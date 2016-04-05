@@ -1,12 +1,3 @@
-Zigzag iterator:
-Given two 1d vectors, implement an iterator to return their elements alternately.
-
-For example, given two 1d vectors:
-
-v1 = [1, 2]
-v2 = [3, 4, 5, 6]
-By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1, 3, 2, 4, 5, 6].
-
 Strobogrammatic Number II:
 A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 
@@ -62,14 +53,20 @@ You may assume the number of calls to update and sumRegion function is distribut
 You may assume that row1 ≤ row2 and col1 ≤ col2.
 
 
-Read 4 II:
-The API: int read4(char *buf) reads 4 characters at a time from a file.
-
-The return value is the actual number of characters read. For example, it returns 3 if there is only 3 characters left in the file.
-
-By using the read4 API, implement the function int read(char *buf, int n) that reads n characters from the file.
-
+Closest Binary search Tree Value II:
+Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
 Note:
-The read function may be called multiple times.
+Given target value is a floating point.
+You may assume k is always valid, that is: k ≤ total nodes.
+You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
+Follow up:
+Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
+
+
+Containing Duplicate
+Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+
+
+
 
 
