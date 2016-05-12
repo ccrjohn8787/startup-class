@@ -1,20 +1,20 @@
-Surrounded Regions
-Number of Islands I, II
-Word Ladder I, II
-Word Search I, II
-Graph Valid tree
-Course Schedule I, II. Pair [0,1] means take course 1 before 0
-Alien Dictionary
-Reconstruct Itenary
-Shortest distance from all buildings
-Minimum Height Tree
-Best meeting point
-Walls and gates: Fill each empty room with the distance to its nearest gate
+Reconstruct Itinerary
+Generate parenthesis
+Word Break I, II
+Gray code
+Palindrome partitioning
+Word pattern II
+Generalized Abbreviation
+Factor combinations
+Flip Game II
+Median of two sorted arrays
+Different ways to add parenthesis
+Expression add operator
 
 
 Home: 
-Clone Graph
-Remove invalid parenthesis
-Nested List Weight Sum
-Number of connected components in undirected graph
-Number of connected components in directed graph
+Letter combination of phone number answer
+Sudoku solver
+Count of smaller number after self
+Count of range sum
+Additive number
