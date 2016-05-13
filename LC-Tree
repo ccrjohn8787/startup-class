@@ -1,13 +1,24 @@
 Palindrome pairs
 Maximal rectangle
-Remove duplicate letters
+Remove duplicate letters: 
+  Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. 
+You must make sure your result is the smallest in lexicographical order among all possible results.
 Create maximum number
+  Given two arrays of length m and n with digits 0-9 representing two numbers. Create the maximum number of length k <= m + n from digits of the two. The relative order of the digits from the same array must be preserved. 
+  Return an array of the k digits. You should try to optimize your time and space complexity.
 Trapping rain water
 Building outline
 Sliding window maximum
 Substring concaternation of all words
 Shortest word distance I, II, III
+  Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list. word1 != word2
+  2. your method will be called repeatedly many times with different parameters. How would you optimize it?
+  3. word1 can equal to word2
 Strobogrammatic number I, II, III
+  Write a function to determine if a number is strobogrammatic
+  Find all strobogrammatic numbers that are of length = n.
+  A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+  Write a function to count the total strobogrammatic numbers that exist in the range of low <= num <= high.
 
 Home: 
 Basic Calculator
