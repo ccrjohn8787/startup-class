@@ -1,0 +1,480 @@
+- 一个string decompression的题。。不知道是不是原题反正没见过。。题目如下. from: 2[abc]3[a]c => abcabcaaac;     2[ab3[d]]2[cc] => abdddabdddcc
+     输入                   输出
+  一开始用了一个栈，写着写着嵌套的逻辑卡住了，最后用俩stack解决。。然后follow-up问的是不要输出string而是输出解压后的K-th character，主要也还是嵌套情况就从内到外把疙瘩解开以后再算
+- Find the total number of patterns of the Android lock screen. The number of key used has to be at least 4, and max 9.
+- 设计乌龟，一开始有两个方法，往前走一步，右转90度。然后说设计个方法可以执行一串命令：e.g., "FRRF"代表走、转、转、走。然后命令要支持括号和数字：e.g., "F97[RF[F]]"代表走一步，然后执行括号里的命令9*7次。
+- 给一个 array of words，和favorite letters， 让重新排序array，使得按照favorite letters的priority 排列。 没有包含 favorite letters 的 words 则继续按照原本字母表排序
+举个栗子：array：['animal','duck','snake','zebra','horse','mouse'], favorite letter:'zh',  output--->['zebra','horse','animal','duck','mouse','snake']
+array：['aab','baa','caa','aaa','aaaa'], favorite letter:'ab',  output--->['aaa','aaaa','aab','baa','caa']
+- 第一题：给一个 sorted Integer array, 返回square后的array.主要是要考虑负数的情况，很多trick的地方比如全都是negative或者全都是positive
+- A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string.
+- 判断一个树是不是另一个的subTree
+
+- top 4 LEDs  is binary for hours
+bottom 6 LEDs for minutes涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- _ _ _ _ = hours
+_ _ _ _ _ _ = minutes 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 0001
+000011
+1:03
+3 LEDs to be lit up?
+1) find total number of combinations for 3 LEDs lit up
+2) follow up: return all the actual combinations of hours: minues
+- coding题目是这样的，一个字典，里面很多单词，例如
+google, leg, about, lemma, apple, time
+找这样的pair <A, B>，有两个条件, (1) A单词的后两个字母和B单词的前两个字母一样 （2）A单词的第一个字母和B单词的最后一个字母一样，例如<google, leg>就是一个合格的pair，<apple, lemma>也是一个合格的pair， <about, time>不可以
+然后求这样的pair的最长长度，<google, leg>的长度=6+3
+我开始没听见他说这个dict是sorted，太紧张了唉。
+- 题目是给你一个board，里面存储user的信息，user有id和socre。
+board有adduser(id, score)(返回add进去的user当前的rank), findByRank(k) (这个返回id)。
+Add如果本身已经有id在board中，需要对这个id的score进行update。(BST insert, delete)
+- 自己实现一个hashtable的insert，delete，search，getRandom，全部都要O（1）.
+
+    - 這個題我 Twitter 的電面考過，可以建一個 class 裏面有一個
+1) 一個 Array —— 用於 random generate index 後 O(1) access element
+2) HashTable（dict in Python），key 是要添加的 element，value 是那個 element 在 Array 裏面的 Index —— 用於通過 object 來 O(1) 作刪除操作。
+put:
+將 object 添加到 HashTable 中，同時 append 到 Array 的最後
+delete:
+通過 passed in 的 object 找到它在 Array 中的位置，將 Array 的最後一個 element 移到剛 delete 的 Index 然後把 object 從 HashTable 刪除，並 update HashTable 裏面剛改動過的 Index （被 move 的 Array 最後那個 element 的 Index 會變）
+get_random:
+index = int(random() * len(hash_table)) # random function 是 Python 自帶的，返回 [0, 1) 之間的小數
+return array[index]
+- 给一个undirected graph，举个栗子如下：
+0-(0)--1--(1)--2
+\        \
+  (1)    (1)
+    \        \
+     3-(0)--4. from
+- 给两个数字，代表起点和终点，请问最短的从起点到终点的路径，且最多经过一个（0）的arc
+- Given a set S of 10^6 doubles. Find a number X so that the [X, X+1) half-open real interval contains as many elements of S as possible.For example, given this subset:[…] 2.7, 0.23, 8.32, 9.65, -6.55, 1.55, 1.98, 7.11, 0.49, 2.75, 2.95, -96.023, 0.14, 8.60, [...]the value X desired is 1.98 because there are 4 values in the range 1.98 to 2.97999 (1.98, 2.7, 2.75, 2.95)
+- 一个string, 有空格，有引号，parse string, 两个引号中间的部分的空格不处理, 引号外面的空格将前后划成两个String。
+做法就是traverse一遍就搞定了，细节处理一下。
+- 給一個車牌號碼(美國的)，以及一個dictionary，請找出dictionary裡含有所有該車牌號碼裡的所有英文字母(case insensitive)的最短字串
+ex:
+車牌 RO 1287 ["rolling", "real", "WhaT", "rOad"] => "rOad"
+follow up:
+(1) 如果dictionary裡有上百萬個字，該如何加速
+(2) 如果dictionary有上百萬個字，然後給你上千個車牌號碼，要你回傳相對應的最短字串，該如何optimize?.
+- 给你一组Treenode，他们每个有一个id，一个parentId，一个value，让你输出所有subtree的sum of value
+- 给一个sorted int array 定义popular item的frequency/occurerence 大于N/4
+求item 值最小的frequency.
+
+    - 只可能在n/4, n/2, 3n/4. Binary search of range
+- atoi 只考虑正数
+- 有一个4-way stop的路口，4条lane， 给两个function getNextCar（）， arriveCar（Car car， Lane lane），要求实现这两个方法。
+- Leaf node of the longest path in binary tree
+- 大意是有一个办公室，in代表进入办公室的时间，out表示出办公室的时间， 每一个event都有in和out两个参数A in:5 out:10
+- C in:12 out: 15
+D in: 25 out:30
+B in:7 out:13 求最长的办公室被连续占用的区间
+- 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
+
+    - 2 heaps + TreeMap<Count, List<Numbers>> + HashMap<Number, Count>:
+
+        - Insert: O(logn)
+        - Delete: O(n) -> can use hash heap to make to O(logn)
+        - Median: O(1)
+        - Mode: O(1)
+    - Balanced binary search tree:
+
+        - Insert: O(logn)
+        - Delete: O(logn)
+        - Median: Worst case O(logn)
+        - Mode: O(n)
+- 题目：.input 是一个游戏的后台log (可以自己定义结构)：
+- （1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
+（2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
+output是每个role出现的次数。
+
+    - playMap<player, List<time>>
+    - roleMap<player, map<role, time>>
+    - for each player:
+     for each role’s start and end time:
+          binary search first occurrence in playMap that’s after start
+          binary search last occurrence in playMap that’s before end
+- 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
+
+    - 找对称轴： (x0 + … + xn)/n
+    - put all points into map -> (x, y)
+    - for (all x) -> check if map contains(2 * mid - x) and if y are equal
+- 第一轮，给一个float number P (e.g = 1.4523), 给定另外一个float number x，求x的sqrt是不是和P前k位相同。二分法改进一下。必要的时候用Math.ceiling()。
+
+static float sqrt(float n)
+        {
+                float low=0,high=n;
+                float mid=(low+high)/2;
+                while(Math.abs(mid*mid-n)>0.00001) //IMPORTANT!
+                {
+                        if(mid*mid<n)
+                                low=mid;
+                        else if(mid*mid>n)
+                                high=mid;
+                        mid=(low+high)/2;
+                }
+                return mid;
+        }
+
+- 第二轮，two sum改版，求所有的pairs，他们的和小于input num。先写了brute force，然后用two pointers优化，面试官问还有没有其他方法，我说可能可以用segment tree，结果自己把自己作死了。他好像期望我用tree的方法做出来。
+    - 2 pointers:
+sort
+i = 0;
+j = length - 1;
+while (i < j) {
+      if (arr[i] + arr[j] >= target) j—;
+       else
+    -              add all pairs (i, k) k from i+1 to j to result; i++;
+}
+- 给出一个 list of int, the target, 输出这个 list 中所用的数能否通过4则运算 得到 target。
+boolean EvaluatesTo(list numbers, int target)
+- Given a rectangular grid of colored pixels and a particular pixel in the grid, find the perimeter of the same-colored blob containing that pixel
+
+    - 补充一下，因为是求包含所给像素的图形的周长，所以就是DFS到每个相同颜色的邻接像素，然后检查这个像素周围四个像素的颜色，如果颜色不同或者越界了，周长+1，否则就继续DFS到那个像素。最后得到周长
+- 函数签名为 int countChunk(String input)， 给定一个字符串，找出最多有多少个chunked palindrome,
+正常的palindrome是abccba, chunked palindrome的定义是：比如volvo, 可以把vo划分在一起，(vo) (l) (vo)，那么它是个palindrome。求实现返回最大的chunk 数量。
+- design an addAlarm function
+struct alarm
+{.
+-   int timestamp;
+  void call()==0;.
+- }
+void addAlarm()
+{
+   //add function body.
+-    synchronized (Alarm.class) {}
+- }
+
+    - TODO: https://instant.1point3acres.com/thread/155754
+    - Have a priority queue for all time stamps sorted by time. timer checks first element in queue
+    - Use Synchronized keyword for thread-safe
+- 第一题：解多项式
+
+    - find range of answer and binary search
+    - If quadratic formula - ans = (-b +- sqrt(b^2 - 4ac)/(2a)
+- 给一堆interval 算出total cover的区间，输出list.
+- 二叉树找closest value。 注意有可能要返回一个以上。
+- 给一个手机键盘，input是一个string，把input根据键盘转化成数字，比如input是“RAT”, output就应该是“77728”，因为R要按三次7键。写之前也是确定了一下input会不会有不合法情况。
+
+    - map<Character, ArrayList<Integer>> -> (R, {7, 7, 7})
+- 第一题是求一个数组里面连续相邻的数的最大长度，第二题把数组换成了树
+- 假设有个social network
+( 1）返回朋友的朋友，但不是自己的朋友；
+( 2 ) 返回朋友的朋友，担不是自己的朋友，按照出现的次数排序，也就是说加入一个人不是我的朋友，但是他是我所有的朋友的朋友，那么他应该是返回结果里面的第一个
+
+    - build a set for 0/1 degree friends
+    - get all second degree friends and count time occured
+    - return sorted by occurrence
+- 给一个Game的schedule, 里面有每一个round和在这个round里面互相compete的players，比如Round1 A-B C-D
+- Round2 A-D B-C.
+- 这个schedule应该满足
+1. 每个player每一个round只能play一次
+2. 每一个player必须和其他所有对手都compete一次
+3. 安排的round数应该是最少的
+返回一个boolean值，看此Game schedule是不是valid的。
+
+    - 1. min number of rounds. 如果是n is odd, min = n, otherwise(n is even) min = n-1.
+    - 2. 每轮用hashset去重, 比如A-B, A-C由于A出现了,所以invalid
+3. 检查invalid的match entry比如A-A B-B
+4. hashmap保存所有已经出现的比赛,保证之后不出现
+- 第一个是问我比如有一个输出哈喽沃德的程序，在命令行里敲下执行命令之后，在屏幕上显示哈喽沃德的字符之前，是怎样一个详细的过程？（比如程序编译，以及输入输出流之类的），这个问题我基础不牢靠吭哧吭哧瞎答了一气。
+
+    - Java: first use javac to compile to JVM byte-code, then JVM executes it
+- 第二个问题就是代码， 让实现一个ringbuffer。心里窃喜。但由于些许紧张写的过程并不是非常流畅，也是吭哧吭哧写完了
+- 主要就是实现一个写入函数，一个读取函数（读取最旧的一个值）。
+- 写完之后让写一下测试，口述一下运行过程。
+- 然后说一下每个函数的复杂度，（这个复杂度实现出来肯定就是O（1）了）
+
+    - See implementation in FixedLengthQueue of palantir prep
+- -给个directory，找出其下面所有的java文件。写代码。
+- recursive function，很简单。
+- 如果肉眼看java代码，class之间的引用关系怎么找？看reference的type；new operator之后跟来的class name。 或者分析用reflection写的object construction代码。
+- 问：假设已经有了getClassDependency（A） api，作用是返回A class所依赖的其他类。现在有一个硕大的代码库，其中有些java class早已没人用。怎么找出所有此类class？
+图算法。把代码库看成图，每个class是节点，依赖关系是边。从有用的class开始遍历图，并标记已访问的节点。最终没有被标记的节点是不可达的，即为没用的class。类似JVM的垃圾回收。
+- 给一个整数数组（可正可负可重复），返回其中任意两个元素乘积的最大值。follow up 到求k个数的最大值。 当时没有想出比sorting 更好的算法了。。不知道k的话有没有更好算法
+- The question is to write a method that, given an input string, generates a longest palindrome by removing characters from the input string or rearranging characters in the input string.
+    - 遍历input string, 计数每个字符出现的次数，如果出现的次数为偶数，那么最长的palindrome必然所有字符。如果为奇数，那么必然包含出现次数减1(在最中间的字符除外，可以出现奇数次）. 然后把这些字符从头尾生成即可。
+- java基础知识，包括 access controller, static final, interface...
+- 一个stock provider, 每一个second会发送stock prices.(考虑到reliability，不是每秒钟都发)， 写一个getAverage 函数(public double getAverage(double price, long timestamp)), 返回不早于系统当前时间一分钟前的所有股票价格的平均值。
+
+    - queue<PricePoint>
+    - while (queue.peek().timestamp < currTime - 60) {
+        queue.pop();
+}
+calculate avg
+- 1.1. 给一个数n，如果能被3整除就print Func3(n)，如果能被5整除就print Func5(n)，如果能被3和5整除就print Func3(Func5(n)). 我用最简单的if-else写了下。
+1.2. follow-up, 把上面的代码改成general的，如这时有{3，5，7}，能被3和7整除的话就print Func3(Func7(n))，能被3，5，7都整除print Func3(Func5(Func7(n)))
+
+    - http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=137822&pid=2200543&fromuid=206597
+- 3. 设计一个电话本系统，实现三个功能：查找号码 boolean isTaken()，添加号码 void takeNumber()，返回一个不在电话本里的没人用的号码 number giveMeANumber()。我一开始说用HashMap，这样前两个函数的复杂度都是O(1)，第三个是O(n)。面试官说能不能优化第三个函数，我说用BST，每个节点多存一个value记录这个节点下还有几个available的号码，giveMeANumber()的实现只要沿着value>0的node往下找就行了。这样三个函数的复杂度都是O(lgn).
+
+    - Trie - each node also remembers how many available child nodes there are
+- 給一个单词和一个字典。每次删除单词里任何一个字母直到剩下一个字母，形成一个序列，比如office->offce->ofce->ofc->oc->c。问是字典里否存在一个这种序列。
+- 已知一个List里全是interger, 还有一个set里也全是integer,求是否存在一个sublist, set里所有元素和sublist中所有元素一一对应。[sublist 这里要求必须为原List的连续项， 注意set里元素无序]
+- Leetcode 288 unique word abbreviation 变体。
+input: String[] words, String str
+output: all words that share the same pattern with str. . 鍥磋鎴戜滑@1point 3 acres
+- e.g String[] words = {happy, haaay, habay, node}; String str = happy
+str 的pattern 是 h4y.(面试小哥限定的) 不用考虑happy -> h4， ha2y 之类的。
+output: happy, haaay, habay
+- Given string s and string pattern, find the number of subsequences in s that forms pattern. All characters are discontinuous in s.
+For example, pattern = ab, s = abcacb. Return 2. because {0, 5} and {3, 5} satisfy the rule.
+
+    - TODO: http://www.lintcode.com/en/problem/distinct-subsequences/
+- 设计一个addLatency和 avgLatency，可以返回3个latency的平均值，
+- Give you a text file, remove duplicated lines. Follow up: If the file is very large, general hash map takes too much spaces, come up with a better…
+
+    - 如果文件很大，是不是可以把文件里的内容按照每一行string的hash值取模，比如hash%10或者hash%100，把一个大文件分到几个小文件里，然后按照之前的方法处理？
+- 一个large array, remove 其中的even number，duplicate其中的odd number，必须in place。
+
+    - Partition array: odd on left, even on right, get index of the first even = i
+for (i = i * 2; i >= 0; i—) duplicate odd numbers and move to end
+- array 含有 0，1，2， 返回能把0放在数列同一边的最小swap值
+
+    - First count number of 0’s
+count how many zeros are on both ends that doesn’t need to be moved
+http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=180892&pid=2336829&fromuid=206597
+- array中只有一个重复数，找出它
+
+    - TODO: https://leetcode.com/problems/find-the-duplicate-number/
+- 给一堆数，找出哪些数是在这些Intervals里面的，返回
+
+    - Binary Search
+[1, 3, 5, 6, 10] -> [1, 3] [4, 5]
+if (number > intervals[mid].end) start = mid;
+else if (number < intervals[mid].start) end = mid;
+else => number is in mid interval
+- 1. 难度 easy
+given a string, find the first letter in that string which appears only once in this string.
+example: aabbccdee, return d
+2. follow the first question 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- if the input is not a string. It is a internet Stream. What situation should you handle?
+example: 这个网络流突然就不让access了，或突然关了，你的loop就crash了。之类的问题如何handle。. more
+- 3. 如果input数据很大很大， 如何improve？
+4. Open Question: How to test Google Search?
+- morse code . 1point 3acres 璁哄潧
+- 输入给一个map<Character, String>和一个string，对应关系用Map给出来
+eg A -> "._"
+     B -> ".__"
+     C -> "._.__"
+     ....
+     Z -> ".._"
+public String morse(String str, Map<Character, String> morseRule) {
+}
+比如给”ABZ“，返回”._  .__  .._“ 妈啊看到这题我惊了，一直担心自己理解错了
+follow up：
+public String decodeMorse（String str， Map<Character, String> morseRule）{. 鍥磋鎴戜滑@1point 3 acres
+- }
+decode 就是输入string换成”._  .__  .._“，返会”ABZ“，我继续无语是不是运气太好了。。。
+follow up：
+public List<String> decodeMorse(String str, Map<Character, String> morseRule) {
+}
+输入”._ .__ .._“， 返会["ABZ", "CZ"]
+还是decode 输入string中的空格去掉”._ .__ .._“，返会所有可能的，这个起码还稍微正常点，但用个简单的回溯就可以解决了
+- 大除法 输入是一个恶心到极点的string，比如1234567891011....（此后省略10000位）作为除数，和一个long作为被除数，返会所得的值.
+- public String divide（String divisor， long dividend）
+这题我的想法就是一段一段的取，大于dividend之后来除，得到的数加到stringbuilder里，余数跟后面加到一起，大于dividend之后在继续除，直到结束。不过其中有些细节要小心，不然会出runtime
+- Lowest Common Parent of two nodes in a binary tree
+这里有点tricky的是LCP和LCA的区别，假如p,q 是BT中的两个node，p是q的ancestor，那么LCA是p， LCP是p的parent。
+- 上来直接做题，题目是merge intervals, 做完了之后讲了讲时间复杂度并且口述了几个test case测程序。
+follow up是写addInterval和getAllIntervals的函数，LZ提出的先按start time sort再插入进去的方案被面试官说复杂度太高，想了想说，就sort一次，之后用binary search找第一个有overlap的interval和最后一个有overlap的interval,然后把中间的删了加一个新的
+- Binary Tree to circular double linked list
+要求按照inorder顺序，in place.
+circular没处理好，感觉脑子都木了，小哥最后告诉了答案
+口头跑了case， 问了时间复杂度
+
+    - http://www.lintcode.com/submission/3701664/
+- 服务器在x secods 内只能接受r个request，对于超过的r部分要disallow。(with token)
+
+    - TODO: Rate Limiter
+- 第一题：问有一个marble，含有名字name和颜色color两个属性。问你用什么数据结构，可以任意的拿和放入其中，使的每次拿的时候取到任意一个marble的概率都是一样
+follow up 如果你有1M种颜色，平均每个颜色有1M个marble，但是你的内存没有1M*1M这么大，这时这个数据结构用什？
+
+    - 我觉得第一题一维array顺序存就好了吧？取的时候取random一个，然后将最后的填到取了的空位上。followup就在内存里搞个1M大小数组存不同颜色的，每个数组指向一个文件，文件里面存marble。拿的时候random两次，第一次选颜色，第二次选marble。
+- 第二题 算法 给你一个arr 返回 T 或者 F
+arr的每个数代表从这个点开始跳几部，返回T的情况：从这个arr中任意一个数开始跳，可以在每个元素都跳到且只跳到一次的情况下返回到开始跳的元素
+比如[1,1,1,1,1,1] => T
+[0,1,1,1,1,1]=> F
+[7, 5, 2, 3] => F
+[2,2,3,1] => T
+
+    - public static boolean solution(int arr) {
+int i = 0, l = arr.length; int sum = 0; // 满足条件时，总共需要走的步数。
+for (int num : arr) { sum += num; }
+while (arr[i] > 0) {
+int iNext = (i + arr[i]) % l;
+sum -= arr[i]; // 扣除已经走的步数。
+arr[i] = 0; // 走过了就没有步数可以再走了。
+i = iNext; }
+return sum == 0 && i == 0; // 返回True的条件 必须是所有的步数都走完了，所以sum等于0，然后index为0 }
+- n个文件(共100G)，找出含某个词的文件将它们归档为一类。 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+-   e.g. A: small cat and small dog
+        B: small cat
+        C: cat and dog
+    then given ['small cat', 'dog'], return [[A,B], [A,C]]
+
+    - Inverse index:
+small -> A, B
+cat -> A, B, C
+- Write code to print all pairs of natural numbers
+- 2. 给一个BT, 每个node有一个next，当该node没有right child时，指向inorder successor，otherwise null。 让不用stack和recursion，inorder 遍历BT。
+3. initialize BT with next.
+- 在一个Grid里算有多少正方形，给一个m一个n的边长
+Total number of squares = m x (m+1) x (2m+1)/6 +
+                          (n-m) x m x (m+1)/2
+when n is larger dimension
+
+- 找最长连续子序列，要求这个子序列的和为0. 比如[4, 8, 3, -7, -4, 8]， 应该得到［3, -7, -4, 8］。
+
+    - prefix sum array -> hashmap<sum, index>
+- 给n行输入，每行2个int：
+1 2
+1 3
+1 4
+2 5
+2 6
+3 7
+...
+构建一棵树（不一定是binary tree），第一行输入的第一个int是root，所以上面的输入转换成下面的树：
+                   1
+                /  |  \
+              2   3   4
+            /  \   |
+          5   6  7
+然后要求打印出在以某个结点为根结点的子树中的所有结点。比如给定结点2，就要打印2,5,6；给定4，就打印4.
+
+    - HashMap<Node, List<Node>> -> parent, children
+
+Leetcode:
+
+- Zigzag Iterator - https://leetcode.com/submissions/detail/60645779/
+
+    - Peeking Iterator: https://leetcode.com/submissions/detail/59905066/
+    - 2D Array Iterator: https://leetcode.com/submissions/detail/61098446/
+    - Nested Iterator: https://leetcode.com/submissions/detail/61098880/
+- Range sum query 2D - Mutable
+    - 第一问update远多于sum的情况，lz迅速给一个暴力解；
+    - 第二问sum比update多的情况，dp用一个矩阵存左上角数的和，更新时要更新矩阵坐下角所有值O(n^2);
+
+        - https://leetcode.com/submissions/detail/61099220/
+    - 第三问sum和update一样多，列之和，解法https://leetcode.com/submissions/detail/61099302/
+    - 最后面试官说这题有logn解法，讨论了下线段树，面试官说Fenwick tree也可以。
+
+        - https://evanyang.gitbooks.io/leetcode/content/LeetCode/range_sum_query_2d_-_mutable.html
+    - Range sum query 1D - Mutable: https://leetcode.com/submissions/detail/61099705/
+- Strobogrammatic number I, II, III
+
+    - https://leetcode.com/submissions/detail/61100161/ (I - determine if number is strobo)
+    - https://leetcode.com/submissions/detail/61100416/ (II- generate all with n digits)
+    - https://leetcode.com/submissions/detail/61100702/ (III - count between low and high)
+- Longest substring with at most k distinct characters
+
+    - http://www.lintcode.com/submission/3460101/
+    - Follow-up:
+There are now new requirements for getLongestSubstring! The string doesn't fit into memory. Instead you get an object of type BigString:
+interface BigString {-google 1point3acres
+    -         public boolean hasNextChar(); 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+    -         public char getNextChar();}
+    - 现成给一个character stream的class instance implements以下interface
+interface StreamReader {
+    char next(); // return next character 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+    -     bool done(); // check if there is more character
+    // as long as done() returns true, it will never return false later
+}
+    - Answer to follow-up: http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=184034&pid=2365791&fromuid=206597
+    - Instead of using HashMap<Character, count>, use HashMap<Character, LastPos>.
+    - When map size is k, remove the char with smallest lasPos in map and start from there
+- shortest palindrome
+
+    - https://leetcode.com/submissions/detail/61102389/
+- Grey Code https://leetcode.com/problems/gray-code/
+- Count of smaller numbers before itself
+- Count of bigger numbers after self
+
+    - Both can be solved with either merge sort or bst
+    - BST solution: https://leetcode.com/submissions/detail/60937473/
+    - Count of range sum: http://www.lintcode.com/submission/3552983/
+- https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/
+
+    - https://leetcode.com/submissions/detail/60800727/
+- https://leetcode.com/problems/longest-consecutive-sequence/
+
+    - http://www.lintcode.com/submission/4359680/
+- Number of Islands I & II
+    - Follow up one: 如果地图数据经常会更新，每次都要算山峰数量，如何提高效率。
+Follow up two: 有什么其他算法可以完成题目，除了DFS和Union-Find Set。
+Follow up three: 如果地图数据量特别大，单机处理不了怎么办。要求说思路或写伪代码。
+    - I - http://www.lintcode.com/submission/3402194/
+    - II - http://www.lintcode.com/submission/3785948/
+- Unique Word Abbreviation
+
+    - https://leetcode.com/submissions/detail/60802149/
+- Perfect Square
+- Missing Range
+
+    - https://leetcode.com/submissions/detail/58043459/
+- Square root
+
+    - Square root of float (while (Math.abs(mid * mid - target) > 0.00001)
+- Best Time to Buy and Sell Stock - http://www.lintcode.com/submission/3681651/
+- Best Time to Buy and Sell Stock II - http://www.lintcode.com/submission/3681686/
+- Best Time to Buy and Sell Stock III - http://www.lintcode.com/submission/3682954/
+- Best Time to Buy and Sell Stock IV - http://www.lintcode.com/submission/3855735/
+- Construct Binary tree from preorder and inorder
+    - http://www.lintcode.com/submission/3599458/
+- kth smallest number in sorted matrix (lint code)
+    - http://www.lintcode.com/submission/3545381/
+- Maximal Rectangle
+    - http://www.lintcode.com/submission/3808493/
+- Palindrome Pair
+
+    - https://leetcode.com/submissions/detail/60293968/
+- Kth Largest Element
+
+    - http://www.lintcode.com/submission/3686654/
+- find the element in the rotated sorted array
+
+    - http://www.lintcode.com/submission/3200321/
+- Merge Intervals
+
+    - follow up是写addInterval和getAllIntervals的函数，LZ提出的先按start time sort再插入进去的方案被面试官说复杂度太高，想了想说，就sort一次，之后用binary search找第一个有overlap的interval和最后一个有overlap的interval,然后把中间的删了加一个新的
+-  http://www.lintcode.com/en/problem/distinct-subsequences/
+
+    - 复习所有subsequence的dp
+    - distinct subsequences: http://www.lintcode.com/submission/4358428/
+    - longest increasing subsequence: http://www.lintcode.com/submission/3854093/
+    - longest common subsequence: http://www.lintcode.com/submission/3713197/
+- Basic Calculator / Evaluate target
+    - https://leetcode.com/submissions/detail/60265668/
+- Minimum window substring
+    - http://www.lintcode.com/submission/3815354/
+- Encode and Decode String
+    - https://leetcode.com/submissions/detail/60650591/
+- Remove node in BST
+    - http://www.lintcode.com/submission/3758462/
+- Closest Value in BST
+    - https://leetcode.com/problems/closest-binary-search-tree-value/
+
+External Resources:
+
+-  Google 题总结      https://hellosmallworld123.wordpress.com/2015/07/23/g%E7%9A%84%E5%87%A0%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/
+- Range Minimum Query
+    - https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/
+- Reservoir Sampling
+- 读大数据处理文章
+- java Basics (how is object passed around in java)
+- time complexity calculation - especially for recursion functions
+
+Java Basics:
+
+- Override hashcode and equals:
+    - public boolean equals(Object o) {
+    if ((o instanceof XXX)) -> ((XXX) o) => downcast
+}
+    - public int compareTo(Student other) => class need to implements Comparable
+- Time Complexity
+
+    - Backtracking: (Almost always exponential or n!)
+
+        - permutation/ n queens: T(n) = T(n-1) + C => n!
+        - word break: 2^n
+    - Divide and Conquer - there is a formula: http://digital.cs.usu.edu/~allanv/cs5050/W2Handout.pdf
