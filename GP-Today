@@ -1,0 +1,125 @@
+1. String decompression: from: 2[abc]3[a]c => abcabcaaac;     2[ab3[d]]2[cc] => abdddabdddcc
+   - follow up: output kth character after decompression
+2. Find the total number of patterns of the Android lock screen. The number of key used has to be at least 4, and max 9.
+3. Tortose move: Move forward one step or Turn right 90 degree. Can execute command like FRRF. More complicated like F97[RF[F]], which means move one forward and do 97 times the command in the bracket
+4. 给一个 array of words，和favorite letters， 让重新排序array，使得按照favorite letters的priority 排列。 没有包含 favorite   letters 的 words 则继续按照原本字母表排序
+   举个栗子：array：['animal','duck','snake','zebra','horse','mouse'], favorite letter:'zh',  output--->['zebra','horse','animal','duck','mouse','snake']
+   array：['aab','baa','caa','aaa','aaaa'], favorite letter:'ab',  output--->['aaa','aaaa','aab','baa','caa']
+5. Given sorted integer array, return the sorted array after each element squared. Careful about negative number
+6. A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string.
+7. Determine whether a tree is a subtree of another
+8. top 4 LEDs  is binary for hours
+     bottom 6 LEDs for minutes
+     - _ _ _ _ = hours
+     _ _ _ _ _ _ = minutes 
+     - 0001
+     000011
+     1:03
+     3 LEDs to be lit up?
+     1) find total number of combinations for 3 LEDs lit up
+     2) follow up: return all the actual combinations of hours: minues
+9. 一个字典，里面很多单词，例如 google, leg, about, lemma, apple, time 找这样的pair <A, B>，有两个条件, 
+   (1) A单词的后两个字母和B单词的前两个字母一样 
+   （2）A单词的第一个字母和B单词的最后一个字母一样，例如<google, leg>就是一个合格的pair，<apple, lemma>也是一个合格的pair， <about, time>不可以
+   然后求这样的pair的最长长度，<google, leg>的长度=6+3
+   我开始没听见他说这个dict是sorted，太紧张了唉。
+10. 给你一个board，里面存储user的信息，user有id和socre。
+    board有adduser(id, score)(返回add进去的user当前的rank), findByRank(k) (这个返回id)。
+    Add如果本身已经有id在board中，需要对这个id的score进行update。(BST insert, delete)
+
+11. Implement a hashtable with support of insert，delete，search，getRandom. All O(1). Can use builtin hashtable
+
+12. 给一个undirected graph，举个栗子如下：
+     0-(0)--1--(1)--2
+     \        \
+       (1)    (1)
+         \        \
+          3-(0)--4. from
+   给两个数字，代表起点和终点，请问最短的从起点到终点的路径，且最多经过一个（0）的arc
+   
+13. Given a set S of 10^6 doubles. Find a number X so that the [X, X+1) half-open real interval contains as many elements    of S as possible.For example, given this subset:[…] 2.7, 0.23, 8.32, 9.65, -6.55, 1.55, 1.98, 7.11, 0.49, 2.75, 2.95,   -96.023, 0.14, 8.60, [...]the value X desired is 1.98 because there are 4 values in the range 1.98 to 2.97999 (1.98, 2.7, 2.75, 2.95)
+
+14. 一个string, 有空格，有引号，parse string, 两个引号中间的部分的空格不处理, 引号外面的空格将前后划成两个String。
+做法就是traverse一遍就搞定了，细节处理一下
+
+15. 給一個車牌號碼(美國的)，以及一個dictionary，請找出dictionary裡含有所有該車牌號碼裡的所有英文字母(case insensitive)的最短字串
+  ex:
+  車牌 RO 1287 ["rolling", "real", "WhaT", "rOad"] => "rOad"
+  follow up:
+  (1) 如果dictionary裡有上百萬個字，該如何加速
+  (2) 如果dictionary有上百萬個字，然後給你上千個車牌號碼，要你回傳相對應的最短字串，該如何optimize?.
+
+16. 给你一组Treenode，他们每个有一个id，一个parentId，一个value，让你输出所有subtree的sum of value
+
+17. 给一个sorted int array 定义popular item的frequency/occurerence 大于N/4 求item 值最小的frequency.  只可能在n/4, n/2, 3n/4. Binary search of range
+
+18. atoi, only positive integers
+
+19. 有一个4-way stop的路口，4条lane， 给两个function getNextCar（）， arriveCar（Car car， Lane lane），要求实现这两个方法。
+
+20. 20. Leaf node of the longest path in binary tree
+
+21. 大意是有一个办公室，in代表进入办公室的时间，out表示出办公室的时间， 每一个event都有in和out两个参数A in:5 out:10 - C in:12 out: 15 D in: 25 out:30 B in:7 out:13 求最长的办公室被连续占用的区间
+
+22. 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
+
+    - 2 heaps + TreeMap<Count, List<Numbers>> + HashMap<Number, Count>:
+
+        - Insert: O(logn)
+        - Delete: O(n) -> can use hash heap to make to O(logn)
+        - Median: O(1)
+        - Mode: O(1)
+    - Balanced binary search tree:
+
+        - Insert: O(logn)
+        - Delete: O(logn)
+        - Median: Worst case O(logn)
+        - Mode: O(n)
+23. input 是一个游戏的后台log (可以自己定义结构)：
+    (1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
+   （2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
+    output是每个role出现的次数。
+
+    - playMap<player, List<time>>
+    - roleMap<player, map<role, time>>
+    - for each player:
+     for each role’s start and end time:
+          binary search first occurrence in playMap that’s after start
+          binary search last occurrence in playMap that’s before end
+          
+24. 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
+
+    - 找对称轴： (x0 + … + xn)/n
+    - put all points into map -> (x, y)
+    - for (all x) -> check if map contains(2 * mid - x) and if y are equal
+    
+25. 第一轮，给一个float number P (e.g = 1.4523), 给定另外一个float number x，求x的sqrt是不是和P前k位相同。二分法改进一下。必要的时候用Math.ceiling()。
+
+     static float sqrt(float n)
+        {
+                float low=0,high=n;
+                float mid=(low+high)/2;
+                while(Math.abs(mid*mid-n)>0.00001) //IMPORTANT!
+                {
+                        if(mid*mid<n)
+                                low=mid;
+                        else if(mid*mid>n)
+                                high=mid;
+                        mid=(low+high)/2;
+                }
+                return mid;
+        }
+
+26. 第二轮，two sum改版，求所有的pairs，他们的和小于input num。先写了brute force，然后用two pointers优化，面试官问还有没有其他方法，我说可能可以用segment tree，结果自己把自己作死了。他好像期望我用tree的方法做出来。
+    - 2 pointers:
+     sort
+     i = 0;
+     j = length - 1;
+     while (i < j) {
+           if (arr[i] + arr[j] >= target) j—;
+            else
+         -              add all pairs (i, k) k from i+1 to j to result; i++;
+     }
+27. 给出一个 list of int, the target, 输出这个 list 中所用的数能否通过4则运算 得到 target。
+    boolean EvaluatesTo(list numbers, int target)
+28. (Leetcode: Smallest Rectangle Enclosing All Black Pixels) Given a rectangular grid of colored pixels and a particular pixel in the grid, find the perimeter of the same-colored blob containing that pixel
