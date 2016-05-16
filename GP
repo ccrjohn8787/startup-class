@@ -1,74 +1,70 @@
-- 一个string decompression的题。。不知道是不是原题反正没见过。。题目如下. from: 2[abc]3[a]c => abcabcaaac;     2[ab3[d]]2[cc] => abdddabdddcc
+1. 一个string decompression的题。。不知道是不是原题反正没见过。。题目如下. from: 2[abc]3[a]c => abcabcaaac;     2[ab3[d]]2[cc] => abdddabdddcc
      输入                   输出
   一开始用了一个栈，写着写着嵌套的逻辑卡住了，最后用俩stack解决。。然后follow-up问的是不要输出string而是输出解压后的K-th character，主要也还是嵌套情况就从内到外把疙瘩解开以后再算
-- Find the total number of patterns of the Android lock screen. The number of key used has to be at least 4, and max 9.
-- 设计乌龟，一开始有两个方法，往前走一步，右转90度。然后说设计个方法可以执行一串命令：e.g., "FRRF"代表走、转、转、走。然后命令要支持括号和数字：e.g., "F97[RF[F]]"代表走一步，然后执行括号里的命令9*7次。
-- 给一个 array of words，和favorite letters， 让重新排序array，使得按照favorite letters的priority 排列。 没有包含 favorite letters 的 words 则继续按照原本字母表排序
-举个栗子：array：['animal','duck','snake','zebra','horse','mouse'], favorite letter:'zh',  output--->['zebra','horse','animal','duck','mouse','snake']
-array：['aab','baa','caa','aaa','aaaa'], favorite letter:'ab',  output--->['aaa','aaaa','aab','baa','caa']
-- 第一题：给一个 sorted Integer array, 返回square后的array.主要是要考虑负数的情况，很多trick的地方比如全都是negative或者全都是positive
-- A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string.
-- 判断一个树是不是另一个的subTree
+2. Find the total number of patterns of the Android lock screen. The number of key used has to be at least 4, and max 9.
+3. 设计乌龟，一开始有两个方法，往前走一步，右转90度。然后说设计个方法可以执行一串命令：e.g., "FRRF"代表走、转、转、走。然后命令要支持括号和数字：e.g., "F97[RF[F]]"代表走一步，然后执行括号里的命令9*7次。
+4. 给一个 array of words，和favorite letters， 让重新排序array，使得按照favorite letters的priority 排列。 没有包含 favorite letters 的 words 则继续按照原本字母表排序
+   举个栗子：array：['animal','duck','snake','zebra','horse','mouse'], favorite letter:'zh',  output--->['zebra','horse','animal','duck','mouse','snake']
+   array：['aab','baa','caa','aaa','aaaa'], favorite letter:'ab',  output--->['aaa','aaaa','aab','baa','caa']
+5. 第一题：给一个 sorted Integer array, 返回square后的array.主要是要考虑负数的情况，很多trick的地方比如全都是negative或者全都是positive
+6. A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string.
+7. 判断一个树是不是另一个的subTree
 
-- top 4 LEDs  is binary for hours
-bottom 6 LEDs for minutes涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
-- _ _ _ _ = hours
-_ _ _ _ _ _ = minutes 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
-- 0001
-000011
-1:03
-3 LEDs to be lit up?
-1) find total number of combinations for 3 LEDs lit up
-2) follow up: return all the actual combinations of hours: minues
-- coding题目是这样的，一个字典，里面很多单词，例如
-google, leg, about, lemma, apple, time
-找这样的pair <A, B>，有两个条件, (1) A单词的后两个字母和B单词的前两个字母一样 （2）A单词的第一个字母和B单词的最后一个字母一样，例如<google, leg>就是一个合格的pair，<apple, lemma>也是一个合格的pair， <about, time>不可以
-然后求这样的pair的最长长度，<google, leg>的长度=6+3
-我开始没听见他说这个dict是sorted，太紧张了唉。
-- 题目是给你一个board，里面存储user的信息，user有id和socre。
+8. top 4 LEDs  is binary for hours
+     bottom 6 LEDs for minutes
+     - _ _ _ _ = hours
+     _ _ _ _ _ _ = minutes 
+     - 0001
+     000011
+     1:03
+     3 LEDs to be lit up?
+     1) find total number of combinations for 3 LEDs lit up
+     2) follow up: return all the actual combinations of hours: minues
+9. 一个字典，里面很多单词，例如 google, leg, about, lemma, apple, time 找这样的pair <A, B>，有两个条件, 
+   (1) A单词的后两个字母和B单词的前两个字母一样 
+   （2）A单词的第一个字母和B单词的最后一个字母一样，例如<google, leg>就是一个合格的pair，<apple, lemma>也是一个合格的pair， <about, time>不可以
+   然后求这样的pair的最长长度，<google, leg>的长度=6+3
+   我开始没听见他说这个dict是sorted，太紧张了唉。
+10. 题目是给你一个board，里面存储user的信息，user有id和socre。
 board有adduser(id, score)(返回add进去的user当前的rank), findByRank(k) (这个返回id)。
 Add如果本身已经有id在board中，需要对这个id的score进行update。(BST insert, delete)
-- 自己实现一个hashtable的insert，delete，search，getRandom，全部都要O（1）.
 
-    - 這個題我 Twitter 的電面考過，可以建一個 class 裏面有一個
-1) 一個 Array —— 用於 random generate index 後 O(1) access element
-2) HashTable（dict in Python），key 是要添加的 element，value 是那個 element 在 Array 裏面的 Index —— 用於通過 object 來 O(1) 作刪除操作。
-put:
-將 object 添加到 HashTable 中，同時 append 到 Array 的最後
-delete:
-通過 passed in 的 object 找到它在 Array 中的位置，將 Array 的最後一個 element 移到剛 delete 的 Index 然後把 object 從 HashTable 刪除，並 update HashTable 裏面剛改動過的 Index （被 move 的 Array 最後那個 element 的 Index 會變）
-get_random:
-index = int(random() * len(hash_table)) # random function 是 Python 自帶的，返回 [0, 1) 之間的小數
-return array[index]
-- 给一个undirected graph，举个栗子如下：
-0-(0)--1--(1)--2
-\        \
-  (1)    (1)
-    \        \
-     3-(0)--4. from
-- 给两个数字，代表起点和终点，请问最短的从起点到终点的路径，且最多经过一个（0）的arc
-- Given a set S of 10^6 doubles. Find a number X so that the [X, X+1) half-open real interval contains as many elements of S as possible.For example, given this subset:[…] 2.7, 0.23, 8.32, 9.65, -6.55, 1.55, 1.98, 7.11, 0.49, 2.75, 2.95, -96.023, 0.14, 8.60, [...]the value X desired is 1.98 because there are 4 values in the range 1.98 to 2.97999 (1.98, 2.7, 2.75, 2.95)
-- 一个string, 有空格，有引号，parse string, 两个引号中间的部分的空格不处理, 引号外面的空格将前后划成两个String。
+11. 自己实现一个hashtable的insert，delete，search，getRandom，全部都要O（1）.
+    這個題我 Twitter 的電面考過，可以建一個 class 裏面有一個
+    1) 一個 Array —— 用於 random generate index 後 O(1) access element
+    2) HashTable（dict in Python），key 是要添加的 element，value 是那個 element 在 Array 裏面的 Index —— 用於通過 object 來 O(1) 作刪除操作。
+     put:
+     將 object 添加到 HashTable 中，同時 append 到 Array 的最後
+     delete:
+     通過 passed in 的 object 找到它在 Array 中的位置，將 Array 的最後一個 element 移到剛 delete 的 Index 然後把 object 從 HashTable 刪除，並 update HashTable 裏面剛改動過的 Index （被 move 的 Array 最後那個 element 的 Index 會變）
+     get_random:
+     index = int(random() * len(hash_table)) # random function 是 Python 自帶的，返回 [0, 1) 之間的小數
+     return array[index]
+     
+12. 给一个undirected graph，举个栗子如下：
+     0-(0)--1--(1)--2
+     \        \
+       (1)    (1)
+         \        \
+          3-(0)--4. from
+   给两个数字，代表起点和终点，请问最短的从起点到终点的路径，且最多经过一个（0）的arc
+13. Given a set S of 10^6 doubles. Find a number X so that the [X, X+1) half-open real interval contains as many elements of S as possible.For example, given this subset:[…] 2.7, 0.23, 8.32, 9.65, -6.55, 1.55, 1.98, 7.11, 0.49, 2.75, 2.95, -96.023, 0.14, 8.60, [...]the value X desired is 1.98 because there are 4 values in the range 1.98 to 2.97999 (1.98, 2.7, 2.75, 2.95)
+14. 一个string, 有空格，有引号，parse string, 两个引号中间的部分的空格不处理, 引号外面的空格将前后划成两个String。
 做法就是traverse一遍就搞定了，细节处理一下。
-- 給一個車牌號碼(美國的)，以及一個dictionary，請找出dictionary裡含有所有該車牌號碼裡的所有英文字母(case insensitive)的最短字串
+15. 給一個車牌號碼(美國的)，以及一個dictionary，請找出dictionary裡含有所有該車牌號碼裡的所有英文字母(case insensitive)的最短字串
 ex:
 車牌 RO 1287 ["rolling", "real", "WhaT", "rOad"] => "rOad"
 follow up:
 (1) 如果dictionary裡有上百萬個字，該如何加速
 (2) 如果dictionary有上百萬個字，然後給你上千個車牌號碼，要你回傳相對應的最短字串，該如何optimize?.
-- 给你一组Treenode，他们每个有一个id，一个parentId，一个value，让你输出所有subtree的sum of value
-- 给一个sorted int array 定义popular item的frequency/occurerence 大于N/4
-求item 值最小的frequency.
 
-    - 只可能在n/4, n/2, 3n/4. Binary search of range
-- atoi 只考虑正数
-- 有一个4-way stop的路口，4条lane， 给两个function getNextCar（）， arriveCar（Car car， Lane lane），要求实现这两个方法。
-- Leaf node of the longest path in binary tree
-- 大意是有一个办公室，in代表进入办公室的时间，out表示出办公室的时间， 每一个event都有in和out两个参数A in:5 out:10
-- C in:12 out: 15
-D in: 25 out:30
-B in:7 out:13 求最长的办公室被连续占用的区间
-- 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
+16. 给你一组Treenode，他们每个有一个id，一个parentId，一个value，让你输出所有subtree的sum of value
+17. 给一个sorted int array 定义popular item的frequency/occurerence 大于N/4 求item 值最小的frequency.  只可能在n/4, n/2, 3n/4. Binary search of range
+18. atoi 只考虑正数
+19. 有一个4-way stop的路口，4条lane， 给两个function getNextCar（）， arriveCar（Car car， Lane lane），要求实现这两个方法。
+20. Leaf node of the longest path in binary tree
+21. 大意是有一个办公室，in代表进入办公室的时间，out表示出办公室的时间， 每一个event都有in和out两个参数A in:5 out:10 - C in:12 out: 15 D in: 25 out:30 B in:7 out:13 求最长的办公室被连续占用的区间
+22. 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
 
     - 2 heaps + TreeMap<Count, List<Numbers>> + HashMap<Number, Count>:
 
@@ -82,10 +78,10 @@ B in:7 out:13 求最长的办公室被连续占用的区间
         - Delete: O(logn)
         - Median: Worst case O(logn)
         - Mode: O(n)
-- 题目：.input 是一个游戏的后台log (可以自己定义结构)：
-- （1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
-（2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
-output是每个role出现的次数。
+23. input 是一个游戏的后台log (可以自己定义结构)：
+    (1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
+   （2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
+    output是每个role出现的次数。
 
     - playMap<player, List<time>>
     - roleMap<player, map<role, time>>
@@ -93,14 +89,16 @@ output是每个role出现的次数。
      for each role’s start and end time:
           binary search first occurrence in playMap that’s after start
           binary search last occurrence in playMap that’s before end
-- 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
+          
+24. 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
 
     - 找对称轴： (x0 + … + xn)/n
     - put all points into map -> (x, y)
     - for (all x) -> check if map contains(2 * mid - x) and if y are equal
-- 第一轮，给一个float number P (e.g = 1.4523), 给定另外一个float number x，求x的sqrt是不是和P前k位相同。二分法改进一下。必要的时候用Math.ceiling()。
+    
+25. 第一轮，给一个float number P (e.g = 1.4523), 给定另外一个float number x，求x的sqrt是不是和P前k位相同。二分法改进一下。必要的时候用Math.ceiling()。
 
-static float sqrt(float n)
+     static float sqrt(float n)
         {
                 float low=0,high=n;
                 float mid=(low+high)/2;
@@ -115,49 +113,55 @@ static float sqrt(float n)
                 return mid;
         }
 
-- 第二轮，two sum改版，求所有的pairs，他们的和小于input num。先写了brute force，然后用two pointers优化，面试官问还有没有其他方法，我说可能可以用segment tree，结果自己把自己作死了。他好像期望我用tree的方法做出来。
+26. 第二轮，two sum改版，求所有的pairs，他们的和小于input num。先写了brute force，然后用two pointers优化，面试官问还有没有其他方法，我说可能可以用segment tree，结果自己把自己作死了。他好像期望我用tree的方法做出来。
     - 2 pointers:
-sort
-i = 0;
-j = length - 1;
-while (i < j) {
-      if (arr[i] + arr[j] >= target) j—;
-       else
-    -              add all pairs (i, k) k from i+1 to j to result; i++;
-}
-- 给出一个 list of int, the target, 输出这个 list 中所用的数能否通过4则运算 得到 target。
-boolean EvaluatesTo(list numbers, int target)
-- Given a rectangular grid of colored pixels and a particular pixel in the grid, find the perimeter of the same-colored blob containing that pixel
+     sort
+     i = 0;
+     j = length - 1;
+     while (i < j) {
+           if (arr[i] + arr[j] >= target) j—;
+            else
+         -              add all pairs (i, k) k from i+1 to j to result; i++;
+     }
+27. 给出一个 list of int, the target, 输出这个 list 中所用的数能否通过4则运算 得到 target。
+    boolean EvaluatesTo(list numbers, int target)
+28. (Leetcode: Smallest Rectangle Enclosing All Black Pixels) Given a rectangular grid of colored pixels and a particular pixel in the grid, find the perimeter of the same-colored blob containing that pixel
 
     - 补充一下，因为是求包含所给像素的图形的周长，所以就是DFS到每个相同颜色的邻接像素，然后检查这个像素周围四个像素的颜色，如果颜色不同或者越界了，周长+1，否则就继续DFS到那个像素。最后得到周长
-- 函数签名为 int countChunk(String input)， 给定一个字符串，找出最多有多少个chunked palindrome,
-正常的palindrome是abccba, chunked palindrome的定义是：比如volvo, 可以把vo划分在一起，(vo) (l) (vo)，那么它是个palindrome。求实现返回最大的chunk 数量。
-- design an addAlarm function
-struct alarm
-{.
--   int timestamp;
-  void call()==0;.
-- }
-void addAlarm()
-{
-   //add function body.
--    synchronized (Alarm.class) {}
-- }
+29. 函数签名为 int countChunk(String input)， 给定一个字符串，找出最多有多少个chunked palindrome,
+    正常的palindrome是abccba, chunked palindrome的定义是：比如volvo, 可以把vo划分在一起，(vo) (l) (vo)，那么它是个palindrome。求实现返回最大的chunk 数量。
+30. design an addAlarm function
+     struct alarm
+     {.
+     -   int timestamp;
+       void call()==0;.
+     - }
+     void addAlarm()
+     {
+        //add function body.
+     -    synchronized (Alarm.class) {}
+     - }
 
     - TODO: https://instant.1point3acres.com/thread/155754
     - Have a priority queue for all time stamps sorted by time. timer checks first element in queue
     - Use Synchronized keyword for thread-safe
-- 第一题：解多项式
+    
+31. 第一题：解多项式
 
     - find range of answer and binary search
     - If quadratic formula - ans = (-b +- sqrt(b^2 - 4ac)/(2a)
-- 给一堆interval 算出total cover的区间，输出list.
-- 二叉树找closest value。 注意有可能要返回一个以上。
-- 给一个手机键盘，input是一个string，把input根据键盘转化成数字，比如input是“RAT”, output就应该是“77728”，因为R要按三次7键。写之前也是确定了一下input会不会有不合法情况。
+    
+32. 给一堆interval 算出total cover的区间，输出list.
+
+33. 二叉树找closest value。 注意有可能要返回一个以上。
+
+34. 给一个手机键盘，input是一个string，把input根据键盘转化成数字，比如input是“RAT”, output就应该是“77728”，因为R要按三次7键。写之前也是确定了一下input会不会有不合法情况。
 
     - map<Character, ArrayList<Integer>> -> (R, {7, 7, 7})
-- 第一题是求一个数组里面连续相邻的数的最大长度，第二题把数组换成了树
-- 假设有个social network
+    
+35. 第一题是求一个数组里面连续相邻的数的最大长度，第二题把数组换成了树
+
+36. 假设有个social network
 ( 1）返回朋友的朋友，但不是自己的朋友；
 ( 2 ) 返回朋友的朋友，担不是自己的朋友，按照出现的次数排序，也就是说加入一个人不是我的朋友，但是他是我所有的朋友的朋友，那么他应该是返回结果里面的第一个
 
