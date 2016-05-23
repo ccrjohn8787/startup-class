@@ -1,0 +1,81 @@
+package AndroidUnlockPattern;
+import java.util.*;
+
+public class Solution {
+    int res = 0;
+    HashSet<Integer> set = new HashSet<Integer>();
+    static ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+    ArrayList<Integer> path = new ArrayList<Integer>();
+    
+    public int calculate(int L) {
+        for (int i=1; i<=9; i++) {
+            set.add(i);
+        }
+        HashSet<Integer> visited = new HashSet<Integer>();
+        helper(0, 0, L, visited);
+        return res;
+    }
+    
+    public void helper(int cur, int pos, int L, HashSet<Integer> visited) {
+        if (pos == L) {
+            res++;
+            result.add(new ArrayList<Integer>(path));
+            return;
+        }
+        for (int elem : set) {
+            if (visited.contains(elem)) continue;
+            if (cur == 1) {
+                if (elem==3 && !visited.contains(2)) continue;
+                if (elem==7 && !visited.contains(4)) continue;
+                if (elem==9 && !visited.contains(5)) continue;
+            }
+            else if (cur == 2) {
+                if (elem==8 && !visited.contains(5)) continue;
+            }
+            else if (cur == 3) {
+                if (elem==1 && !visited.contains(2)) continue;
+                if (elem==7 && !visited.contains(5)) continue;
+                if (elem==9 && !visited.contains(6)) continue;
+            }
+            else if (cur == 4) {
+                if (elem == 6 && !visited.contains(5)) continue;
+            }
+            else if (cur == 6) {
+                if (elem == 4 && !visited.contains(5)) continue;
+            }
+            else if (cur == 7) {
+                if (elem==1 && !visited.contains(4)) continue;
+                if (elem==3 && !visited.contains(5)) continue;
+                if (elem==9 && !visited.contains(9)) continue;
+            }
+            else if (cur == 8) {
+                if (elem==2 && !visited.contains(5)) continue;
+            }
+            else if (cur == 9) {
+                if (elem==1 && !visited.contains(5)) continue;
+                if (elem==3 && !visited.contains(6)) continue;
+                if (elem==7 && !visited.contains(8)) continue;
+            }
+            visited.add(elem);
+            path.add(elem);
+            helper(elem, pos+1, L, visited);
+            visited.remove(elem);
+            path.remove(path.size()-1);
+        }
+    }
+    
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Solution sol = new Solution();
+        int res = sol.calculate(3);
+        System.out.println(res);
+        for (ArrayList<Integer> each : result) {
+            System.out.println(each);
+        }
+    }
+
+}
