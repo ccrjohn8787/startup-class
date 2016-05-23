@@ -1,0 +1,85 @@
+- 给一个image的size（x,y)和webpage的size（max_x,max_y), 然后在image propotion不变的情况下能输出的最大size，这题就是要handle error condition，因为pixel不能是float，然后还得考虑0，以及（2,1,1,1）返回的是（0,0)
+    - (not sure whether correct) k = min(float(max_x/x), float(max_y/y))，最后的size就是int(k*x), int(k*y)?
+    
+- Considering there are N engineers in one company with id from 1 to N, Each of the Engineer has a skill rate R_i, 
+we want to select one group of engineering whose ids have to be continuous. The size of one group is the number of engineers 
+in it and the skill rating of the group is the lowest rating of all the members in the group. Now given N and array R, 
+for each group from size X from 1 to N, we want to know the highest skill rating of all the groups whose size is X
+    - Comment: Use a sliding window of size X and see highest group rating. Similar to Lintcode Sliding Window Maximum
+    
+- 有一堆player，每个人beat 其他人的概率已知。然后已知初始的对阵表，问给定一个player，问他最后夺冠的概率是多少 —- a–b c—d e—f g—h 输入的format你自己决定。
+    - Comment:
+        - Can use a tree, each node have an array with arr[i] representing probability player i make it to the node. The leaf node array having player i as 1 and all other as 0. parent node array arr[i] = sum(arrLeft[i] * arrRight[k] * P(i win k)). And result is root node player i slot
+        - Tree is hard to build. We can use matrix with each two rows representing a pair. Every round even number row match against its neighboring odd number row and merge to a new row. The final array has the result. Can use queue to do that too, each time poll two arrays, and push one in
+        - Saw a dp solution in forum. need to check it out
+
+- 一个byte encoding的题目，大概是给你一种编码的格式，然后给你一个byte数组，让你判断这个数组合不合法
+        - 这个编码的定义是，有1-7byte的character，每种character第一个byte有一个固定的前缀，比如1 byte character第一个byte的前缀是0，2 byte是110, 3 byte 是1110以此类推， 8byte是11111111。
+    有一个特殊的前缀是10，这种byte是每个多byte character的组成部分。比如一个2 byte character: 110XXXXX 10XXXXXX。一个3 byte character: 1110xxxx 10xxxxxx 10xxxxxx。
+    如果字符被打段或者超长都要fail。
+        - Comment: Use bit mask AND operation to test the beginning bits. Google search check valid utf-8
+
+有两个tree，要判断两个tree的叶节点是否都相同。要求：1. 只判断叶节点，就算两棵树不一样，如果他们的叶节点以及叶节点在inorder traverse时的顺序一样，哪也算两个树相同；2. 没内存，也就是空间复杂度O(1)。我先想着用iterator同时traverse两棵树，但是写的时候发现太难没写出来，之后想出第二种解法：设定一个global variable，先inorder遍历第一棵树，发现第一个叶节点的时候把这个叶节点存在global variable TreeNode里，然后暂停遍历，跳到第二棵树遍历第二棵树，直到发现第二棵树的第一个叶节点，把这个叶节点根global variable存的节点比较，如果不同说明两棵树的叶节点的顺序不一样，返回false。如果相同则直接跳回第一棵树去找第一棵树的第二个叶节点，如此往复。可以用multithread来实现从而达到O(1)空间同时遍历N棵树比较他们是否相同。
+
+给我一堆unsorted数字，问我可不可以等分成若干组，每组由五个连续的整数组成。
+eg: 1,2,3,4,5,4,5 -> false.
+1,2,3,4,5,2,3,4,5,6 ->true
+follow up: 问我可不可以等分成若干组，每组由五个重复数组成。
+follow up2: 每组由k个连续数组成。   k>=3
+
+- .input 是一个游戏的后台log (可以自己定义结构)：
+- （1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
+（2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
+output是每个role出现的次数。
+
+    - playMap<player, List<time>>
+    - roleMap<player, map<role, time>>
+    - for each player:
+     for each role’s start and end time:
+          binary search first occurrence in playMap that’s after start
+          binary search last occurrence in playMap that’s before end
+    - Link
+    
+- 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
+
+    - 找对称轴： (x0 + … + xn)/n
+    - put all points into map -> (x, y)
+    - for (all x) -> check if map contains(2 * mid - x) and if y are equal
+
+- 给一个Game的schedule, 里面有每一个round和在这个round里面互相compete的players，比如Round1 A-B C-D
+- Round2 A-D B-C.
+- 这个schedule应该满足
+1. 每个player每一个round只能play一次
+2. 每一个player必须和其他所有对手都compete一次
+3. 安排的round数应该是最少的
+返回一个boolean值，看此Game schedule是不是valid的。
+    - 1. min number of rounds. 如果是n is odd, min = n, otherwise(n is even) min = n-1.
+    - 2. 每轮用hashset去重, 比如A-B, A-C由于A出现了,所以invalid
+3. 检查invalid的match entry比如A-A B-B
+4. hashmap保存所有已经出现的比赛,保证之后不出现
+
+- given a string, find the first letter in that string which appears only once in this string.
+example: aabbccdee, return d
+2. follow the first question 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- if the input is not a string. It is a internet Stream. What situation should you handle?
+example: 这个网络流突然就不让access了，或突然关了，你的loop就crash了。之类的问题如何handle。. more
+- 3. 如果input数据很大很大， 如何improve？
+4. Open Question: How to test Google Search?
+
+    - Thoughts: hash table? how to know not duplicate in a stream?
+
+- 大除法 输入是一个恶心到极点的string，比如1234567891011....（此后省略10000位）作为除数，和一个long作为被除数，返会所得的值
+    - public String divide（String divisor， long dividend）
+    - 这题我的想法就是一段一段的取，大于dividend之后来除，得到的数加到stringbuilder里，余数跟后面加到一起，大于dividend之后在继续除，直到结束。不过其中有些细节要小心，不然会出runtime
+
+- 第一题：问有一个marble，含有名字name和颜色color两个属性。问你用什么数据结构，可以任意的拿和放入其中，使的每次拿的时候取到任意一个marble的概率都是一样
+follow up 如果你有1M种颜色，平均每个颜色有1M个marble，但是你的内存没有1M*1M这么大，这时这个数据结构用什？
+    - [ ] 我觉得第一题一维array顺序存就好了吧？取的时候取random一个，然后将最后的填到取了的空位上。followup就在内存里搞个1M大小数组存不同颜色的，每个数组指向一个文件，文件里面存marble。拿的时候random两次，第一次选颜色，第二次选marble
+
+Write code to print all pairs of natural numbers
+
+在一个Grid里算有多少正方形，给一个m一个n的边长
+Total number of squares = m x (m+1) x (2m+1)/6 +
+                          (n-m) x m x (m+1)/2
+
+when n is larger dimension
