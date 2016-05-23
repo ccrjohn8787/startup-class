@@ -1,0 +1,62 @@
+public class Solution {
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[] res = new int[k];
+        for (int i=Math.max(0, k-len2); i<=k && i<=len1; i++) {
+            int[] temp = merge(maxArray(nums1, i), maxArray(nums2, k-i), k);
+            if (isgreater(temp, 0, res, 0))
+                res = temp;
+        }
+        return res;
+    }
+    
+    public int[] merge(int[] arr1, int[] arr2, int k) {
+        int[] res = new int[k];
+        if (arr1.length == 0) return arr2;
+        if (arr2.length == 0) return arr1;
+        int cur = 0, i = 0, j = 0;
+        int len1 = arr1.length, len2 = arr2.length;
+        while (i<len1 && j<len2) {
+            if (isgreater(arr1, i, arr2, j)) {
+                res[cur++] = arr1[i++];
+            }
+            else res[cur++] = arr2[j++];
+        }
+        while (i < len1) {
+            res[cur++] = arr1[i++];
+        }
+        while (j < len2) {
+            res[cur++] = arr2[j++];
+        }
+        return res;
+    }
+    
+    public int[] maxArray(int[] arr, int count) {
+        int[] res = new int[count];
+        if (count == 0) return res;
+        int n = arr.length;
+        int j = 0; //stack head next
+        for (int i=0; i<n; i++) {
+            while (j>0 && n-i-1>=count-j && res[j-1]<arr[i]) { //stack head can be poped
+                j--;
+            }
+            if (j<count) {
+                res[j] = arr[i];
+                j++;
+            }
+        }
+        return res;
+    }
+    
+    public boolean isgreater(int[] arr1, int i1, int[] arr2, int i2) {
+        int len1 = arr1.length, len2 = arr2.length;
+        while (i1<len1 && i2<len2 && arr1[i1]==arr2[i2]) {
+            i1++;
+            i2++;
+        }
+        if (i1 == len1) return false;
+        if (i2 == len2) return true;
+        return arr1[i1]>arr2[i2];
+    }
+}
