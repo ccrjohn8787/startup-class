@@ -83,3 +83,12 @@ Total number of squares = m x (m+1) x (2m+1)/6 +
                           (n-m) x m x (m+1)/2
 
 when n is larger dimension
+
+- read rate limiter: http://www.jiuzhang.com/solutions/rate-limiter/
+     - http://code.activestate.com/recipes/578659-python-3-token-bucket-rate-limit/
+- Create maximum number solution: http://www.cnblogs.com/EdwardLiu/p/5094248.html
+- insert interval binary search solution
+- basic calculator
+- big integer division
+
+- encode and decode string
