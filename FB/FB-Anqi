@@ -1,0 +1,45 @@
+Inorder/ postorder iterator of BST
+Convert BST to linkedlist
+Btree serialize and de-serialize
+circular queue init/enqueue/dequeue
+Email duplicate Union find 
+  Ex: user1: email1, email2
+         User2: email2, email 3
+          User3: email3
+   Then user123 are a group, put together
+'11' can be 'aa' or 'k'  = 2 count combination
+       Then output all possible combinations
+Phone number: 1-abc, 2-def.... All possible 
+Deepest nodes' lowest common ancestor
+Famous person 
+     Find node n-1 inbound 0 outbound in graph
+Coin - 2,3,5,10,15... Combination
+Boggle - word snake
+Time series 
+     Input: [user1, 10, 20] [user2, 15, 25] [user3, 18, 20]
+-> [1, 10, true] [1, 20, false]....
+    Output: [10, 15, 1] [15, 18, 2] [18, 20, 3][20,25,1]
+Spell check with wildcard
+     p**k matches peak, perk
+Tree path from leaf to root/菱形
+Tree path from root to leaf
+Longest tree path from one leaf to another leaf
+Time slot recover time
+     Three types of work, after one type on work have to recover some time, but during that time you do other types of work.
+      1, 2, 3, 1, 1, 2 the minimum time slot to get all done given cover time is 5
+       123_ _ _12_ _ _ _1.   - 13
+Sum hamming distance 
+       Sum of two number in binary to binary
+longest increasing seubsequence
+K random in list - get k random elements from list
+a1,a2,a10,a11 - natural order not alphabetic order
+        Not a1, a10, a11, a2
+aaccbc , abc, accb
+        The softest substring containing all chars 
+Max int index in array random if duplicate
+        Get the index of maximum number in the array if there's duplicates, output random one
+Remove zero from array
+        10024301. -> 11234
+Small than with same digits
+        The biggest number of the same digits that's smaller than the given number
+        Ex. 101 : 100, 100: none?
