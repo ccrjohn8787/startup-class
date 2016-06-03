@@ -1,0 +1,625 @@
+- [x] Merge K sorted list (Very high frequency lately)
+
+    - [x] Follow up: with iterator
+    - https://instant.1point3acres.com/thread/178441 (in comment section)
+    - https://instant.1point3acres.com/thread/178509
+    - Link with sample code
+    - 如果给的不是lists，而是每个list的iterator，how do you modify your code?
+
+        - public Iterator merge(List iterators) {}
+    - 实现iterator的next和hasnext。
+    - Given k sorted lists of O(n) integers each, implement an iterator that will yield all elements in sorted order.
+    - Reference: http://stackoverflow.com/questions/3610261/is-it-possible-to-merge-iterators-in-java
+    - Sample code in link
+    - Solution:
+        - Original:
+            - Divide and conquer merge: http://www.lintcode.com/submission/3328771/
+            - All three ways: http://www.jiuzhang.com/solutions/merge-k-sorted-lists/
+        - Iterator:
+            - Eclipse: MergeKIterators
+            - If MergeKLists already implemented, can use that
+                - Link
+
+- [x] print binary tree vertical, 二叉树给定。楼主的做法就是Queue BFS,用dictionary记录每一个node的column.用一个mincolumn和一个maxcolumn记录最大最小的column.然后遍历dictionary打印。 (This way don’t need tree map)
+
+    - https://instant.1point3acres.com/thread/162237
+    - https://leetcode.com/problems/binary-tree-vertical-order-traversal/
+    - Link2
+
+- [ ] TODO: BST vertical traversal变体。改变的地方是要返回每列的sum而不是node集合。回答用array或者hashmap后被要求分析两者的缺点，然后要求非array非hashmap解决。最后用doubly linked list+resursive搞定。
+
+    - https://instant.1point3acres.com/thread/178578
+    - Solution:
+
+        - If can use hash map, just do regular vertical order with bfs but hash map store the sum.
+        - Also since we don’t need nodes in order, we can just do it recursively.
+        - For doubly linked list, would have root as the center node. Every time check whether node passed in has next or previous, if has, add current value. If not, create one and connect
+
+- [x] Merge non-overlapping intervals
+    - https://leetcode.com/submissions/detail/61585693/
+
+- [ ] 一个char[][] board，里面有‘b’'B''w''W'四种，bB都表示black，wW都表示white，找最大的正方形面积，这个正方形四个边都是black，正方形中间随便黑白无所谓。Example：一个5x5的board如下，符合条件最大正方形是个3x3的，return面积9。 wwbww wbbbb bbWbw Bbbbb wwwww
+
+    - Link:
+    - phone 2016-01
+
+- [x] 输入是两个字符串（第一个字符串是自定义的字母顺序比如zafdbeg，第二个字符是任意输入的字符串），输出是按照第一个字符串的规则排好序的字符串。
+- 这轮遇到nice的国人大哥，有一些followup question最终用bucket sort解是他出题目的。
+
+    - Link 2016-05-23
+    - Baby Google phone problem
+    - Solution:
+
+        - Eclipse: Google/CountingSortString
+
+- [x] 输入一串字符串比如 1 2 2 3 4 6 7，如果是nondecreasing 或者 nonincreasing 就返回true。
+- 看着不难吧，可惜啊可惜第二轮被一个三哥面，跟我聊了太久的background，最后就剩下十几分钟，我就只做了这个easy题，run了几个test cases。不知道各位有没有类似情况，这是上来就被坑吗？怎么问了那么久的behavior question？.
+
+    - Link 2016-05-23
+    - Solution:
+        - Eclipse: CheckStringOrder
+
+- [ ] balance parentheses in a string . 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+- 例子：
+"(a)()" -> "(a)()"
+"((bc)" -> "(bc)"
+")))a((" -> "a"
+"(a(b)" ->"(ab)" or "a(b)"
+
+    - Link 2016-06-02
+    - See link for more details
+
+- [ ] 给定一个数列，比如1234，将它match到字母上，1是A，2是B等等，那么1234可以是 ABCD 但是还可以是12是L，所以1234也可以写作 LCD 或者 AWD 给定一个定长的序列（可以非常长），请给出solution输出所有可能的字母组合（consecutive的，只要连续的组合）。 我的思路：大概的思路就是递归，一个类似斐波那契数列的公式，省内存就用动态规划来做。
+
+    -  https://instant.1point3acres.com/thread/176238
+
+- [ ] 第二题：给出N个序列，比如2个序列A,B,没个序列包含若干的区间，比如 A: , , B: , , 没个序列内的区间没有overlap但是序列之间的区间没有这个限制。请给出solution合并N个序列到一个序列 Final，Final内依然没有overlap的区间。 比如上例 Final就是 , .
+
+    -  https://instant.1point3acres.com/thread/176238
+
+- [ ] Given a tree, find the smallest subtree that contains all of the tree's deepest nodes. a / | \ b c d / \ | e f g / / \ h i j depth of tree: 4 deepest nodes: least common ancestor of : b return: b
+
+    - https://instant.1point3acres.com/thread/155556
+    - Sample code in link
+
+- [ ] Multiply Vectors 和 Multiply Strings很像
+
+    - https://instant.1point3acres.com/thread/176302
+
+- [ ] 给三个funtions: is_low(), is_mid(), is_high(). 让给一个数组排序, low的放在最前面, mid的放在中间, high的放在最后面.
+
+    - https://instant.1point3acres.com/thread/161568
+    - Follow up: 那follow up就是各种优化时间空间复杂度，直到为最低的O(1)空间O(n)时间。
+    - Lintcode: Sort colors
+
+- [x] High Frequency: Task Schedule: 就是一些task, 相同的task之间要有个cooling down time， 求总的时间。 比如cooling down time 是 3, AAB的时间就是A _ _ _ A B 为6。这个题在板上的面经里已经出现多次了。
+
+    - https://instant.1point3acres.com/thread/137193
+    - More details on another link:
+    - # Tasks: 1, 1, 2, 1.
+    - # Recovery interva (cooldown): 2
+# Output: 7  (order is 1 _ _ 1 2 _ 1).1point3acres缃�
+
+    - # Example 2
+# Tasks: 1, 2, 3, 1, 2, 3
+# Recovery interval (cooldown): 3
+# Output: 7  (order is 1 2 3 _ 1 2 3)
+# Example 3
+# Tasks: 1, 2, 3 ,4, 5, 6, 2, 4, 6, 1, 2, 4
+# Recovery interval (cooldown): 6
+# Output: 18  (1 2 3 4 5 6 _ _ 2 _ 4 _ 6 1 _ 2 _ 4)
+
+    - https://instant.1point3acres.com/thread/176716
+    - Sample code in link
+    - Another link
+
+    - [ ] Follow up: 写一个调度函数，输入task序列和interval，输出task最优执行序列
+
+        - Link
+    - Solution:
+
+        - Eclipse: TaskScheduler
+
+- [ ] 两个binary string相加输出binary string， 给出基本解法后，更改输入是一个string集合，输出不变，然后问如何降低空间复杂度，因为我先reverse了输入string，就更改index为逆序节省空间
+
+    - https://instant.1point3acres.com/thread/178441
+    - add binary。follow up 改成K进制如何。比如十六进制啥的。然后问完了看才半小时多，
+
+        - Link
+
+- [ ] 给一个string(全是digit), 给一个target value, 在string里任意插+或-，使得string的值等于target value.
+
+    - https://instant.1point3acres.com/thread/163999
+    - Seems like simplified Leetcode Expression add operator
+
+- [ ] binary tree inorder successor (Given parent node)
+
+    - class Node {Node left, Node right, Node parent} Node getNext (Node current) { }
+    - Link: https://instant.1point3acres.com/thread/178361
+    - Sample code in link
+
+- [ ] 给定一个array,条件：1. A = A+-1; 2. There is only one peek or one valey in the array, return the index of that peek or valey. 刚开始说了一下O(n)顺着找的办法，三哥说更好的办法呢？我说那就是binary search了。结果做着做着发现这样搞还是O(N)。然后三哥开导我不要用recursion呢，用binary search该怎么搞。我又仔细看了一下，发现直接比较头尾大小，O(1)就能解决。。然后压时间写完了
+
+    - https://instant.1point3acres.com/thread/143834
+
+- [ ] 给定一个N * Ｍ的matrix，同时给定一个矩阵中存在的坐标(x, y)， 求从(x, y)点用k步（要求是正好k步， k >= 0）搜索到(0, 0)点共有多少条路径， 从每一个点往下一个点搜索时，可以上下左右四个方向走。
+
+    - 比如，下面这个矩阵：
+    - 0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+    - (x, y) = (1, 1), k = 2，输出为2 很快用dfs写完了，面试官要求用三维dp来做
+    - https://instant.1point3acres.com/thread/177849
+
+- [ ] 输入是两个字符串（第一个字符串是自定义的字母顺序比如zafdbeg，第二个字符是任意输入的字符串），输出是按照第一个字符串的规则排好序的字符串 (baby google phone)
+
+    - 有一些followup question最终用bucket sort解是他出题目的。
+    - Link
+
+- [ ] 输入一串字符串比如 1 2 2 3 4 6 7，如果是nondecreasing 或者 nonincreasing 就返回true
+
+    - Link
+
+- [ ] print all path from root to leaf
+- 比如tree是-google 1point3acres
+-                 A. 1point 3acres 璁哄潧
+-             B       C. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+
+- print AB, AC
+. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+这题用DFS还蛮好做的，如果用stack怎么做呢？
+
+    - Link Sample code in link
+
+- [ ] 给一个tree，返回每个点左右子树的和与自己值的差，用递归做，还问.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- 了不递归怎么做
+这题也是dfs好做，如果不递归的难点在于，每个treenode需要记录他的左子树的和，
+右子书的和，再减去自己的node val. 一个stack好像不够，我是用了一个hashmap记录
+每个node对应的左右子树的和，再用一个stack做post order traversal, 感觉挺麻烦
+的，不知有什么巧妙的办法吗？
+
+    - Link Sample code in link
+
+- [ ] 给一个board，上面有0 和1，1不可以走，0 可以走。任意给一个start一个end，让输出最短的步数。follow up输出路径。就是BFS
+
+    - Link
+
+- [ ] 和一面类似，但是每次都是可以纵向两步横向一步，或者横向一步纵向两部，问步数和路径。
+
+    - Link Sample code in link
+
+- [ ] 判断一个树是不是另一个树的子树
+
+    - Link
+
+- [ ] 给定一个array:[3,7,5]---unique, primes,
+- 求所有的可能的乘积
+一开始我说用类似subset的方法做，乘一个，放回数列里，再拿出来乘下一个，类似：. From 1point 3acres bbs
+
+-         for(int i : S) { 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+-             List<List<Integer>> tmp = new ArrayList<>();
+            for(List<Integer> sub : res) {
+                List<Integer> a = new ArrayList<>(sub);
+                a.add(i);
+                tmp.add(a);
+            }
+            res.addAll(tmp);
+        }
+然后小哥说take too much memory，不让写代码，先优化一下。。然后，然后，
+就开始血崩了。。完全不知道怎么优化. From 1point 3acres bbs
+
+- 一开始说那我们直接brute force吧，memory占用还是一样的。。
+然后就试各种办法试了半个小时。。
+最后小哥说，你可以用bit map做，用不同的bit value表示不同的combination。。
+
+    - Link Sample code in link
+
+- [x] print matrix diagonally
+- 1 2 3.1point3acres缃�
+- 4 5 6
+print: 3,2,6,1,5,4
+
+    - Link
+
+- [ ] Implement Merge sort
+
+- [ ] check if a BT is a BST
+
+    - Link
+
+- [ ] Given a set of Tree Nodes, find if they form a single valid BST, if so return the root
+- Example:
+Nodes : (Node1, Node 2)
+Tree structre:. 鍥磋鎴戜滑@1point 3 acres
+-    Node1
+/
+Node2
+. from: 1point3acres.com/bbs
+- In this case, return Node1.
+Nodes : (Node1, Node 2)
+Tree structre:. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+-    Node1
+/
+Node3
+In this case, return null。
+
+    - Link sample code in link
+
+- [ ] find kth largest element in array的变形
+- 给一个array of points (x, y coordinates)
+然后给一个点origin
+print k closest emelents to origin
+follow up是如果array length很大 k很小 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- 都是用heap做的 问了time 和 space complexity
+
+    - Link Sample code in link
+
+- [ ] 找出两个给出两个string, leetcode, codyabc和一个数字k = 3,问两个string里面存不存在连续的common substring大于等于k.比如这个例子，两个string都有cod,所以返回true。楼主用dp建了一个m*n的table秒了，然后写test case,发现有个小corner case,改了,pass
+
+    - Link
+
+- [ ] LCA in BST.输入是两个value,不是node.瞬秒，无bug. Follow up是统计问题，如果这两个值是随机从这颗树里面sample,问我的算法平均需要几次比较就可以得出结果。这题大家可以想一想，很有意思，涉及到一些统计的分布。答案我过几天公布。
+
+    - Link
+
+- [ ] 给一个array，给一个数字n，找出n个连续数字which和最大。
+
+    - Link
+
+- [ ] 给一个array，给一个数字n，找出3个不overlap的n个连续数字使得和最大，比如说给 1 3 7 7 2 1 1 4 8 8 6 1 1 9，结果就是1 3 (7 7) 2 1 1 (4 8) (8 6) 1 1 9，输出他们的和。
+
+    - Link
+
+- [ ] 给一堆object，随便存在什么datastructure里面，有一个function可以用来判断两个object的相对大小，但不可传递，a>b,b>c 不能推出a>c。找出这堆objects中的其中一个，大于所有其他的objects。
+
+    - Link
+
+- [ ] 给一系列点，然后判断能不能构成多边形，面试官 刷刷的写了个类出来（真想哭，别人都是把题目先在colledit上粘出来了，为毛我这种待遇哎），看到这个题我第一反应是要求求凸包，于是我问面试官给我一些样例 来clarify 一下这个问题，坑爹面试官拒绝给，而让我自己想，我先列举了两个点情况，然后3个点，共线情况，然后说 给的点至少要能构成一个三角形，然后他说为啥（囧 我纳闷，这不是很显然么），我又写了一个直线的一般情况来说明，还有重点的情况来说明，他说这确实不能构成多边形，难道还有啥情况我没考虑的么，我想了下没做声， 面试官列了一个中间包了一个点的图形，问我能不能构成，我说可以啊，除了中间的点，能构成个凸包，面试官说不是要求一个凸包，囧，我郁闷了，那是要求啥，我停顿了一分钟，他又写了个样例，我一看是个四边形，说可以，他说不可以，我又看了一下，我说按这个连接方法可以，然后他说按照顺序连，他不认为用户会想要知道怎么练的细节。我想哭，你咋不早说啊，这时都讨论了15分钟了！！！.我说要一个个点判断新加的线段是不是与前面相交，我急着编码，还没完全考虑清楚全部共线和存在重合点的情况，先把主体的先写出来吧，两层循环暴利之，码了一会儿，留个了判断相交的函数isIntersect(),写完准备开始处理共线情况，这时面试官说话了，存在bug,我慌了找了下，貌似循环边界条件不对（大概思索了两分钟，现在想起来当时反应怎么那么慢），我改了下，解释了下，然后面试官说 ，这是个bug，还有，我继续查循环，怎么看都没有了啊，面试官提示我X行，我又看了会（真是弱到极致），边界用例少=号。时间剩下3分钟，面试官叫停，开始聊天，我本来准备问很多的，就问了两个问题，扯了下他关于Thrift,Rest经验。FB就这样跪了，没想过FB会出计算几何题，没想到面试官会是这种面试形式，总之跪得非常不爽，努力刷题，复习基础哎，实力还是太弱了
+
+    - Link
+
+- [ ] 两个sparse向量点积，设计个数据结构可以optimize运算，用了hash
+
+    - Link
+    - 小哥说机器学习经常要处理sparse feature vector的情况，问我应该怎么更高效地存储和计算。
+一开始我说用dict存index和对应的值，但是小哥说他觉得dict(hashtable)不是他想要的，他就想要用list。
+然后我用list存之后，当时太紧张了，算点积的时候脑残到用了个O(mn)的时间复杂度。小哥果然说时间复杂度太高，我一想O(max(m,n))就可以啊，于是赶紧边写边说。。写到这时间都没多少了，然后小哥说有个follow up，一个vector远大于另一个vector怎么降低复杂度，我想了一会说我还是想用dict。。小哥说我明白你的意思，问我复杂度，我说这下应该是O(min(m,n))了，小哥说你假设读字典是constant time对吗，我说是的。
+
+        - Link
+
+- [ ] 3 sum，然后说如果任意选择数字该怎么做，想了一会儿才想到是combination sum，然后分析了复杂度。
+
+    - Link
+
+- [ ]  find the seond most common number in an array, return the frequency.
+
+    - Link
+
+- [ ] magic number like:
+- f(n) = f(n-1) + 2*f(n-3)
+
+    - [ ] follow up
+    - f(n, k) = f(n - 1) + 2 * f(n - k)
+    - LInk
+
+- [ ] reverse print a linkedlist.. asked 3 methods. recursive, iterative, with-stack.
+
+    - Link
+
+- [ ] Design ReadLock and WriteLock.
+
+- Mulilple thread problem. When a reader is reading:
+CALL
+1.readlock()
+2. to do something
+3. readunlcok()  (when the reader completes reading)
+when a writer is writing:
+CALL
+1. writelock()
+2. to do something. 鍥磋鎴戜滑@1point 3 acres
+
+- 3. writeunlock() (complete writing)
+
+    - Link
+
+- [ ] 输入：一个文件夹. visit 1point3acres.com for more.
+- 输出：文件夹下面的所有相同文件对. 1point 3acres 璁哄潧
+- 例子：
+给你一个文件夹路径，/foo/bar，要求找出这个文件夹下面的所有相同的文件，比如a和c是相同的，d和e是相同的，就输出(a, c)，(d, e)。
+我看到路径还以为是Simplify Path呢！心中一阵窃喜，结果怎么发现后面的没见过！好吧，先通过dfs获取所有的文件，然后计算MD5，然后比较是不是一样。╀笁鍒嗗湴
+
+    - [ ] follow up1，要是MD5不够强壮怎么办？答：上另一个hash啊！比完一个，再比另一个，两个都一样才认为一样。然后又写了一遍……小哥说能提升么？我说可以啊！第二个hash可以在真正需要的时候再计算，不用每个文件都计算两个hash存起来。然后又写了一遍……. 1poin
+
+    - [ ] follow up2，以上代码里最花时间的是哪部分？答：dfs。小哥说再想想，要是文件都是video呢？我醒悟了，说是计算hash的部分。小哥问，怎么提升呢？我想了一会儿说，我们不用给每个文件计算hash 啊！先用size比嘛！绝大部分的文件size都是不一样的嘛。小哥说好，你能把你算法再实现一次吗？…………………………
+    - . 鍥磋鎴戜滑@1point 3 acres
+最后小哥说方法是对的，但是代码太丑，能写得更好看一些吗？于是我又写了一次……
+    - Link
+
+- [ ] K closest points to a given point (x, y). N is in millions and K is few hundreds.
+
+    - Link
+
+- [ ] 给一个正数n，打印出所有相加的组合
+- 例如10可以打印出
+1+1+1+...1
+1+2+1+...1
+..
+9+1
+10
+
+    - Link
+
+- [ ] Check if a system is big endian
+
+    - Link
+
+- [ ] 让我写一个function。。mutex。。
+
+    - 应该是有个函数里面有个count变量我要用这个来上锁之类的。
+    - Mutex可以用atomic test and set/compare and set实现
+    - Link
+
+- [ ] randomly return the index of maximal elements in the array.
+
+    - Link
+    - Sample code in link
+
+- [ ] minimum window containsing a string变种。。输入是一个字符串和一个集合。。集合就是我们要的之后最小窗口里面必须有的字符。
+
+    - Link
+
+- [ ] find an bug in a series of IDs, which has already known that the last good product ID and the known bug ID, try to find it,
+-   using Binary search.
+
+- [ ]
+
+- paint house大变种. n houses, k colors. neighboring houses cannot be painted with the same color.
+NOTICE: neighboring relationship is given by adjacent list which means a house may have multiple neighbors.
+    - Link
+
+- [ ] 自然string comparator。不知道的搜下。就是string 比较的时候考虑里面数字的大小，比如 abc9 < abc123 abc > ab9  因为char比digit重要。写的很顺利，最后run了test case 人家也说没问题。 然后就结束了。结果下了我自己ide跑发现有case 没cover，不知道他怎么想的，求过！求bless。
+
+- 要的就是这样：
+static class NaturalComparator implements Comparator<String> {. Waral 鍗氬鏈夋洿澶氭枃绔�,
+-     /**
+-      * return negative num if l < r
+     0  if l == r
+     positive if l > r
+     */
+    public int compare(String l, String r) {}
+
+    - Link
+
+- [ ] 1. leetcode原题，strstr，唯一区别就是参数是char array，不让用string方法做（当然也包括stringbuilder），返回在hackstack里第一次匹配needle的substring的第一个字符下标，后来想想这哥们写c和c++的，也就make sense了。。
+
+- [ ] 2. 第一题秒之后，迅速又粘了一段，大意就是把第一个haystack参数变成一个二维数组，然后找needle在haystack第一次出现的位置，同样的不能用string相关方法，还是返回把haystack[][]二维数组看成一维以后的第一次匹配的字符下标，举例：haystack := [[a,b,c,c], [c,b,d]], needle := [c,c,b,d] , return 2; needle := [b, d] return 5 (5是把haystack看成一维的以后的找到第一个bd以后b的下标)。
+
+    - Link
+
+- [ ] binary search tree，给定一个value，return bin tree里面下一个比value大的值.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- 做过binary tree iterator，但没做过这题
+一开始想法就是inorder traversal之后一个一个吐出来到找到value
+当然这不是最佳解，很naive的解法，面试官叫我想能不能改进
+
+- [ ] 给一个string，列出所有长度大于一的palindromic substring，LC longest palindromic substring的变体
+
+- [ ] Goat and dinasor
+
+    - Link See code in link
+
+- [ ] Given a list of number, there is only one peak or one drop. Find the maximum drop.
+- Exps:
+1 -> 2 -> 3 -> 9 -> 3 -> 0 = 9;
+10 -> 4 -> 3 -> 8 = 7 ;
+
+    - Link
+
+- [ ] Serialize and Deserialize tree： 但是要自己写node structure 和 用linkedlist去存。 . 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- linkedlist这块有点费劲，和LC的string不太一样。有点小慌。。。没有写bug free
+
+    - Link
+
+- [ ] 给一个array和target，求是否存在subarray之和等于target。一开始直接上了sliding window，秒了之后跑了几个test case，面试官问说你这种做法有什么预设，楼主没反应过来，小哥高亮了最后一个test case说你看有负数就不行。当时楼主就蒙了，说这样只能把所有的subarray之和都算出来了，然后就扯到了Fenwick Tree，解释了一下原理小哥说但是我们的array是immutable啊，楼主才想出来用double for loop， O(n**2) time和O(1)space去做，写完之后小哥说可不可以用linear space，答做一个类似dp 的array，sum(i+1) = sum(i) + arr[i+1], sum(i, j) = sum(j) - sum(i+1)。说完这么多之后就只剩五分钟了，
+
+    - Link
+
+- [ ] Binary tree to circular doubly linked list
+
+- [ ] 一个恐龙题：http://www.1point3acres.com/bbs/thread-167740-1-1.html， follow up是说如果dataset太大，内存放不下怎么办？我说可以split开来分别sort然后存进disk，之后就是个merge k sorted list的问题了。
+
+    - 还有一个battleship，很多人都碰到了这个，时间不多了就没问什么follow up了。coding方面应该不是太水都能过吧，如果他们还继续考这几题的话基本就是送分了。
+    - Link
+
+- [ ] We're given a sorted array of integers: [-3, -1, 0, 1, 2]
+- We want to generate a sorted array of their squares: [0, 1, 1, 4, 9]
+O(n) runtime complexity.
+
+    - Link
+
+- [ ] Given a string like "3+5*4 + 3 "
+-   return 23
+Assume :. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- 1. all numbers >0
+2. only +, *
+3. no ()
+4. always valid, no "3   +5 **4"
+
+    - Link
+
+- [ ] read 4k bytes, multiple times
+
+    - Link
+
+- [ ] word ladder变种和一个iterator的实现
+
+    - Link
+
+- [ ] 两个string，如果第二个在第一个里没有出现return -1，如果出现了return最后一次出现时候在第一个string里的position。
+
+    - Link
+
+- [ ] 顺时针的print binary tree boundary, 就是从根开始，先打右边界，再打叶子，最后打左边界。
+
+- [ ] buy and sell stock，每天可以买一股，也可以都买了，或者不买不卖。
+
+    - 这里面每天可以有三种操作:买一股，全卖出，不买不
+    - 每次找最大值，然后最大值前面的都买，最大值那天卖掉。
+后面的部分递归调用上边的算法
+    - Link
+
+- [ ] Given an API that takes a Facebook user ID as input, return a list of user IDs of his/her friends
+
+    - Link
+
+- [ ] 有个函数getFriendList(int id)可以调用，返回的是List<Integer>，是id这个用户的所有好友的id
+- 问如何给用户推荐10个好友？
+
+    - Link
+
+- [ ] print a singly linked list reversely
+
+    - 然后问清楚原来是print就行，用recursion就一下写好了
+小哥说有个问题，如果很多人都在操作这个list，会有什么问题？我说concurrency, list中间加入有null值
+就concurrency聊了一些，但是好像小哥不是很满意这个答案
+然后他又说如果这是个很长的list？我说recursion占用stack的空间
+他说那怎么办呢？我说 by installment?然后他终于放过我了...
+    - Link
+
+- [ ] target sum in 2D array and 3D matrix
+
+    - http://www.geeksforgeeks.org/find-subarray-with-given-sum/
+-google 1point3acres
+3D takes it to a matrix.
+    - Link
+
+- [ ] check consecutive subarray duplicate numbers, 就是用hashset查重复就可以了，关键是窗口的移动
+
+    - 给一个array, 然后给一个k, 让你check 连续的k个integer是否含有dulplicate, 很简单的，用窗口为K的hashset一直扫一遍就行了，很简单
+    - Link
+
+- [ ] 判断一个数组是否是一直递增或者一直递减的，如果是，return true. other else, return false
+
+    - Link
+
+- [ ] implement一个function实现x/y
+
+    - Binary search
+    - Link
+
+- [ ] read4k，给定一个API read4k，返回最多4096个字符串，然后让你写的是给一个随便的值n，基于read4k实现出来
+
+    - Link
+
+- [ ]  subarray sum target. return true or false(exist or not)... all elements are positive
+- leetcode minimum subarray sum 变形。 两个pointer sliding window 秒之。 之后问了复杂度O(n) no excuse. 有个边界小bug被指出。
+
+    - [ ] 把第一题extend到2D。给一个matrix, all elements are positive，问有没有个sub rectangle加起来和等于target。return true/false。
+    - Lz听到题目有点懵，认真调整心态，解决之。先写了个cumulative sum。把所有从0,0 到i,j的和算在新的matrix的i,j上。方便之后算head到tail的sub rectangle的和。这一步O(n^2)。。
+    - 之后Lz就开始纠结怎么移动2D的sliding window。一看时间不多了，没有耐心的阿三就开始催催催。。。。实在没办法只写了BruteForce。。。哭again。。。。
+写出来最后O(n^4)...丢脸
+    - Link
+
+- [x] Leetcode Reverse Word in a String II
+- 特殊情况并且印证结果 (比如leading & trailing space的处理).
+
+    - [x] Follow up是加入符号但是reverse的时候需要保留位置: "This, is a - test" -> "test, a is - This"
+
+        - If exactly the original place, just record the position and insert back later
+    -  reverse words of string...我一开始就用那个in place的方法做，先reverse整个string, 再单独reverse。
+他说这个方法不好，有没有更好的，我说可能没有了，这个方法只需要跑两遍，不用extra memory。
+他一定让我想，我就说可以split，加到list里面，然后再输出。他问我这个方法相比第一个有哪些优点。
+我想了一下觉得如果用java的话，string是immutable的，也是要用extra space的，但是用c/c++，就可以in place.
+他说第二个方法更加易读，更加容易维护。说如果中间有extra space会怎么用的情况，然后就让我写代码。
+然后，我就开始写，第一遍大致对了，然后最后一个word怎么都加不进去，我脑抽了以为是判断出了问题，其实是忘了考虑
+如果跑到string最后的该加进去。。。三哥全程一言不发。。。我就一直尝试自言自语解释。最后找出问题了，正常情况都可以了，
+三哥跑了一下最后有trailing spaces的情况
+    - Link
+    - Solution:
+
+        - Eclipse: Uber/ReverseWords
+        - Leetcode: (No trailing, leading space, only one space in between)
+
+            - https://leetcode.com/submissions/detail/57998894/ (baby’s)
+            - https://leetcode.com/submissions/detail/57978076/(Mine)
+    - Anqi said this is a Facebook problem. Asked to do in place with leading and trailing spaces
+        - Solution:
+            - Reverse entire string first, reverse each word second. Use two pointers (similar to move zeros leetcode) to move all words to correct place
+            - See Eclipse: Uber/ReverseWords/ReverseInplace
+
+- [ ] 输入是一个链表，和一个整数 k
+- 要求每隔k个元素把下k个元素reverse  k是任意非负数。
+比如 1 2 3 4 5 6 7 8 9 ，  5.
+- 返回  5 4 3 2 1 6 7 8 9
+这题思路很简单， 但是我感觉写起来比较容易出bug。  鄙人不才最后写了快100行代码才弄完。 walk through的时候发现有一个小bug 最后fix掉了。
+
+    - Link: http://www.1point3acres.com/bbs/thread-141325-1-1.html
+    - Similar to https://leetcode.com/problems/reverse-nodes-in-k-group/
+
+题库：
+
+- [ ] Inorder/ postorder iterator of BST
+
+- [ ] Convert BST to linkedlist
+
+- [ ] Btree serialize and de-serialize
+
+- [ ] circular queue init/enqueue/dequeue
+
+- [ ] Email duplicate Union find
+    - Ex: user1: email1, email2
+    - User2: email2, email 3
+    - User3: email3
+    - Then user123 are a group, put together
+
+- [ ] '11' can be 'aa' or 'k'  = 2 count combination Then output all possible combinations
+
+- [ ] Phone number: 1-abc, 2-def.... All possible
+
+- [ ] Deepest nodes' lowest common ancestor (See above)
+
+- [ ] Famous person （Leetcode find celebrity)
+
+- [ ] Find node n-1 inbound 0 outbound in graph
+
+- [ ] Coin - 2,3,5,10,15... Combination
+
+- [ ] Boggle - word snake
+
+- [ ] Time series
+    - Input: [user1, 10, 20] [user2, 15, 25] [user3, 18, 20] -> [1, 10, true] [1, 20, false]....
+    - Output: [10, 15, 1] [15, 18, 2] [18, 20, 3][20,25,1]
+
+- [ ] Spell check with wildcard. E.g. p**k matches peak, perk
+
+- [ ] Tree path from leaf to root/菱形
+
+- [ ] Tree path from root to leaf
+
+- [ ] Longest tree path from one leaf to another leaf
+
+- [ ] Time slot recover time
+
+- [ ] Three types of work, after one type on work have to recover some time, but during that time you do other types of work. 1, 2, 3, 1, 1, 2 the minimum time slot to get all done given cover time is 5     123_ _ _12_ _ _ _1.   - 13
+
+- [ ] Sum hamming distance
+
+- [ ] Sum of two number in binary to binary
+
+- [ ] longest increasing seubsequence
+
+- [ ] K random in list - get k random elements from list
+
+- [ ] a1,a2,a10,a11 - natural order not alphabetic order Not a1, a10, a11, a2
+
+- [ ] aaccbc , abc, accb   The softest substring containing all chars
+
+- [ ] Max int index in array random if duplicate
+
+- [ ] Get the index of maximum number in the array if there's duplicates, output random one
+
+- [ ] Remove zero from array 10024301. -> 11234
+
+- [ ] Small than with same digits
+
+- [ ] The biggest number of the same digits that's smaller than the given number Ex. 101 : 100, 100: none?
