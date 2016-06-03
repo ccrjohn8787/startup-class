@@ -1,0 +1,88 @@
+- Java多线程，基本概念，从synchronize开始，不停改进.
+- 从concurrent hashmap聊起，主动问是distributed还是single instance。对方自然让从single instance开始聊起，怎么设计read write lock。把相关自己熟的概念扯进去，引导对方的思路，就类似于strong consistency vs eventual consistency。最后自然是consistent hashing收尾。culture fit也是经典的pros and cons of monolithic model vs microservice model.
+    - Concurrent hashmap => concurrent distributed map:
+        -      http://dsoguy.blogspot.com/2009/08/distributed-data-structures.html
+    - Strong Consistency vs Eventual Consistency vs Strong Eventual Consistency:
+        -      http://stackoverflow.com/questions/29381442/eventual-consistency-vs-strong-eventual-consistency-vs-strong-consistency
+    - Simplest readwrite lock:
+        -
+
+public class ReadWriteLock{
+
+  private int readers      = 0;
+  private int writers      = 0;
+  private int writeRequests = 0;
+
+  public synchronized void lockRead() throws InterruptedException{
+    while(writers > 0 || writeRequests > 0){
+      wait();
+    }
+    readers++;
+  }
+
+  public synchronized void unlockRead(){
+    readers--;
+    notifyAll();
+  }
+
+  public synchronized void lockWrite() throws InterruptedException{
+    writeRequests++;
+
+    while(readers > 0 || writers > 0){
+      wait();
+    }
+    writeRequests--;
+    writers++;
+  }
+
+  public synchronized void unlockWrite() throws InterruptedException{
+    writers--;
+    notifyAll();
+  }
+}
+
+    - Need to consider re-entrance problem
+- you have N mysql databases that return results in order, you need to build an API that returns the completely ordered lists, how will you solve this problem.
+    - External Sort
+    - https://en.wikipedia.org/wiki/External_sorting
+- rotate array by k. rotate in distributed system. (rotate to left)
+    - Reverse the whole array, Then reverse the part 0 to n-k and n-k+1 to n
+- design a tweet search system - how to scale with incoming tweets
+    -     Design a search engine:
+    - http://www.ardendertat.com/2012/01/11/implementing-search-engines/
+- 设计一个可以快速生成全局Unique ID的系统
+    - http://darktea.github.io/notes/2013/12/08/Unique-ID
+
+        - 41 bits: Timestamp (毫秒级)
+        - 10 bits: 节点 ID (datacenter ID 5 bits + worker ID 5 bits)
+        - 12 bits: sequence number
+Snowflake 生成的 unique ID 的组成 (由高位到低位):
+
+- design一个recommendation system，然后聊到如何选出一个article里的keywords，如何分类文章。讲了Bayseian document classification，答的不太好
+- A* search algorithm
+- How to implement virtual function using C
+- What you need to do to replace tcp/ip protocal with UDP on your service?
+- 如果有一个client 和多个server通信，分析一下如果服务器fail to response是有哪些种可能？接下来是接着这个主题来写代码. 大概有网络故障，server down掉，server multithread deadlock，请求超时。
+- Let’s say we have a very simple model where if one of those servers is performing poorly, we stop sending all requests to it.
+We’ll measure the performace by the success rate, ie #successes/ # requests
+class Response {
+  def isSuccess: Boolean
+}
+We want to call kill()  when the success rate drops below the required success rate in the given request window.
+For example, the required success rate could be 0.95 and the window could be 100, meaning that if more than 5 requests of the past 100 have failed, we want to call kill().
+- 在 给你 一个1TB 硬盘。 里面有500G 的 文件， 问你如何找出duplicate 的文件
+- 如何找到twitter 互相关注的人。如果数据量大，如何用mapreduce实现
+- 实现一个 Task Scheduler. Client sending runnable tasks which need to be start after x millionseconds. Implement a scheduler to schedule and run these runnable task.
+    - http://stackoverflow.com/questions/4256074/how-is-task-scheduling-implemented
+- 一棵树总共有   2 *n个 (left, right pointer)   然后有多少是 root指向child的呢？ n - 1个，所以为null的是n + 1个
+- Evaluate RPN
+- find element that appears odd times in an array
+    - XOR all elements together
+- text justification
+- JVM
+- Print all permutations from (1 .. N) with k inversions
+- 设计一个plagiarism detection system
+- 吃豆子：你有一个罐子里面有红色和白色的豆子，你每一轮拿一个豆子出来，要是白色就吃了，要是红色就放回去再拿一次，这一次无论什么颜色你都吃。。问最后吃的一个是白色的概率是多少。。
+    - p(r,w) = 0, when w = 0
+p(r,w) = 1, when r = 0, w > 0
+p(r,w) = w/(r+w)*p(r,w-1) + r/(r+w)*[w/(r+w)*p(r,w-1) + r/(r+w)*p(r-1,w)], otherwise
