@@ -1,0 +1,125 @@
+Buttercola: http://buttercola.blogspot.com/search/label/Airbnb
+
+1. - Given an array of numbers A = [x1, x2, ..., xn] and T = Round(x1+x2+... +xn).
+We want to find a way to round each element in A such that after rounding we get a new array B = [y1, y2, ...., yn] such that y1+y2+...+yn = T where  yi = Floor(xi) or Ceil(xi), ceiling or floor of xi.
+- We also want to minimize sum |x_i-y_i|
+
+    - 举例
+# A = [1.2, 2.3, 3.4]
+# Round(1.2 + 2.3 + 3.4) = 6.9 => 7
+# 1 + 2 + 3 => 6
+# 1 + 3 + 3 => 7
+# 0.2 + 0.7 + 0.4 = 1.3
+# 1 + 2 + 4 => 7
+# 0.2 + 0.3 + 0.6 = 1.1
+所以[1,2,4]比[1,3,3]要好
+
+2. Decode string:
+Often, we want to encode raw IDs in our database by hiding them behind some
+2-way decodeable hash. So, a URL which would have at one time been:
+https://www.airbnb.com/rooms/848662
+becomes
+https://www.airbnb.com/rooms/kljJJ324hjkS_
+We decode the ID kljJJ324hjkS_ to 848662 on our backend and serve the
+relevant content. at some point, we start getting 404 errors from clients
+requesting a certain URL of the form
+https://www.airbnb.com/rooms/kljjj324hjks_
+This can happen if certain clients, email services, or url shorteners "
+sanitize" the url. Unfortunately, this change breaks decoding and the
+resource cannot be found.
+To assess how big of a deal this is, we may want to recover the IDs of the
+targets that were 404ing.
+
+Your task:
+Given a method decode(testEncStr) which will return the decoded int id if
+testEncStr is decodeable or will throw an exception or return null (
+depending on the language) if not, implement a new method decodeFind(String
+badEncStr) which takes a string and returns the decoded int id.
+
+3. 猜数字
+猜一个4位的数字，每位上数字从1到6.
+提供一个API，输入一个你猜的数字，返回有几位是猜对的
+比如要猜的数字是1234，猜的数字是1111，则返回1
+猜的数字是1212，则返回2
+要求写个程序多次调用这个API以后，返回猜的数字结果是什么
+
+4. [ ] find median from large file of integers: binary search - O(32n)
+
+其实有很多对大file的处理方法。 在interview当中，华人哥哥给出的hint是用binary search
+首先， 我们知道对任何大的file median of any int will between INT_MIN and INT_MAX。所以我们知道了upper bound 和lower bound。我们猜一下median might be "guess = lower+(upper-lower)/2"。之后我们可以验证对不对。就是扫一遍这个file，看看是不是有一半的element确实小于这个数字。如果是的话，这里注意一定要返回 smallest element in the file that is larger than the guess。如果有超过一半的数据小于这个guess，可想而知用binary search的方法，下一步就是移动上线到guess-1. 反之移动下线。对吧。那么这个算法最多需要scan 32次fille对不？这个数字当时我有点含糊。但是现在想想应该是对的。
+
+5. - CSV Parser: http://buttercola.blogspot.com/2015/11/airbnb-csv-parser.html
+    - a, b, c, d => a| b| c| d
+"abc", a, b => abc| a| b
+"abc ""d""", a, b => abc "d"| a| b
+大概的意思是，如果字符串被左右引号包着，去掉那对左右引号，如果引号里面还有引号则要保留，但是如果有重复引号，就缩成一个。所以""d""会变成"d"
+
+6. 餐馆点餐问题：给你一个菜单，要你输出一个金额所有能点的不同组合。要求用完所有钱。
+7. [ ] Closest N sum
+8. [ ] Strongly Connected Component:
+http://www.geeksforgeeks.org/strongly-connected-components/
+9. 给你一个list of posts，每个post对应一个host，这个list是已经排序好了的。
+因为同一个host可以发好几个post，用户不希望看到Airbnb给的推荐房源都是来自同一个户主。所以面试官希望对这个list调整一下排序，让每一页里的post不出现相同的host，otherwise preserve the ordering。
+每一页中有12个post。
+10. Search results are ordered by score
+Pagination:
+1) show 12 results per page, but avoid the same host dominate the results on a page
+2) a host shows up at most once in a page if possible,
+3) otherwise, preserve the ordering
+
+11. 实现一个mini parser, 输入是以下格式的string:"324" or"[123,456,[788,799,833],[[]],10,[]]"
+要求输出:324 or [123,456,[788,799,833],[[]],10,[]]
+也就是将字符串转换成对应的格式的数据.
+
+12. 输入一个数组的字符串, 要返回一个数组, 里面每一个元素是要么一个整数, 要么是一个数组. 但是注意数组可以多层嵌套.
+
+13. 一个数组，选出不相邻子序列，要求子序列和最大，
+[4,9,6]=10
+[4,10,3,1,5]=15
+我的解法是使用dp。follow up问到如何测试，测试用例设计，时间空间复杂度等
+
+14. 比较两个document 是否相似 - edit distance
+
+15. Given a list of word and a target word, output all the words for each the edit distance with the target no greater than k.
+e.g. [abc, abd, abcd, adc], target "ac", k = 1,
+output = [abc, adc]
+  http://buttercola.blogspot.com/2015/11/airbnb-k-edit-distance.html
+  
+16. 见下图 。给你一个字符对的转换matrix，表示这个字符对会转化成一个字符(但是有的字符对可能有多个能够转化成的字符，原文是nondeterministic)。以及若干个合法的终点(最顶上那一个点)状态，多次询问，每次一个字符串如果有一个方法能够走到合法状态就算是YES，否则NO
+解法：记忆化搜索，记录所有中间状态。因为转化矩阵和合法终点都是固定的，某个字符串要不永远是YES，要不永远是NO。最好写个类因为他后来说的……
+
+17. Hilbert curve: 见图，忘了这东西叫什么名字了。每次给你一个(x, y, iter)，问你在iter这张图中在(x, y)坐标的点是第几个？
+解法：从大往小左，逐渐细化。每次先算出当前点在当前iter是在第几象限，先加上前面那些跳过去的象限里的点。然后找到这个点在这个象限的相对坐标新(x,y)，但是还不够！对于三四象限的点，因为方向变了，需要做镜面映射，把(x,y)映射成(y,x) (第三象限) 或 (M-y, M-x) (第四象限)，M是象线的长宽
+
+18. 写echo TCP client， 向面试官的server发请求， 读回数据。地里比较少人说这种， 我来详细说一下， 情境是这样的： 想象你开车， 踩下油门，车会加速，放开油门，车会减速。 client向server发的请求有以下2种： （a）STATUS --表示查询现在车的速度和踩下踏板的压力； （b）THROTTLE 50.1 --- 这条指令是“THROTTLE” 加上一个数字， 表示我现在将踩油门的压力调为50.1
+
+EXAMPLE: 比如在telnet中
+STATUS
+0.0 0.0     (这行是server返回的， 第一个数字表示压力，第二个数字表示速度)
+THROTTLE 50.1 (这个指令发出 server没有返回)
+STATUS.1point3acres缃�
+50.1 3.75   (可以看到速度在缓慢上升)
+STATUS     (过几秒后，你又发STATUS指令过去)
+50.1 15.98   (速度依旧上升。。。)
+
+对就是这样，像是简单物理实验。
+
+写完TCP client后，要求是写一个方法将速度控制到达一个target speed
+
+最后一个问题是求这个 delta力 和 delta速度 之间的函数关系
+
+19. - boggle game, 但是呢比如你现在走了一个词apple, 那么a, p, p, l, e这几个char的位置不能继续用了。于是给你一个board, 一个dict让你计算最多能有多少个valid单词出现在这个Board上面
+    - Link
+
+    - Related:
+        - 题目是给定一个2d matrix of letters和一个dictionary，找出一条path包含最多的存在于字典的word个数 讨论了半天算法，真到写code的时候时间就来不及了，test case没来得及写，也没来得及优化。
+        
+20. - john's travel city: a1 a2 c2 h8 j9
+tom's travel city: b1 a1 c3 z5
+kate travel city: a2 a1 h8 x8
+给你一个人john, 以及他的一堆朋友，让你计算出来和他travel的city相似度大于75%的所有朋友，并且根据这个相似度对朋友排序
+
+    - Another wording: for all cities john travels:
+   increment similarity between john and users in the same city list
+   
+21. Airbnb: Rectangle: You have a plain with lots of rectangles on it, find out how many of them intersect.
