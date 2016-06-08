@@ -123,3 +123,22 @@ kate travel city: a2 a1 h8 x8
    increment similarity between john and users in the same city list
    
 21. Airbnb: Rectangle: You have a plain with lots of rectangles on it, find out how many of them intersect.
+
+22. [ ] Regular Expression Matching: https://leetcode.com/submissions/detail/61692985/
+
+
+    - [ ] Added ‘+’ for matching more than one char
+
+    - [ ] (Glass door) Implement a     simple regex parser which, given a string and a pattern, returns a booleanindicating whether the     input matches the pattern. By simple, we mean that the regex can only     contain special character: * (star), . (dot), + (plus). The star means     what you'd expect, that there will be zero or more of previous character     in that place in the pattern.
+
+    - [ ] http://www.mitbbs.com/article_t/JobHunting/32309663.html
+    - Link: http://buttercola.blogspot.com/2015/11/airbnb-regular-expression-matching.html
+
+23. [ ] Sort a list of numbers in which each number is at a distance k from its actual position.
+    - Link: http://buttercola.blogspot.com/2015/11/airbnb-k-distance-sort.html
+    - Idea: You could take a moving window of 'k' elements and keep finding the minimum in that, and putting that in the first position. A good implementation might be a heap.
+
+    - Reference:
+        - Link
+        - http://www.geeksforgeeks.org/nearly-sorted-algorithm/
+        - https://www.careercup.com/question?id=4601987345678336
