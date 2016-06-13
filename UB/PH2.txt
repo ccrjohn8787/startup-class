@@ -1,0 +1,300 @@
+- [x] list of words (dictionary) + array of characters ->  return boolean contains(array, words) to check if a string in dict contains all chars in array.Test cases:
+- // ['a', 'b', 'e'], "abes" -> True
+// ['a', 'b', 'c'], "abes" -> False
+// ['a', 'a'], "as" -> False
+// ['a', 'a'], "asaa" -> True
+第一问很快写完，编译运行test cases通过。
+
+    - [x] 然后follow up: long list of words, return Shortest word in dictionary such that contains(array, word) is true.
+    - 面试官说完follow up还提示了下你可能需要对dict预处理。没想到什么太好的办法，一开始说是先对dict的words按长度排序，这样在找string的时候长度少于array size的就可以直接忽略了，面试官对这个好像不太满意，我又说可不可以把单词压缩下，这样占用空间就小了，这样一来好像之前的排序也没啥用了。。。他不置可否，继续提问，你这个算法如果要scale要多个机器上，要做什么优化，我说能不能把字典分块，每个机器负责一部分工作，他说我不是要你做load balancing。。。又瞎扯了一通，然后时间就差不多了，说你有什么问题要问我的，问完问题就结束了
+    - Link
+    - Solution: (Similar to Google Car tag problem)
+
+        - Solution1: integer array as hash map
+
+            - Key is how to find whether a string include all character in another string in linear time
+
+                - integer hash: put tag in array with occurrence count in each and compare with each
+            - Follow up (1): hash dictionary to different machines
+            - Follow up (2): hash dictionary to different machines, compute for each machine (all machine have the thousands of car tags). compare at the end
+        - Solution2: bitmap (!!if only need to cover, not cover the count)
+
+            - 每个单词的字母map到32bit int的26个bit上 遍历dic，用编码以后的车牌编码和字典单词编码做and看是不是还等于车牌的编码 记录candidate和长度 用了 O(n) time和O(1) space (1)可以跳过的的情况，比如长度大于candidate了 (2) 对dic编码，然后对每个编码的bit从大到小or从小到大建立一个trie，同时在插入的时候，在每个节点保留一个当前子树下最小长度的单词 用O(n)的space和time 查询的时候直接返回该节点的结果 貌似是wrostcase O(mlg n) 总共O(n+mlg n) 约等于O(n)
+
+- [x] rotating array.1point3acres缃�
+- 给一个int数组，以及一个int N，将数组向右rotate N位，N可能比数组的size大。
+
+    - Leetcode: rotate array:
+
+        - https://leetcode.com/submissions/detail/61546329/
+    - 参考解法：
+1.两种解法
+1.1 time - O(2N), space - O(1)
+经典的three rotate解法，即找到分界点 i， 将0~i 翻转一次，将 i~end翻转一次，最后将0~end翻转一次。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+    - 1.2 time - O(N), space - O(N)
+开一个新数组，遍历一遍填进去。
+
+- [x] 求intersection
+- 给三个int数组，每个都保证sorted且元素unique，求三个数组的交集。三个指针从头开始遍历，如果一样则输出，不一样则移动最小的指针
+
+    - Solution:
+
+        - SetIntersectionThree
+    - 我也觉得有两种解，不过当时没说。
+2.1 time - O(N), space - O(1)
+三个指针从头开始遍历，如果一样则输出，不一样则移动最小的指针。
+2.2 time - O(N), space - O(N)
+遍历三个数组，用hashmap存一下。If hash map value == 3, add to result
+
+- [x] 设计一个data structure 类似hashtable不过实现get，set，remove和getrandom。getrandom需要返回hashtable里面随机的一个数，要evenly distributed
+
+    - 1) 一個 Array —— 用於 random generate index 後 O(1) access element
+2) HashTable（dict in Python），key 是要添加的 element，value 是那個 element 在 Array 裏面的 Index —— 用於通過 object 來 O(1) 作刪除操作。
+put:
+將 object 添加到 HashTable 中，同時 append 到 Array 的最後
+delete:
+通過 passed in 的 object 找到它在 Array 中的位置，將 Array 的最後一個 element 移到剛 delete 的 Index 然後把 object 從 HashTable 刪除，並 update HashTable 裏面剛改動過的 Index （被 move 的 Array 最後那個 element 的 Index 會變）
+get_random:
+index = int(random() * len(hash_table)) # random function 是 Python 自帶的，返回 [0, 1) 之間的小數
+return array[index]
+    - Solution:
+
+        - See Google Eclipse: HashTableGetRandom
+
+- [x] 给你一个数据结构
+- class  Node {
+      // 只能是val有效或者是 nodes有效。
+      int val;
+      int vector<Node> nodes;
+}
+input: 给你一个str, 比如是"[1,2,[3,[4,5]],6]"，表示第一个Node val = 1, 第二个Node val = 2， 第三个Node的比较有意思是nodes是有效的里面的Node又是nodes是有效的,第四个是 Node val = 6
+output: vector<Node> 比如上面的结果就是 1, 2, [3,[4,5]], 6
+[x] Follow up: 写个打印出output的函数
+
+- 都是recursion解决。
+在Hackerank上写。注意要自己include header files和写main函数。
+补充内容 (2016-3-2 13:57):
+在Node的定义里 int vector<Node> nodes; 应该是 vector<Node> nodes
+
+    - Link
+    - Solution:
+        - Eclipse: DecodeNode
+        - If ‘[‘ add a new empty node. If’]’ pop all non-empty node and add to first empty node. If number, use while loop to get whole number and create a number node and add to stack. Whatever is left at stack at the end is the result
+
+- [x] 给一个string list, 例如：['a', 'b', 'b', 'c', 'c', 'e', 'e', 'e']，返回出次次数是中位数的字符。例如本题，应该返回[b, c]
+
+    - Link
+    - Solution:
+        - Eclipse: MedianOccurrence
+        - Record occurrence in array, quick select find median and last pass to find the char that has the occurrence
+
+- [x] def crawling()
+-          pass
+   def getcrawlingurl():
+         a = []
+         for x in (1, 100):
+              a.append('google.com'+str(x))
+         return a
+    listsOfURL = getcrwalingurl()
+    def crawlingMax5(listsOfURL)
+问题是如何在crawlingMax5()中调用crawling()，使得一次最多抓取5次url。
+我没太明白第2题的题意，开始我以为是多线程问题，后面面试官说和多线性无关，根据解析来做。大家有谁看懂了这道题的，欢迎一起讨论～
+补充内容 (2015-7-15 07:29):-google 1point3acres
+
+- 补充一下，是同时最多抓取5个url。
+
+    - Link
+    - Solution:
+
+        - Each call of main method returns a method that crawls the next 5 urls
+        - SolutionLink
+
+- [x] 形式化来说，给N个未排序的数组，找出全局中位数
+- 应用场景是，有N个hosts，每隔一段时间就会报告一些参数，比如qps和平均延迟等，现有某个用于monitor的机器收集信息，并且返回特定时间段内同一参数所有数据的的中位数。
+先给brute force，对所有数据排序然后找中位数。
+之后改进版YY了一个基于bucket的方法，算是在精确度和时空复杂度之间的trade off，不过面试官不是很满意……
+
+    - Sort each list and use merge k sorted list to find median
+    - Solution:
+
+        - Eclipse: MedianNLists
+        - CodeLink
+
+- [x] 面试题是一个比较简单的design问题，设计一个bus event系统，就是可以注册event 也可以取消注册，还有触发注册的回调函数（要求一共实现三个函数， registerEvent unregisterEvent 还有 postEvent）
+- 刚拿到题傻眼了，感觉这怎么可能就三个函数，感觉涉及到的东西很多啊。
+然而面试小哥很耐心的引到了我一下，就上路了。
+
+    - public class EventBus {
+    -     public void register(String eventName, Listener listener) {}
+    -     public void unregister(String eventName, Listener listener) {}
+    -     public void postEvent(String eventName, Object data) {}
+
+    -     public interface Listener {
+    -         void onEvent(Object data);
+    -     }
+    - }
+    - 以上是Skeleton Code，实现register, unregister以及postEvent这三个方法实现。
+
+    - 主要思路就是一个生产者消费者问题，我用的hashmap加hashset做的buffer
+完了以后问了下hashmap怎么实现，又问了下给你一个object你怎么得到hashcode （这个我根本不知道啊。。。。就说要是我设计就用内存地址保证唯一性。然后提了下要物理地址不能要虚拟地址）
+接着优化了下线程锁，就是分析critical section， 减小被锁的object （对我一开始直接把整个消息队列锁起来的。。）
+
+    - Link
+    - Solution:
+
+        - HashMap: eventName -> HashSet<Listener>
+        - Register: Find hash map and add listener to hashset
+        - Unregister: Find hashMap and remove listener from hashset
+        - PostEvent: Find hashMap and foreach listener call onEvent(Data).
+        - HashCode: object memory address or override hashcode method of listener
+        - Lock optimization: Lock when adding, iterating or removing
+
+- [x] email domain address typo, need to figure out and return correct domain name. e.g. yhaoo--> yahoo, giaml --> gmail, hmailot--> hotmail.
+
+    - Solution: HashMap<Key, Value>, key as sorted string, value as correct email domain.  10min finsih coding and proactively add unit test and make it run. 面完10分钟给onsite.
+
+- [x] best time to buy and sell stock I 的变形。就是给了一定的钱，可以买非整数股
+
+    - maximize rate = sell_price / buy_price
+    - Link
+    - Solution: Link
+
+        - Eclipse: BestTimeToBuySellStockWithFraction
+
+- [ ] 实现类似template engine
+- input:. 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+- string =.
+- '''
+    <h1>{{customerName}}</h1>
+    <ul>
+    {% for user in users %}. From 1point 3acres bbs
+-       <li><a href="{{ user.url }}">{{ user.username }}</a></li>
+    {% endfor %}
+    </ul>
+'''
+dict = {
+    customerName: 'uber',
+    users: [
+        {
+            url: 'myUrl',
+            username: 'myUsername'
+        }
+    ]
+}
+implement render(string, dict)
+
+    - Solution:
+
+        - Full stack developer problem, use javascript
+        - Low probability of being tested
+
+- [x] You are given a collection of contestants and their scores, return the medalists and their scores
+- 大意就是有一堆参赛者还有他们的分数，输出得奖牌的，就是前三名
+
+    - Solution:
+
+        - MinHeap size of 3
+
+- [x] merge two sorted linked list，lc原题。只是又问了
+
+    - [x] 两个follow up，一个是去除重复元素merge怎么做，
+
+        - Duplicate number only count the first one
+
+    - [x] 另一个是merge的时候不算重复的数字怎么做
+
+        - Duplicate number not included at all
+    - Link: http://www.1point3acres.com/bbs/thread-147574-1-1.html
+    - Solution:
+
+        - Original: http://www.lintcode.com/submission/3693864/
+        - Eclipse:  MergeTwoSortedListWithoutDuplicates
+
+- [x] find all possible subsequence palindrome for given string
+- "cdc" - > ["c", "d", "cc", "cdc"].
+
+- Leetcode上有相关的题，Palindrome Partitioning II, 区别是substring palindrome，而非subsequence
+
+    - Solution:
+        - Find all possible: Find subsets and check if is palindrome
+            - Eclipse: PalindromeSubsequence
+        - If asked to find the longest:
+            - http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
+            - Interval dp: dp[i][j] means longest with i and j as index bounds:
+                - dp[i][j] = dp[i-1][j+1] + 2 if s[i] == s[j] and = Max(dp[i-1][j], dp[i][j+1]
+
+- [x] 怎么样在char matrix里面找word (Leetcode word search)
+
+    - Solution
+
+        - http://www.lintcode.com/submission/4579357/
+
+- [x] implement strStr
+
+    - http://www.lintcode.com/submission/3209161/
+
+- [x] 最后做了一道DP：
+- 一个数列，不能取相邻的元素，求max
+[2, 3, 4] -> max profit is 6,  [2, 9, 6]-> max profit is 9,  [-1, -1, -1] -> max profit is 0
+
+    - Link
+    - Solution:
+
+        - Similar to HouseRobber
+        - http://www.lintcode.com/submission/3308052/
+        - dp[i] = Math.max(dp[i-1], dp[i-2]+arr[i])
+        - Max with 0 at the end
+
+- [x] Implement nested integer iterator.
+
+    - implement an iterator so when calling the next(), input: {1， 2， 3，{4， {5， 6}}}, output: 1, 2, 3, 4, 5, 6
+    - Link: http://www.1point3acres.com/bbs/thread-145297-1-1.html
+    - Solution:
+
+        - https://leetcode.com/submissions/detail/62196619/
+
+- [x] find occurence_time，就是一个排序好的int array里，让你找某个int出现的个数
+
+    - Solution:
+
+        - Binary Search: Find first and last occurrence
+        - http://www.lintcode.com/submission/4490912/
+
+- [x] BST怎么找到kth smallest element
+
+    - Solution:
+        - Recursive in order traversal and maintain a count.
+        - Eclipse: Palantir/BSTKthSmallestElement
+
+- [x] integer to english word, 0 < input < 1000
+- 用recursion写出来之后被要求用modulo operator再写一遍,中间出了一次index上的bug, 后来自己fix掉
+
+    - Solution:
+
+        - https://leetcode.com/submissions/detail/60978343/
+
+- [x] 实现两个函数addorupdate()和recentevents(limit), 就是类似lru cache，第一个函数是加入或者更新一个事件，然后第二个函数返回limit个最近加入或访问的事件。
+
+    - Solution:
+
+        - LRU Cache: http://www.lintcode.com/submission/3878998/
+        - RecentEvents(limit) just take ‘limit’ number of nodes from tail
+
+- [x] 比较两个Map Object，Map的Value可能有两种情况 1. Strings; 2. Map<String, Object> objects
+
+    - Link: http://www.1point3acres.com/bbs/thread-139954-1-1.html
+    - The Object can be a map too. need to compare each key and see if the value is the same
+    - Solution:
+        - Eclipse: CompareMaps
+
+- [x] LeetCode Valid Parentheses.
+-     [x] Follow up 1: 如果中间有别的字符怎么办
+-     [x] Follow up 2: 如果添加别的括号种类比如<>，如何做到对原先的代码改动尽量少
+
+    - Link: http://www.1point3acres.com/bbs/thread-139954-1-1.html
+    - Solution:
+        - Original: https://leetcode.com/submissions/detail/62217653/
+        - Follow up 1: If other chars, ignore
+        - Follow up 2: Expose method to register map pair and not change during an evaluation
+
+    - See two sigma prep how to diagnose when server is slow
