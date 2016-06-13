@@ -1,0 +1,305 @@
+- [x] 二叉树找closest value。 注意有可能要返回一个以上。
+
+    - Solution:
+
+        - Eclipse: ClosestValueBST
+        - Leetcode: Binary tree closest value: Recursive, Iterative (preferred)
+        - Idea is to record the min difference on the search path. If equal to min value, add to the list. If min value updated, clear the list and record new min diff and add current value to list
+        - Difference is Leetcode problem guarantee only one unique result
+    - ink: http://www.1point3acres.com/bbs/thread-175734-1-1.html
+
+- [x] 给一个手机键盘，input是一个string，把input根据键盘转化成数字，比如input是“RAT”, output就应该是“77728”，因为R要按三次7键。写之前也是确定了一下input会不会有不合法情况。
+
+    - Cannot find the link to the problem
+    - map<Character, ArrayList<Integer>> -> (R, {7, 7, 7})
+
+- [x] 第一题是求一个数组里面连续相邻的数的最大长度，第二题把数组换成了树
+
+    - Thoughts:
+
+        - (1) Leetcode: Longest Consecutive Sequence
+        - (2) Leetcode: Longest Consecutive Sequence in Binary Tree
+
+- [x] 假设有个social network
+- ( 1）返回朋友的朋友，但不是自己的朋友；
+( 2 ) 返回朋友的朋友，担不是自己的朋友，按照出现的次数排序，也就是说加入一个人不是我的朋友，但是他是我所有的朋友的朋友，那么他应该是返回结果里面的第一个
+
+    - build a set for 0/1 degree friends
+    - get all second degree friends and count time occured
+    - return sorted by occurrence
+    - Solution:
+
+        - Eclipse: FriendOfFriend
+        - Level order traversal. Degree 2 friends maintain count and sort at the end
+
+- [ ] 给一个Game的schedule, 里面有每一个round和在这个round里面互相compete的players，比如Round1 A-B C-D
+- Round2 A-D B-C.
+- 这个schedule应该满足
+1. 每个player每一个round只能play一次
+2. 每一个player必须和其他所有对手都compete一次
+3. 安排的round数应该是最少的
+返回一个boolean值，看此Game schedule是不是valid的。
+
+    - 1. min number of rounds. 如果是n is odd, min = n, otherwise(n is even) min = n-1.
+    - 2. 每轮用hashset去重, 比如A-B, A-C由于A出现了,所以invalid
+3. 检查invalid的match entry比如A-A B-B
+4. hashmap保存所有已经出现的比赛,保证之后不出现
+
+- [x] 让实现一个ringbuffer。心里窃喜。但由于些许紧张写的过程并不是非常流畅，也是吭哧吭哧写完了
+- - 主要就是实现一个写入函数，一个读取函数（读取最旧的一个值）。
+- 写完之后让写一下测试，口述一下运行过程。
+- 然后说一下每个函数的复杂度，（这个复杂度实现出来肯定就是O（1）了）
+
+    - Solution:
+
+        - Eclipse: RingBuffer if not allow run over
+        - Eclipse: FixedLengthQueue if allow run over
+        -  maintain head, tail, size, capacity. when hitting capacity (array size), set head/tail to 0, when head==tail and size != 0 => determine whether overwrite
+    - 5/17
+
+- [x] -给个directory，找出其下面所有的java文件。写代码。
+- recursive function，很简单。
+
+- [x] 问：假设已经有了getClassDependency（A） api，作用是返回A class所依赖的其他类。现在有一个硕大的代码库，其中有些java class早已没人用。怎么找出所有此类class？
+- 图算法。把代码库看成图，每个class是节点，依赖关系是边。从有用的class开始遍历图，并标记已访问的节点。最终没有被标记的节点是不可达的，即为没用的class。类似JVM的垃圾回收。
+
+- [x] 给一个整数数组（可正可负可重复），返回其中任意两个元素乘积的最大值。
+
+    - [x] follow up 到求k个数的最大值。
+    - http://instant.1point3acres.com/thread/159562
+    - Phone, 2016-01
+    - Comment:
+        - First: Maintain max positive and min negative, for each number, if positive, multiplied with max positive and update max, If negative, multiplied with min negative and update max. If zero, update max with zero (in case only have zero and one negative number)
+        - Second: Use min heap for positive number, max heap for negative number. Both heap has max size of k. After one pass, if all negative, take max k negative number product. If k is odd, first take the one positive number and then take a pair from positive and negative and put the larger one to result and move the index forward by 2
+    - Solution:
+
+        - Eclipse: MaxProductOfKElements
+
+- [x] The question is to write a method that, given an input string, generates a longest palindrome by removing characters from the input string or rearranging characters in the input string.
+
+    - 遍历input string, 计数每个字符出现的次数，如果出现的次数为偶数，那么最长的palindrome必然所有字符。如果为奇数，那么必然包含出现次数减1(在最中间的字符除外，可以出现奇数次）. 然后把这些字符从头尾生成即可。
+    - Hash map count occurrence of each char, if odd number, remove to become even number, but can leave one of them(first one)
+
+- [x] 一个stock provider, 每一个second会发送stock prices.(考虑到reliability，不是每秒钟都发)， 写一个getAverage 函数(public double getAverage(double price, long timestamp)), 返回不早于系统当前时间一分钟前的所有股票价格的平均值。
+
+    - queue<PricePoint>
+    - while (queue.peek().timestamp < currTime - 60) {
+        queue.pop();
+}
+calculate avg
+    - Solution:
+
+        - Eclipse: AverageStockPriceLastMinute
+    - Link: http://www.1point3acres.com/bbs/thread-161901-1-1.html
+
+- [x] 给一个数n，如果能被3整除就print Func3(n)，如果能被5整除就print Func5(n)，如果能被3和5整除就print Func3(Func5(n)). 我用最简单的if-else写了下。
+- 1.2. follow-up, 把上面的代码改成general的，如这时有{3，5，7}，能被3和7整除的话就print Func3(Func7(n))，能被3，5，7都整除print Func3(Func5(Func7(n)))
+
+    - http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=137822&pid=2200543&fromuid=206597
+    - Thoughts:
+
+        - iterate array backward, apply method if divides
+
+- [x] 设计一个电话本系统，实现三个功能：查找号码 boolean isTaken()，添加号码 void takeNumber()，返回一个不在电话本里的没人用的号码 number giveMeANumber()。
+
+    - [x] 我一开始说用HashMap，这样前两个函数的复杂度都是O(1)，第三个是O(n)。面试官说能不能优化第三个函数，我说用BST，每个节点多存一个value记录这个节点下还有几个available的号码，giveMeANumber()的实现只要沿着value>0的node往下找就行了。这样三个函数的复杂度都是O(lgn).
+
+    - [x] Trie - each node also remembers how many available child nodes there are
+
+- [x] 給一个单词和一个字典。每次删除单词里任何一个字母直到剩下一个字母，形成一个序列，比如office->offce->ofce->ofc->oc->c。问是字典里否存在一个这种序列。
+
+    - Solution:
+
+        - Eclipse: LongestWordChain
+        - two sigma oa. iterative or recursion
+
+- [x] 已知一个List里全是interger, 还有一个set里也全是integer,求是否存在一个sublist, set里所有元素和sublist中所有元素一一对应。[sublist 这里要求必须为原List的连续项， 注意set里元素无序]
+
+    -  Thoughts: rolling hash? if hash not equal, move forward; if equal, O(n) time verify. If ask for min window, use two pointers. Min windwo substring
+    - Solution:
+        - Eclipse: SublistEqualsSet
+        - Use forward two pointers
+
+- [x] Leetcode 288 unique word abbreviation 变体。
+- input: String[] words, String str
+output: all words that share the same pattern with str. . 鍥磋鎴戜滑@1point 3 acres
+- e.g String[] words = {happy, haaay, habay, node}; String str = happy
+str 的pattern 是 h4y.(面试小哥限定的) 不用考虑happy -> h4， ha2y 之类的。
+output: happy, haaay, habay
+
+- [x] 设计一个addLatency和 avgLatency，可以返回3个latency的平均值，
+
+    - Thoughts: moving window avg leetcode
+
+- [x] Give you a text file, remove duplicated lines. Follow up: If the file is very large, general hash map takes too much spaces, come up with a better…
+
+    - 如果文件很大，是不是可以把文件里的内容按照每一行string的hash值取模，比如hash%10或者hash%100，把一个大文件分到几个小文件里，然后按照之前的方法处理？
+    - Link: http://www.jiuzhang.com/qa/943/
+
+- [x] 一个large array, remove 其中的even number，duplicate其中的odd number，必须in place。
+
+    - Partition array: odd on left, even on right, get index of the first even = i
+for (i = i * 2; i >= 0; i—) duplicate odd numbers and move to end
+    - Link: https://instant.1point3acres.com/thread/156277
+    - Solution:
+        - Eclipse: RemoveEvenNumber
+
+- [x] array 含有 0，1，2， 返回能把0放在数列同一边的最小swap值
+
+    - First count number of 0’s
+count how many zeros are on both ends that doesn’t need to be moved
+http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=180892&pid=2336829&fromuid=206597
+    - Solution:
+        - Eclipse: MinSwapNumber
+
+- [x] 给一堆数，找出哪些数是在这些Intervals里面的，返回
+
+    - Binary Search
+[1, 3, 5, 6, 10] -> [1, 3] [4, 5]
+if (number > intervals[mid].end) start = mid;
+else if (number < intervals[mid].start) end = mid;
+else => number is in mid interval
+    - Solution:
+
+        - Eclipse: FindNumbersInIntervals
+
+- [ ] given a string, find the first letter in that string which appears only once in this string.
+- example: aabbccdee, return d
+2. follow the first question 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- if the input is not a string. It is a internet Stream. What situation should you handle?
+example: 这个网络流突然就不让access了，或突然关了，你的loop就crash了。之类的问题如何handle。. more
+- 3. 如果input数据很大很大， 如何improve？
+4. Open Question: How to test Google Search?
+
+    - Thoughts: hash table? how to know not duplicate in a stream?
+
+- [x] morse code . 1point 3acres 璁哄潧
+- 输入给一个map<Character, String>和一个string，对应关系用Map给出来
+eg A -> "._"
+     B -> ".__"
+     C -> "._.__"
+     ....
+     Z -> ".._"
+public String morse(String str, Map<Character, String> morseRule) {
+}
+比如给”ABZ“，返回”._  .__  .._“ 妈啊看到这题我惊了，一直担心自己理解错了
+follow up：
+public String decodeMorse（String str， Map<Character, String> morseRule）{. 鍥磋鎴戜滑@1point 3 acres
+- }
+decode 就是输入string换成”._  .__  .._“，返会”ABZ“，我继续无语是不是运气太好了。。。
+follow up：
+public List<String> decodeMorse(String str, Map<Character, String> morseRule) {
+}
+输入”._ .__ .._“， 返会["ABZ", "CZ"]
+还是decode 输入string中的空格去掉”._ .__ .._“，返会所有可能的，这个起码还稍微正常点，但用个简单的回溯就可以解决了
+
+    - Solution:
+
+        - Eclipse: MorseCode
+        - regular backtracking
+
+- [ ] TODO: 大除法 输入是一个恶心到极点的string，比如1234567891011....（此后省略10000位）作为除数，和一个long作为被除数，返会所得的值.
+
+    - public String divide（String divisor， long dividend）
+    - 这题我的想法就是一段一段的取，大于dividend之后来除，得到的数加到stringbuilder里，余数跟后面加到一起，大于dividend之后在继续除，直到结束。不过其中有些细节要小心，不然会出runtime
+    - Solution:
+
+        - Eclipse: DivideInteger
+    - Link: http://www.1point3acres.com/bbs/thread-179404-1-1.html
+
+- [x] Lowest Common Parent of two nodes in a binary tree
+- 这里有点tricky的是LCP和LCA的区别，假如p,q 是BT中的两个node，p是q的ancestor，那么LCA是p， LCP是p的parent。
+
+    -  Solution:
+        - Eclipse: LowestCommonParent
+        - should be similar to LCA, just finish condition different
+    - LCA: http://www.lintcode.com/submission/3684477/
+
+- [x] Binary Tree to circular double linked list
+- 要求按照inorder顺序，in place.
+circular没处理好，感觉脑子都木了，小哥最后告诉了答案
+口头跑了case， 问了时间复杂度
+
+    - http://www.lintcode.com/submission/3700775/
+    - Thoughts: global node approach or divide and conquer. Need pass first node and last node to connect circular
+
+- [x] 服务器在x secods 内只能接受r个request，对于超过的r部分要disallow。(with token)
+
+    - http://www.jiuzhang.com/solutions/rate-limiter/
+    - Solution:
+        - Eclipse: RateLimiter. Millisecond bucket
+
+- [ ] 第一题：问有一个marble，含有名字name和颜色color两个属性。问你用什么数据结构，可以任意的拿和放入其中，使的每次拿的时候取到任意一个marble的概率都是一样
+- follow up 如果你有1M种颜色，平均每个颜色有1M个marble，但是你的内存没有1M*1M这么大，这时这个数据结构用什？
+
+    - [ ] 我觉得第一题一维array顺序存就好了吧？取的时候取random一个，然后将最后的填到取了的空位上。followup就在内存里搞个1M大小数组存不同颜色的，每个数组指向一个文件，文件里面存marble。拿的时候random两次，第一次选颜色，第二次选marble。
+
+- [x] 第二题 算法 给你一个arr 返回 T 或者 F
+- arr的每个数代表从这个点开始跳几部，返回T的情况：从这个arr中任意一个数开始跳，可以在每个元素都跳到且只跳到一次的情况下返回到开始跳的元素
+比如[1,1,1,1,1,1] => T
+[0,1,1,1,1,1]=> F
+[7, 5, 2, 3] => F
+[2,2,3,1] => T
+
+    - public static boolean solution(int arr) {
+int i = 0, l = arr.length; int sum = 0; // 满足条件时，总共需要走的步数。
+for (int num : arr) { sum += num; }
+while (arr[i] > 0) {
+int iNext = (i + arr[i]) % l;
+sum -= arr[i]; // 扣除已经走的步数。
+arr[i] = 0; // 走过了就没有步数可以再走了。
+i = iNext; }
+return sum == 0 && i == 0; // 返回True的条件 必须是所有的步数都走完了，所以sum等于0，然后index为0 }
+    - Link: http://www.1point3acres.com/bbs/thread-164793-2-1.html
+
+- [x] n个文件(共100G)，找出含某个词的文件将它们归档为一类。 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+-   e.g. A: small cat and small dog
+        B: small cat
+        C: cat and dog
+    then given ['small cat', 'dog'], return [[A,B], [A,C]]
+
+    - Inverse index:
+small -> A, B
+cat -> A, B, C
+    - Map reduce: http://www.jiuzhang.com/solutions/search/?question=inverted
+
+- [ ] Write code to print all pairs of natural numbers
+
+- [x] 给一个BT, 每个node有一个next，当该node没有right child时，指向inorder successor，otherwise null。 让不用stack和recursion，inorder 遍历BT。initialize BT with next.
+
+    - Solution:
+
+        - Eclipse: BinaryTreeNextPointer (Not implemented)
+        - Go left most first, if left most has right child, go left most of right child. Otherwise, go with next pointer
+
+- [ ] 在一个Grid里算有多少正方形，给一个m一个n的边长
+- Total number of squares = m x (m+1) x (2m+1)/6 +
+                          (n-m) x m x (m+1)/2
+when n is larger dimension
+
+- [x] 找最长连续子序列，要求这个子序列的和为0. 比如[4, 8, 3, -7, -4, 8]， 应该得到［3, -7, -4, 8］。
+
+    - prefix sum array -> hashmap<sum, index>
+
+- [x] 给n行输入，每行2个int：
+- 1 2
+1 3
+1 4
+2 5
+2 6
+3 7
+...
+构建一棵树（不一定是binary tree），第一行输入的第一个int是root，所以上面的输入转换成下面的树：
+                   1
+                /  |  \
+              2   3   4
+            /  \   |
+          5   6  7
+然后要求打印出在以某个结点为根结点的子树中的所有结点。比如给定结点2，就要打印2,5,6；给定4，就打印4.
+
+    - HashMap<Node, List<Node>> -> parent, children
+    - Solution:
+
+        - Eclipse: PrintSubTree
+    - Build tree with hash map. Iterate with bfs
+
