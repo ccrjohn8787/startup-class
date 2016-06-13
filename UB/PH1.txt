@@ -1,0 +1,307 @@
+- [x] K subsequences:
+    - Jigar got a sequence of n positive integers as his birthday present! He likes consecutive subsequences whose sum is divisible by k. He asks you to write a program to count them for him.
+    - Problem: https://www.hackerrank.com/contests/w6/challenges/consecutive-subsequences
+    - Link: http://www.1point3acres.com/bbs/thread-192197-1-1.html
+    - Reference:
+        - https://www.hackerrank.com/contests/w6/challenges/consecutive-subsequences/editorial
+    - Idea:
+        - Do prefix sum and count number of prefix sum mod k for each different remainder. Since each prefix sums that has the same remainder with k qualifies for the result, we can just count each different remainder. At the end, for each different count n, add n choose 2 to the result
+    - Solution:
+        - Eclipse: KSubSequences
+
+- [x] 两个log， log1， log2， merge成一个log
+
+    - timestamp : num of driver
+    - log1
+1:00       5.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+    - 2:15       7
+3:00      20.re.
+    - . 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+log2
+1:05     3
+2: 20    8.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+    - 3:00     5
+combined
+1:00     5
+1:05     8
+2:15   10
+2:20   15
+3:00   25-google 1point3acres
+
+    - 大概意思是这样，具体可能有偏差，最开始我以为 top k 问题，面试官说只有两个log，大概想了想用 two pointers来做。解释了下，就开始写代码。可能edge  case太多，或者我没仔细分析题目。中间的逻辑有问题。最后run代码的时候又一直有语法错误。白人小哥很耐心，可我的表现实在太差。没戏了肯定是。
+    - 大概的意思是2:15的时候log1中有，log2中没有，就要加上log2上一条的数据，所以是7 + 3. 里面corner case很多。如果一个timestamp在两个log都有的话，直接相加就好。
+    - onsite也遇到过这道题，如果输入只有两个log的话，可以用两个指针ptr1，ptr2分别遍历两个log，循环每次取ptr1或ptr2中较小的timestamp并计算结果加入result
+    - Link
+    - Solution:
+
+        - Eclipse: MergeTwoLogs
+
+- [x] 输入一组数据，用户名字，登录时间，登出时间，输出用户个数在所有登录/登出时间. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 例如
+input = [
+['A', 1.1, 2.3],
+['B', 1.3, 3.4]
+]
+output= [.
+- [1.1, 1],
+[1.3, 2],
+[2.3, 1],
+[3.4, 0]
+]
+
+    - Link
+    - Solution:
+
+        - Eclipse: CountUsers
+        - Similar to Lintcode: NumberOfAirplanesInTheSky
+
+- [ ] 一个hello function如果一秒之内被访问三次以内输出‘hello’， 多于三次输出‘error’
+- 然后再讨论大数据多服务器如何处理，就是2million次访问正常输出，更多次则输出‘error’.
+
+    - Link
+
+- [ ] 著名的rate limiter, 大概就是第三方有个API，设计一个rate limiter 去限制每分钟call的次数， 地里见过，但准备错了，当时有点慌，就挂了， 应该用leakybucket。
+
+    - Link
+
+- [x] Quad tree build from matrix
+    - Baby second interview
+    - Solution:
+        - Eclipse: QuadTreeBuild
+
+——————————————————— First round ————————————————————————————
+
+- [x] 写一个leetcode phone book 可以 比如你输入10 可以产生10位数以内的所有对应字母组合
+
+    - Leetcode: Letter combination of phone number + Permutations
+    - Link
+    - Solution:
+        - Eclipse: PhoneBookGeneration
+    - 问题：基本是Letter Combinations of a Phone Number，略微有些需要改变：1. 需要打印出所有十位数电话号码的combination；2. 不考虑电话号码中含有1或0的号码。
+
+        - [x] Follow up1: 一共会打印出多少行结果
+        -                    26^10种，就是10个任意字母的所有组合
+
+            - Each digit has 26 choices
+
+        - [x] Follow up2: 有N台机器，每台机器的ID为M [0 - N-1]，如何改变程序。
+
+            - Hash(phoneNum) % N
+            - each machine in charge of part of the 10 digit phone number
+
+- [x] BST longest diameter
+
+    - Link
+    - Solution:
+
+        - Eclipse: BinaryTreeDiameter
+        - Similar to Lintcode BinaryTreeMaxPathSum
+        - Reference: http://www.geeksforgeeks.org/diameter-of-a-binary-tree/
+
+- [x] O(1) space 限制下找出fibonacci数列第n个数
+
+    - Link
+    - Solution:
+
+        - Eclipse: FibonacciNth
+    - O(n) and O(log(n)) solution: http://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
+
+    - Maths:
+
+- [x] 一个2d grid，由0和1组成。从某一个1开始，计算由相邻的1构成的区域的面积。
+- 比如：
+00100
+01101
+00100. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 11110
+从第2行第3列的那个1开始计算，最后结果应该是8。也就是左边那些互相连接起来的1构成的面积。
+我用BFS算的。似乎也可以用UF。
+Follow up：接上题，将每一个grid看成边长为1的正方形，计算上述区域的周长。
+其实在上一题的BFS算法基础上略作修改即可
+
+    - Solution
+
+        - 面积：Leetcode number of islands
+        - 周长：See Eclipse Google: Perimeter
+            - Every time go out of valid position or changed kind, add one
+
+- [x] Given a balanced binary tree, counter clock-wise plot the tree node on the boundary.
+
+    -                         5. 1point 3acres 璁哄潧
+    -                 4             8
+            1     3        2   6
+         3   1           9  2   7
+    - print: 5, 4, 1, 3, 1, 9, 2, 7, 6, 8
+    - Link: https://instant.1point3acres.com/thread/178162
+    - Reference: http://www.geeksforgeeks.org/boundary-traversal-of-binary-tree/
+    - Solution:
+
+        - Eclipse: BinaryTreePrintClockwise (2 solutions in two classes)
+        - Approach 1: Using level order traversal and add left and bottom to queue and right to stack
+        - Approach 2: recursion. See Eclipse and geeks for geeks link for second solution
+    - Subproblem: print all leaves of binary tree:
+
+        - Use recursion on left first and print if is leaf and then right (see eclipse)
+
+- [x] 第一道是给一个32位的int数，你判断它的2进制表示是否是palindrome,我自己是高位和地位两边一起移动看收尾字符是否是相同的，后来网上有大牛说可以做查询表或者把低16位翻转，左移16位，然后让高16位右移16位，两个部分or一下，看和原来数据是否一样。
+
+    - Solution:
+
+        - Eclipse: PalindromeBinary
+        - Not work for negative number
+
+- [x] Leetcode Reverse Word in a String II
+- 特殊情况并且印证结果 (比如leading & trailing space的处理).
+
+    - [x] Follow up是加入符号但是reverse的时候需要保留位置: "This, is a - test" -> "test, a is - This"
+
+        - If exactly the original place, just record the position and insert back later
+    -  reverse words of string...我一开始就用那个in place的方法做，先reverse整个string, 再单独reverse。
+他说这个方法不好，有没有更好的，我说可能没有了，这个方法只需要跑两遍，不用extra memory。
+他一定让我想，我就说可以split，加到list里面，然后再输出。他问我这个方法相比第一个有哪些优点。
+我想了一下觉得如果用java的话，string是immutable的，也是要用extra space的，但是用c/c++，就可以in place.
+他说第二个方法更加易读，更加容易维护。说如果中间有extra space会怎么用的情况，然后就让我写代码。
+然后，我就开始写，第一遍大致对了，然后最后一个word怎么都加不进去，我脑抽了以为是判断出了问题，其实是忘了考虑
+如果跑到string最后的该加进去。。。三哥全程一言不发。。。我就一直尝试自言自语解释。最后找出问题了，正常情况都可以了，
+三哥跑了一下最后有trailing spaces的情况
+    - Link
+    - Solution:
+
+        - Eclipse: ReverseWords (in place and using string split)
+        - Leetcode: (No trailing, leading space, only one space in between)
+
+            - https://leetcode.com/submissions/detail/57998894/ (baby’s)
+            - https://leetcode.com/submissions/detail/57978076/(Mine)
+
+- [x] Mirror Binary Tree
+
+    - Solution
+
+        - If check mirror: http://www.lintcode.com/en/problem/symmetric-binary-tree/
+        - If need to generate a mirror of a BT:
+            - Eclipse: MirrorBinaryTree
+            - Use recursion
+
+- [x] 一个sentence，一个book， 返回是否所有的sentence里的char都在book出现过。
+
+    - Solution: see below
+
+        - 建一个Set，放sentence中的所有char；
+        - 遍历book中的char，如果set contains book中的char，Set.remove(char);
+        - 如果任何时候Set.isEmpty() == true, 说明全部都被找到了，return true；
+        - 如果到循环结束，book中的char全部遍历完后，Set size != 0, return false;
+
+- [x] 给一个 words = ["a", "b", "c"], 一个 weights = [1, 2, 3] 然后写一个function按照对应的weight来生成 word.
+- 比如如果生成600次，a 大致出现100次，b 大致200次， c大致300次
+做完之后他再让你生成n次再统计输出一下结果
+
+    - Solution:
+
+        - Eclipse: WeightedWords
+    - See below
+
+        - 首先是输入不多，权重不大的情况：按照构建一个字符串比如str = 'AABBBCCCCC'，随机生成范围rand = [0, str.length - 1]的整数，返回str[rand]；
+        - 如果输入比较多，权重数字很大，对输入进行处理把权重变成累计权重，比如对于上面的输入处理成data ＝ [{label: 'A', cumulativeWeight: 2},{label: 'B', cumulativeWeight: 5}, {label: 'C', cumulativeWeight: 10}]， 随机生成范围rand = [0, data[data.length - 1].cumulativeWeight)的整数，对于data中元素elem从第一个开始搜索，如果rand < elem.cumulativeWeight则返回elem.label
+        - 在产生随机数后可以进一步把搜索改为二分搜索
+
+            - Binary search on index. e.g. [A, B, C], start = 0, end  = 2, each time compare arr[mid] with the ending index’s number
+
+- [x] Tree Traversal: inorder/preorder/postorder recursive/iterative
+
+    - Binary Tree problems summary
+    - Iterative:
+        - Inorder: stack go left first, then pop from stack, if there’s right child, push all left child to stack
+        - Preorder: same as in order but add to result when pushing element to stack
+        - PostOrder: left+right+root same as root+right+left reverse => do opposite of preorder and reverse the collection at the end
+
+- [x] implement a hash map, key和value都是<int, int>
+
+    - Solution:
+
+        - array + List in each array
+        - Need rehash?  http://www.lintcode.com/submission/3373817/
+
+- [x] 一维dp问题：在[0，M]的线段上，给定不同的点(x1, x2, ..., xn)以及对应的utility (r1, r2, ..., rn)，需要选出subset of positions 来maximize sum of utility，同时满足下列条件：
+- (1) 不能选太靠近起点和终点的位置： 选择的点不能在 [0，s]以及[M-s, M]内。
+(2) 任何两个位置之间距离不能小于d
+
+    - Solution:
+        - Eclipse: MaxUtility
+        - dp[i] = max utility if choosing i (dp[i] = 0 if i < s or i >= M-s)
+        - dp[i] = max(dp[j] + utility[i]) for all j from 0 to i-d
+        - find maximum dp[i]
+
+- [x] We have access to 2 external endpoints:
+- 1. /locations/{pizza type}
+Returns a list of strings representing all our locations that produce that type of pizza.
+Example:
+/locations/hawaiian : [“TrainStation”, “University”]
+2.  /nextPizzaTime/{location}/{pizza type}
+Returns the earliest time in minutes until that location produces the provided type of pizza
+Example:
+/nextPizzaTime/TrainStation/hawaiian : 7
+/nextPizzaTime/University/hawaiian : 11
+简单地说, 有以上两个接口, 写第三个:
+We need to expose an endpoints that returns the earliest time ANY of our locations can produce a pizza type
+/nextPizzaTime/{pizza type}
+[x] Follow up: 第三个接口总被调用, 如何优化?
+
+    - Link
+    - Solution:
+
+        - Rephrase the problem:
+
+            - API 1: given pizzaType, return the locations that produces the pizza types
+            - API 2: given location and pizzaType, return next time the location produces the pizza type
+            - Code API 3: given pizza time, return earliest time ANY of the locations produces pizza type
+        - First call first API to get all locations, then call second to get all next time and pick the smallest one
+        - Follow up: if called many times:
+
+            - Maintain a hash map of pizza type to list of tuple of locations and next time and last checked time:
+
+                - e.g. hawaiian -> (TrainStation, 5min, 11:00:00AM), (…),...
+            - for each of the tuple in the list, if difference between current time and last checked time is more than the next time, than refetch. Compare and get the smallest again
+
+- [x] http://stackoverflow.com/questions/12713564/function-in-javascript-that-can-be-called-only-once
+
+    - Problem: function that can be only called once, the second time do nothing:
+        - use a global flag?
+        - Multithreaded with lock?
+
+- [x] coding: letter combination in phone number(edge case, handle 0 and 1)
+
+    - [x] follow up: word recommendation(use prefix tree (trie)) (just talking about idea)
+
+        - Solution: Trie tree find all isWord node with DFS that matches prefix
+
+    - [x] follow up: show most popular word(prefix tree + heap) (just talking about idea)
+
+        - Solution: Trie tree node save the count of word instead of isWord flag
+
+    - [x] follow up: (like, 15) (live 10) (just talking about idea)
+    - You li ke pizza.
+I li ve in San Francisco
+when type "I li", should give recommendation about live not like
+use map, prefix tree + heap
+
+        - Solution: same
+
+    - [x] follow up: make letter combination function more standard, user could define their keymap
+    - change function header to
+def letterCombination(input, letterMap) (handle when len(letterMap[input])) == 0)
+
+        - Solution: add custom map to input argument
+
+    - [x] follow up: make a class, so letterMap will not be altered when it's created (edge case: what if a input letter doesn't exist in letterMap, check if it's in letterMap first)
+    - Class NumberMap:
+        def __init__(self, letterMap):
+                self.__letterMap = letterMap
+
+        - Solution: put map in constructor
+    - Link
+    - Solution
+
+        - Original: http://www.lintcode.com/submission/4569429/
+        - Word recommendation: See TypeHead in system design
+            - 5.Crawler, Typeahead
+
