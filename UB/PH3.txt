@@ -1,0 +1,370 @@
+
+- [x] hashcode a class，就是重写所有class从object继承来的hashcode()，不复杂（复杂的也没法短时间扣出来）， 调用各个field自身的hashcode()，乘以prime（一般设31）相加，不知道各位大神还有什么其他更好更专业的implement求教。 反正面试官大哥说ok，我还问了要不要我implement下string的hashcode()因为他给的这个class只有double和string两个类型：
+- class xxx {
+    Double d;
+    String str1;.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+-     String str2;. 1point 3acres 璁哄潧
+- }
+
+    - Solution:
+
+        - result  = 1;
+result = result * prime + flied1.hashCode();
+result = result * prime + filed2.hashCode();
+        - 需要用质数减少collision
+        - Reference: http://stackoverflow.com/questions/113511/best-implementation-for-hashcode-method
+        - Why prime?
+            - Well, computed hash code cannot be always unique :) Is a hashcode. However I got the idea: the prime number has only one multiplier, while non-prime has at least two. That creates an extra combination for multiplication operator to result the same hash, i.e. cause collision.
+
+- [x] Compress string: 就是给个string比如"aaaabbbccc"返回“4a3b3c”
+
+    - Solution:
+
+        - Eclipse: Google/CompressString
+        - Maintain counter and index of prev string. Every time changes value, add counter and value to string builder
+
+- [x] 问我知道树有哪些遍历方法，我说前中后序遍历，然后就让我写一个中序遍历。写完自己写了个test case能跑，然后大哥说你觉得你这代码哪里可能有问题，我说不知道，他提示说如果树很大会有什么问题，我说我这是recursive的方法，会调用system stack，树大了可能空间不够。他说那你怎么解决，我就写了个iterative的方法。
+
+    - Link
+
+- [x] 输入是一串硬币价值和一个金额，问有多少种取法可以达到这个金额。我就写了个helper function，类似recursion的方法call这个function,取到0了 counter就加1，之前还把这个vector sort了一下，大哥问你这个sort能实际减少复杂度吗，我说不能，但是能更快的terminate。大哥说能不能优化一下实际减少复杂度。我说可以用个map把<取到第idx枚硬币，剩余的金额>作为key，取法数量作为value存起来。后来时间不够就说了下想法
+
+    - Link
+    - Different from Leetcode: Coin Change since would cause duplicate
+
+        - e.g. Value = 4, coins = {1,2,3}. Using the leetcode approach would get 6, but actually only 4
+    - Reference:
+
+        - http://algorithms.tutorialhorizon.com/dynamic-programming-coin-change-problem/
+        - http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/(including space optimization to O(n))
+    - Solution:
+
+        - CoinChange
+
+- [x] 有一个已经实现好了的API，只要输入一个站名，就可以输出来此站的所有公交线路的信息。问你设计一个interface，输出最近要来的公交车的下一站。
+- 然后慢慢问问题，逐渐把问题缩小成为找离现在时间点最近的下一个公交到站时间点。
+继续问问题，把API的输出理解为已经按时间点排好序，OK，典型的find element in sorted array
+
+    - Link: http://www.1point3acres.com/bbs/thread-132216-1-1.html
+    - More explanation:
+
+        - “输出最近要来的”公交车的下一站。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+        - 感觉是要是要先通过P找到马上要来的那路公车。再找出该公车的下一站吧。
+比如，公车时刻表：
+1路：12点经过P站
+2路：12点15经过P站
+3路：11点45经过P站
+现在时间点11点50.
+离现在时间点最近的下一个公交：1路
+导出1路的array。
+然后再binary search到P
+如果P不是最后一个就输出P＋1.
+        - 对于任意站点x有n条路线，每条路线可能有p个站点(x只是其中一个) 那么api返回的是n个array, 每个array里面的p个元素是sorted。
+遍历n个array, 对于每个array可以用时间维度的binary search来找到什么时候到站
+    - Link: http://www.1point3acres.com/bbs/thread-132216-1-1.html
+
+- [x] Pig Latin. https://en.wikipedia.org/wiki/Pig_Latin
+
+    - 规则没有那么多，分了好几问update的问的，当时没有搞得特别清楚，代码写的惨不忍睹，幸好还有二面。
+    - Link: http://www.1point3acres.com/bbs/thread-154236-1-1.html
+    - From wiki:
+
+        - For words that begin with consonant sounds, all letters before the initial vowel are placed at the end of the word sequence, Then, "ay" (some people just add "a") is added,
+
+            - "happy" → "appyhay"
+        - For words that begin with vowel sounds or a silent letter, one just adds "yay" to the end.
+
+            - "eat" → "eatyay"
+        - etc
+    - Just implementation according to the rules
+
+- [x] 扫雷游戏 关键是 interviewer 假设各种 function都有了 一共没写几行
+
+    - Reference:
+        - Generate board and mine: https://hellohell.gitbooks.io/-shuati/content/minesweeper_game.html
+        - Game design: https://www.careercup.com/question?id=11966706
+        - From Yelp onsite:
+            - 扫雷游戏。一个n*m棋盘，要我随机放置k个地雷，然后将棋盘根据扫雷规则把棋盘用数字填满。最后问了时间复杂度
+每个雷的上下左右都加1. O（k）
+            - Link: http://www.1point3acres.com/bbs/thread-135569-1-1.html
+        - Link: http://www.1point3acres.com/bbs/thread-160135-1-1.html
+
+- [x] Implement TimeTravelingHashTable的get和insert方法
+- * TimeTravelingHashTable
+* insert(key, value, timestamp)
+* get(key, timestamp)
+* get(key) // returns value associated with key at latest time.
+
+    - * insert("k1", "v1", 10)
+* get("k1") // returns "v1"
+* get("k1", 11) // returns "v1"
+* insert("k1", "v2", 20)
+* get("k1", 15) // returns "v1"
+* get("k1", 11) // returns "v1"
+* get("k1", 21)...
+    - Link: http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=141712&pid=2095221&fromuid=169528
+    - Solution:
+
+        - Eclipse: TimeTravelingHashTable
+        - Use Hashmap<key, TreeMap<timestamp, value>>
+        - get(“k1”) => Use lastEntry() of TreeMap which returns the highest entry in the TreeMap
+        - get(“k1”, 10) => First see if timestamp is in TreeMap. If not, use floorEntry(10) method in TreeMap
+        - Reference of TreeMap: http://www.tutorialspoint.com/java/java_treemap_class.htm
+
+- [x] 问了一下thread和process的区别，然后接着就问了blocking lock queue的具体实现。
+
+    - Link
+    - Solution:
+        - Process and Thread   (A. difference  B. difference between IPC and ITC    C. Example of Process communication and Thread Communication)
+
+            - Process is an instance of a program that is being executed has its own address space
+
+                - Processes communicate through interprocess communications
+
+                    - File: each write to a file and read
+                    - Socket: write and read from socket. Can be local machine
+                    - Shared memory: agree on a part of memory to communicate
+                    - Memory mapped file: map virtual memory to a file and communicate
+                    - Pipe: readonly and write only file provided by OS
+            - Threads is a light weight process that shares address space, but have own register, stack, program counter
+
+                - If have more threads than cores, needs context switching to give impression of multi-threading
+                - Communication: shared memory
+    - Blocking Queue
+        - Eclipse: BlockingQueue
+            - Enqueue: wait on queue full and notify when queue is empty and adding item
+            - Dequeue: wait on queue empty and notify when queue is full and removing item
+        - http://tutorials.jenkov.com/java-concurrency/blocking-queues.html
+        - http://stackoverflow.com/questions/20110013/implement-your-own-blocking-queue-in-java
+
+- [x] 题目就是flatten json to a list of map, 有一段json，比如说如下：
+- {
+  "uuid": "abc",
+  "properties": {
+    "sessionName": "Test session name",
+    "waypoints": [
+      {"uuid": "def", "properties": {"latitude": 3}}
+    ]
+  }
+}
+把它转化成List<Map<String, Object>>， map里面uuid是key, properties是value。 所以结果应该像下面
+[
+  {"uuid": "abc", "properties": {"sessionName": "Test session name", "waypoints": ["def"]}},
+  {"uuid": "def", "properties": {"latitude": 3}},
+  ...
+]
+就是输入是
+Jack,project1
+bob,project2
+Jack,project3
+Eric, projecrt4
+...
+输出
+Jack, project1, project3
+Eric, project4
+bob, project3
+
+    - Link: http://www.1point3acres.com/bbs/thread-136248-1-1.html
+    - Not very clear on the problem meaning, but use recursion to do it
+
+- [x] 给一个有序数组（不含重复），返回任意一个数字，这个数字的值和它的数组下标相等。Binary search
+
+    - [x] follow up: 如果含有重复数字怎么办？
+    - Link
+    - Solution:
+
+        - Idea: Binary Search
+        - Eclipse: FindItemEqualToIndex
+        - Follow up: if has duplicate: just O(n) solution
+
+- [x] 题目是让你写一个带有TTL (Time to leave) 功能的Cache，之后的测试不能睡Thread，得自己写一个Time Module来模拟时间做测试。
+
+    - Link: http://www.1point3acres.com/bbs/thread-145480-1-1.html
+    - Idea:
+        - HashMap + Queue. Cache item contains timestamp of last insert or update. When get or set is called, check queue items to see if expired
+    - Solution:
+        - Eclipse: TTLCache
+
+- [x] 有一大堆meeting， 有start time和end time，都是integer，且在一天之内，代表一天内的第几分钟。然后让返回boolean代表这些是否有overlap，然后楼主就naive了，就写了个comparator sort了，按start time 排序后一个个检查下一个的start time是否小于上一个的end time。然后小哥说有没有更好的办法，提示了一下说用一个数组。然后楼主恍然大悟，就开了个1440 大小的bit的数组写了个O(n)的。
+
+    - Interval check overlap:
+    - Solution:
+
+        - O(log(n)): Either sort on interval and check overlap or break it down to edges and use counter to check overlap
+        - O(n): boolean array size of range of possible minutes in the day (0, 1440). 来一个meeting就把相应时间段全变成true，如果发现之前就是true直接return。和你思路差不多
+
+            - Sample code using BitSet: Link
+
+- [x] Elevation Matrix
+
+    - 输入是一个 N*N的矩阵，代表地势高度。如果下雨水流只能流去比他矮或者一样高的地势。
+矩阵左边和上边是太平洋，右边和下边是大西洋。求出所有的能同时流到两个大洋的点。
+    - Link: http://www.1point3acres.com/bbs/thread-142212-1-1.html
+    -  Reference:    http://www.fgdsb.com/2015/02/09/elevation-matrix/
+    - Solution:
+
+        - DFS/BFS starting from one ocean, mark reached. Do the same with other ocean and find intersection
+        - Code in reference link
+        - Runtime: O(n^2)
+
+- [x] Big Integer Subtraction
+
+    - Reference: http://massivetechinterview.blogspot.com/2015/09/implementing-biginteger.html
+    - Solution:
+        - Eclipse: BigIntegerSubtraction
+        - If allow negative number, need to convert to positive number first, might involve addition if sign different
+
+- [ ] 已知酒店房间已被预定的时间和客人想要入住的时间，要客人换房间的次数最少，返回所有可能。
+- 例子，输入：
+总共10个房间，每个房间的预定和空闲情况已知，即A[day][roomID]是在输入中
+- 然后说新来一人，要求住宿第3天到第7天，求如何安排让客人换房次数最少
+
+    - Link: http://www.1point3acres.com/bbs/thread-167789-1-1.html
+    - Sample Code: http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=167789&pid=2189417&fromuid=169528
+    - Solution:
+        - Eclipse: HotelRoom
+
+- [ ] (Onsite)无向图结构。知道会若干个disjoint set。构建disjoint set，使得可以在O(1)时间内得到bool inSameSet(Node a, Node b)的结果。
+
+    - Link: http://www.1point3acres.com/bbs/thread-147058-1-1.html
+
+- [ ] (Onsite)有向图结构。可能成环，可能有disjoint set。求找出图中最长连续序列的长度，最好还能把序列打出来
+
+    - Link: http://www.1point3acres.com/bbs/thread-147058-1-1.html
+
+- [x] Represent a deck of playing cards in an object-oriented design. (1) Write a function to output the deck. (2) Write a fn to shuffle the deck.
+
+    - Link: http://www.1point3acres.com/bbs/thread-137444-1-1.html
+    - Solution:
+        - Eclipse: DeckOfCard
+        - Reference:
+            - https://www.cs.duke.edu/csed/ap/cards/cardstuff.pdf (Interface and output)
+            - http://www.hawstein.com/posts/20.2.html (Perfect shuffle)
+
+- [x] 第二题是sort a deck of card，要求比nlogn更快，然后想法就是根据花色和大小确定牌应该在的位置，然后swap，比如一张牌suite a，rank b，那么它应该在 a*13+b 的位置上。。。然后lz就傻逼了，换回来的之后直接 i++了。。。应该继续判断是否要交换牌直到该位置的牌正确为止。。。
+
+    - Solution:
+
+        - Swap card to its position
+
+- [x] 假设给你一个2D array由'\'和'/'构成。让你求这些slashes把整个区域分成了几个区间。举个例子：
+- 假设输入是：
+/\/
+\/\
+那么需要返回6。我一开始没听懂题目意思，让他解释一番。他说你可以这样看：
+----------
+A/F\B/C
+D\F/E\C.
+- 其中字母代表的是区域的标号。
+如果各位没看懂的话我再举个例子。input是这个
+/\\
+/\/.
+- /\\.
+
+- 返回还是6。，因为整个可以分成这样：
+----------
+- B/\C\D
+/CC\C\
+C/\CC/.
+- /EE\/F
+E/\E\F
+/GG\E\
+----------。
+给我解释了大概十分钟后我终于明白要干什么了。开始想思路。想了一会没想法，面试官提示说你可以写一个函数
+ def find_neighbors(i, j, is_left）
+- 返回这个矩阵中i,j可以到的其他位置，is_left表示的是这个位置是在slash的左边还是右边，到这里我大概知道这是一个DFS或者是BFS的问题了。
+
+    - Link: http://www.1point3acres.com/bbs/thread-144457-1-1.html
+    - Solution:
+        - Eclipse: NumberOfSlashRegions (Some bug there, see original code link)
+        - http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=144457&pid=2017746&fromuid=169528
+
+- [x] Rate limiter: sever给每个用户单位时间可以发送的request设置一个上限，超出上限的request需要被block，设计系统的这个功能
+
+    - [x] API limiter 给一个函数写一个包装函数，要求一秒最多调用5次，超过5次就直接返回不运行函数。 用Tokenbucket令牌桶算法就好了。
+
+    - [x] 题目是一道是callAPILimitedRate，就是在一分钟内callAPI的times不能超过一定值。其实就是当前的时间减去开始的时间，超过一分钟，则count为0，同时更新开始时间。然后计算count有没有超过limit。超过则throw error。否则callAPI。
+
+    - [x] Follow up就是在时间差为1分钟的情况。比如1秒-61秒。这样的情况就是用sliding window。因为API不是每一秒都call的，所以还有一个vector<pair<int, int>>, 第一个int 存时间，第二个int存的是call 的次数。vector永远只存于当前时间一分钟以内的数据。然后统计vector的sum。算sum是不是超过了limit。不难的。感觉考思路和临场反应。
+    - Solution:
+
+        - Eclipse: Google/RateLimiter
+        - NineChapter: http://www.jiuzhang.com/solutions/rate-limiter/ (Not bucketed)
+        - Save storage:
+            - Have hour bucket, minute bucket and second bucket.
+            - Each access is stored to all three buckets and drills down to finer levels
+
+- [ ] TODO: 就是刚开始有第一个乘客requester要搭车，给出发点original point的[latitude, longitude] 和 destination的[latitude, longitude]。于是就有了这趟行程current route最初的两个点 Point_start 和 Point_end。
+- 然后现在有一个List<Requester>, 每一个Requester都有一个起始点original point和destination point。要求把符合要求的requester加入到current route里去。比如现在有个Requester  r1 起点和终点是 P_start_1, P_end_1, 而且P_start_1, P_end_1都在 ［P_start， P_end］之间，所以加入r1后，current route 就变成了[ P_start， P_start_1, P_end1, P_end]
+注意：这个list里所有requester都是想carpool，加赛的，所以规定后来的Requester的起点和目的地都在Point1 和Point2之间。
+然后给了一个API。int  QueryEngine.getDistance(Point p1, Point p2).   这个API返回任意两个点之间所花费的用时, 用时O(1)。
+问题是： 给了初始乘客Requester r0 （知道他的起点， 终点）， 然后给一个 List<Requester>, 问这个list里的requester可以有多少人加入到current route里来？按顺序返回最终的route里的point
+
+    - Solution:
+
+        - Baby Eclipse: UberPool
+
+- [ ] TODO: 题目是在二维平面上给定一组两个点的相对位置，需要判断这组相对位置是否可以被满足
+- 一共有八种相对的位置 N, S, E, W, NE, NW, SE, SW (北，南，东，西，东北，西北，东南，西南)，举几个栗子：
+(1)Input： 1 N 2, 2 NE 3, 3 S 1
+    Expected output: False
+(2)Input :  4 SE 5, 5 SW 3, 3 N 4
+    Expected output: True
+
+    - Link
+    - Solution:
+
+        - Eclipse: RelativePositions
+        - Approach 1: use the first point as (0, 0) and direction assumes distance of 1 unit apart. e.g. 1N2, then 1 is (0,0) and 2 is (-1,0)
+
+            - 1NE2, then 1 is (0, 0) and 2 is (-1,-1).
+            - Add each to a hash map and if both found in map, see if the direction is valid
+        - Approach 2: Topological sorting:
+
+            - Each point has N, S, E, W four neighbors, if 1N2=> add
+
+- [x] The matching should cover the entire input string (not partial).
+- The function prototype should be:
+bool isMatch(String str, String pattern)
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa",”a[1,3)") → true
+isMatch("aaa",”a[1,3)") → false
+isMatch("ab",”a[1,3)b[1,3)") → true.
+- isMatch("abc",”a[1,3)b[1,3)c") → true
+isMatch("abbc",”a[1,3)b[1,2)c") → false
+isMatch("acbac",”a[1,3)b[1,3)c") → false
+isMatch("abcc",”a[1,3)b[1,3)cc[1,3)") → true
+
+    - Solution:
+
+        - Eclipse: WildCardMatchWithCount
+        - Need to modify the eclipse solution:
+
+            - first parse the pattern string to simple string with another metadata array describing the number of matches it can take
+
+- [ ] TODO: 题目：给一个长消息，分拆成几个短消息，每个短消息有一个长度限制。一个单词不能分拆到两个短消息中。然后在每个短消息后面加上页码信息，如 (1/3),(2/3),(3/3)，这个新加入的页码信息也计算入每个短消息的长度限制.
+- 经过询问之后得到更多详细要求及假设：（1）消息数量尽可能少，不必凑整句，可以在任意空格处分页；（2）这个固定长度可能非法，比如某个词很长导致一条消息放不下，要判断并抛出异常；（3）假设空格分割，不会出现连着两个空格的情况。
+这个题目看着挺简单，但真正trick的地方是页码（长度：1位，2位还是3位）数量只有在切分短消息之后才知道，而切分短消息又必须基于页码长度。
+
+    - 所以这个题的解决方案其实是backtracking。假设短消息少于10条，页码信息就是5位,比如(1/3).然后切分消息，如果消息总数多余10条，那么重新来过，假设消息少于100条...依次，直到切分的消息总数跟页码长度匹配为止。
+    - Link   Link2   Sample code in link2
+
+- [ ] 电面面经：
+- // input: sentences
+// e.g.
+// a fox jumps over a rock.
+// a frog jumps over a pond..
+- //.....
+// output: sentence.
+地里见过的题目。我就说需要给个dictionary，然后根据dictionary从已有的句子中找出主语谓语宾语，然后再combine成新的句子。因为面试官说要40分钟内写完调好，所以不要求高级NLP算法。我就说需要提供个dictionary，通过dictionary从已有的句子中找出主语谓语宾语的三个set，然后分别从三个set中取词组成新的句子。感觉这题比较开放，不同考官要求可能会不一样
+
+    - Solution:
+
+        - Eclipse: GenerateSentence
+
+Knowledge Problem:
+
+- [ ] 问当你用browser打开www.uber.com的时候，发生了生么。我就用http请求，到dns，到server，再返回，浏览器render之类的讲了一下
