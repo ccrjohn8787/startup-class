@@ -1,0 +1,162 @@
+- [x] 第一轮面了道shortest path sum in matrix,
+
+    - [x] follow up 打印路径,
+
+    - [x] 问有多少种最短路径
+    - 从左上角到右下角
+    - Link
+    - Solution:
+
+        - Eclipse:
+
+            - Eclipse: MinPathSum
+        - If can only go down or right, can use DP
+        - If not, can only do BFS
+
+- [ ] 第二轮 不够言笑的manager,问了道六边形构成的图，问怎么存这六边形，以及如何返回他的六个邻居:http://www.redblobgames.com/grids/hexagons/
+
+    - 第二题没回答好。。。我只用了一种方式，list list存的。。。后来想想看其实可以存成图的方式
+    - 这题是不是可以把一个六边形写成一个node class，然后list<Node> 存他的六个邻居？
+    - 不过给你的格式是第一行是ring1, 第二行是ring2 第三行是ring3，每一行开始的位置在一条直线上……如果要这样存就要先找出邻居数学关系式。。。怎么存其实不重要，因为总是要找出给你输入格式下邻居的位置的数学关系
+    - 他是想要存下整个六边形，最开始的中心六边形是一个ring，然后他的六个邻居是ring2 然后ring2的外围的十二个邻居是ring3，每个六边形其实是编号好的.比如说ring2的第二个六边形的邻居是ring1,ring2的第一个，第三个, ring3的第二个第三个第四个
+    - Link
+
+- [ ] 第四轮 一个permutation 加第k个permutation
+
+    - Link
+
+- [ ] Game of Life:
+
+    - [ ] 问了game of life 然后问steam 输入的情况下怎么处理。
+
+        - Link
+
+    - [ ] follow up是如果board很大，大到根本存不了，咋办，我说那只记录边界和是活细胞的点的位置 https://segmentfault.com/a/1190000003819277
+
+- [ ] 给一个contact名单，电话键盘有字母，实现给一个电话，看对应的名字在不在contact中。
+
+- [ ] TODO: BST给数值k，找两个node加起来为k，要用less than O（n） space
+
+    - Write 2 iterators: one inorder and one reverse inorder
+
+- [ ] LC: 实现两个整数相除。
+
+- [ ] LC: 第一轮是个外国小哥，算术式Evaluation, 要求支持+-*/().
+
+- [ ] TODO: 第二轮是个国人大哥，一个2D平面有一堆雷达（雷达有x, y坐标，以及能探测到的范围r半径）然后又一辆小车要从y=0和y=1的区间里面通过并且不能被雷达探测到。让写一个function看小车能不能通过。
+
+    - Build graph - radar is a node. there is an edge if dist(x1, y1, x2, y2) <= r1 + r2
+    - find all connected components in graph
+    - check each component to see if it blocks the whole tunnel
+=> blocks if max(y+r) >= 1 && min(y-r) <= 0
+
+- [ ] Leetcode Unique Path ii.
+
+    - [ ] 主要面的是unique paths I + II, 加了面试官自己的follow up, 就是如果给定的grid里面有三种情况，0能走，1不能走，2表示弹簧，可以走到2右边2格的位置，求结果
+    - dp[i][j] = dp[i-1][j] + dp[i][j-1] + (dp[i][j-2] == 2? dp[i][j-2] : 0)
+
+- [ ] 第一轮国人小哥中文面的，给一个List of meetings, meetings有起始时间，求meetings的arrangement，返回的是哪个meeting Room被排了哪些面试。
+
+    - [ ] TODO: 然后学长说，那我们变一下，现在只有一个room，然后每个meeting都有权重，要求在不冲突的情况下使得最后安排下来的权重和最大
+    - sort meetings by end time
+dp[i] = max value from previous i meetings
+dp[i] =max (dp[k] + weight(i)) for (k from 0 to i-1 where meeting k.end <= meeting i.start)
+          or dp[i-1]
+
+- [ ] 第二轮1. class Throttler {
+-       int qps;.1point3acres缃�
+-       public Throttler(int qps) {
+      }
+      pubilc boolean allowAccess() {
+      }
+}
+给这么一个class实现rate limiter，allowAccess()返回的事当前时间的access能不能被批准
+举个栗子：
+qps是2
+request1 time 0.0 return true;
+request2 time 0.5 return true;. 鍥磋鎴戜滑@1point 3 acres
+- request3 time 0.6 return false;
+
+- [ ] TODO: Given List<word>, String para, 返回包涵所有word最短的一段话,返回String
+- 先把word简化成character来做的，就是LC的minimum window substring，最后时间不够没写完，感觉gg在这里了
+
+- [ ] TODO: 给一个单核CPU的log，parse log，每一行log三列分别是jobname(String)    start/end(boolean)    timeStamp(long)
+
+- name(String)    start/end(boolean)    timeStamp(long)
+f1                   start                        0. Waral 鍗氬鏈夋洿澶氭枃绔�,
+- f2                   start                        2
+f3                   start                        4
+f3                   end                         5
+f2                   end                         8
+f1                   end                        9
+上面log的意思是我们在0开始做f1
+在2的时候切换到f2,
+4的时候开始做f3，
+5的时候f3结束
+要返回每个function要用的时间
+这个input的返回就是
+f1 ： 3
+f2 ： 5
+f3 ： 1
+Use a stack: start push, end pop
+
+- [ ] 在terminal里输入文件名的一部分然后按tab补全，求能找到target文件要输入string的最短长度
+
+- [ ] TODO: 写一个可以被多线程访问的计数器？？每被访问一次count++，check被访问次数的method并不常用
+
+- Java AtomicInteger: incrementAndGet(), decrementAndGet(), get()
+
+- [ ] 第四轮，第四轮是我面的最迷的一轮，前半段连写了三道简单题 reverse linkedList, 按层打印树，和LC reverse words in a string
+
+- [ ] 后半部分在讨论如何用4G的RAM sort硬盘里100G文件的问题，可以加额外的硬盘，要尽量使用时尽量短
+
+    - [ ] 如果很多数重复怎么办，经过提醒，国人大哥告诉我应该在merge的时候，对于每次从priorityque中poll后的那个对应的sorted list，对比下自己这个sorted list里后面的数是不是和当前的一样，一样的话直接加进总的list中就可以了
+
+- [ ] 8x8走K步多少种走法
+
+    - [ ] 从点A走到点B， 给K步，8个方向都可以走， 问多少种走法
+
+- [ ] TODO: Wildcard Match，讲了DP的解法
+- dp[i][j] = if (char equals or ‘.’) dp[i-1][j-1] else if (‘*’) dp[i-1][j]
+
+- [ ] TODO: 题目是两个人是否能通过6个人认识
+
+- [ ] Product except itself
+
+- [ ] 二维矩阵的有些格子有障碍，一个人从左上往右下走，只能走下和右两个方向，求到右下的最短距离。
+
+    - [ ] 这个人可以上下左右都走，还是找最短距离 (bfs)
+
+- [ ] Number of Islands
+
+- [ ] 第一个不是很难，就是给了两个text文档，去parse第一个文档中的每个字符，然后去判断能不能组成第二个text。很简单，用hashmap做就好了。小哥后来让我优化，说怎么样可以提前退出而不用走完第一篇text，我就给他写了一个flag，记录到第二个text结束的时候就直接退出，小哥很满意。
+
+- [ ] 然后就第二题，第二题也是之前地里有的，外星人词典，判断这个addressbook对不对就行了
+
+- [ ] shortest distance from all building
+
+- [ ] android unlock string pattern number
+
+- [ ] TODO: s1，s2，s 分别代表string list1，string list2 和index list。两者根据index list，match就return true，不match就return False。我一上来先提出了直接历变的解法，集创建两个空string，根据index不断把两个string list里的string往两个空string里面写。小哥问我时间复杂度，我说O(n)，他说太general了，具体咧？懵逼了，真没了解那么深。后来提醒我说每次空string叠加也是耗时的，耗的时间跟被叠加的string有关。。。就是O(mn)。再问我空间复杂度，我说O(n)，还说general，最后也是O(mn)，让我改进我的算法用O(1)的空间复杂度。。。好吧，在不断交流和提醒中，写完了，用pointer，四个pointer，两个指现在的string，两个string里面的字母
+-      例如s1={"abc", "a", "ccc"}, s2={"bc", "aa", "d"}, pattern={1, 0}，则s1和p的转化结果是"aabc"，s2和p的转化结果也是是"aabc"，则返回true。如果pattern是{0, 1}，则转化结果分别是"abca", "bcaa"，则返回false。followup是，如果给定s1和s2，判断是否存在一个pattern使得转化结果一致。 过程中要求分析算法复杂度
+
+- [ ] 比方说给你50个task，有个API假设已经有了，是用来run这些task的，但是这个API最多每次只能同时run3个。并且run的顺序根据priority level来定，让实现。具体包括 get，change priority 和run，get就是新的task，change priority就是把已有的还没运行的task更改priority level，run就是运行同时保证运行完一个马上推入下一个运行
+
+- [ ] Bigint class
+
+- [ ] 设计一个API, 返回所有朋友看的snap 从高到低的snap, 所有数据结构自己构造，我就想了个Person的class, 里面有friend List, 以及一个hashMap统计各个snap的观看纪录，然后就是bfs, 再一个大的hashmap统计了
+- 最后加了个Node class {private int snapId, private int count}, 用Collections.sort出结果
+       extra:  他说你20分钟写好了，咱还有时间，你给我写个quicksort的实现吧，啪啪啪， bug free写好了， 说good job
+
+- [ ]  题目和regular expression matching 有点像， 除了＊不在表示任意count, 而是1-100 的count， 我说直接暴力枚举各种可能的结果，比如碰到a* 就见一个list 包含所有可能，然后把 s 和 由 p生成的所有可能比较一次， 面试官问有没有更好的方法，细想了下，dp还是能写的，然后就写了下，调了下bug, 测了各种testcase， 过了
+
+- [ ] 3) array里只有一个数字出现超过50%次 其他都只有一次 return超过50%次的 follow up 如果有一个数字没有超过50%次 return -1
+- 4) jump game min step 返回一个答案即可
+
+- [ ] word search II 用trie
+
+- [ ] 如何实现databasr indexing b+ tree  如何实现load testing  那些scaling vertical horizental 多线程问题 举例说明锁 以及dead lock
+-   题目是一系列log. thread1 acqure mutex1 判断死锁 用有向图detect cycle
+
+- [ ] 3sum
+
