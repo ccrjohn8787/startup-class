@@ -1,0 +1,404 @@
+My collected questions and most recent:
+
+- [ ]
+
+
+
+- 设计一个数据结构使得一个request在1秒之内只能执行50次
+    - RequestWrapper {
+  Request rq;
+  int time;
+}
+Queue<RequestWrapper>
+
+    - 每次进queue之前，把队列里过期的request wrapper出队（根据时间是否离现在时间超过一秒），然后查看当前queu的size是否超过50，不是的话，就选择进队。
+    - stack overflow第一个是token bucket的思路, ScottShao的是leaky bucket的思路，感觉也是对的吧。 删除过期request的步骤可以改成，记下当前queue里剩下没process的request数，减去距离上一次过去的时间里解决掉的request数，如果小于容量，就enqueue这个request
+    - 做法是用一个queue来存timestamp，每次来一个request的时候 if 50 > queueSize 直接加到queue里 else (50 == queueSize) 把queue前面所有大于1秒的timestamp删除，如果此时queue size小于50了再加进去. 但是这个做法面试官不满意，请问应该怎么做呢？应该涉及到什么数据结构呢？
+    - 可不可以保存一个 起始时间点 和一个 counter？ 每进来一个request 先看 timestamp，如果超过1秒了，更新counter和起始时间。如果不超过，则检查counter的大小。
+    - Link1 Link2
+
+- [ ] write a grid class
+1. set the height and width.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+- 2. set value at arbitrary point
+3. get max value of the grid
+.
+一开始问我用什么结构存这个grid， 我说vector，他问为什么，我说可以random access。
+然后做题，先直接brute-force， 2问O(1), 3问O(n^2)。他说取最大值太慢了，我就用了个priority_queue（他还问了我priority_queue<int, vector<int>, less<int>>参数的意思，说他不太清楚。。），2问变O(n^2)，3问变O(1)。他说不行，set value太慢了，我说创建一个vector<int> maxVallue(m, 0)，记录每行的最大值，这样2问复杂度是O(n), 3问是O(m)。
+他又否了我的想法，说如果是一个1*1000的grid复杂度还是很高。我说binary search tree可以都O(logn)，他说有duplicate怎么办，后来我说用multiset，这样都是O(logn)并且可以重复。（PS: 因为太久没用multiset+时间太赶，用法写错了。。。multiset是不能改变值的，只能找到了然后删了再加新的，当时没时间了就跟set一样直接ms[grid[i][j]] = newValue了。。。应该是ms.erase(ms.find(grid[i][j])); ms.insert(newValue)。悲剧）
+
+    - Link: http://www.1point3acres.com/bbs/thread-192195-1-1.html
+    - Sample code: Link
+    - 2016-06-02
+    - Segment Tree or Binary Index Tree
+
+- [x] 假设除了用1和0表示数字的binary方式，还可以用2来表示，给一个数字，求有多少种表达方式。. From 1point 3acres bbs
+-                    例子：4 = 100, 20, 12 所以答案是3。 8 = 1000, 200, 120, 112 所以答案是4。
+
+    - Link
+    - Sample code link: Link
+    - Solution:
+
+        - Eclipse: CountBinaryWithTwo
+
+- [x] 第一题：打印所有的质数（print all prime numbers），我已开始没理解清楚范围，设了个i <Integer.MAX_VALUE，为了第一题秒时间，我没多想就用了俩for loop写出来了，他说可以，这样能保证小范围的质数短时间打出来
+
+    - [x] 第二题：follow up， what if keep printing to the number that greater than the biginteger by using java, 没想明白,我说java里面有biginteger的library，大于long的长度，他说这样用第一题的方法的话越到最后时间越长，两个数间隔好很久（假设n到正无穷..）
+    - 因为是个O(N*N)的解法，有没有更好的解法，大叔很有耐心，一直在等我想，也给了些hint，我最后没想出来，后来时间到了，感觉药丸。
+    - Link
+    - Solution:
+
+        - https://leetcode.com/submissions/detail/60387805/
+        - Optimization with hash map:
+            - Only store non-prime numbers? but since primes are very sparse, it would not be much of an optimization
+
+- [x] 给一堆nodes有，每个里面有 id，有parent_id实现获取当某点的子节点 function 1.
+- 实现获取当某点的后代点 function 2
+follow up：
+先用O(n)做了，然后问如何做到O(1)
+取后代的时候注意什么问题？
+1、自己是自己的父节点
+2、nodes里面有环（如何防范？）
+
+    - 是说每个Node有一个id还有一个parent_id。让你实现两个function，第一个是获取当前节点的子节点。第二个是获取当前节点的所有后代（子，孙等）节点。 是这样吗？
+    - 这个题是考察图吧，本质就是一个有向图，用一个hashmap遍历一遍建立起Adjacency lists,这样每个点的neighbor点就都知道了
+剩下的就是在有向图上进行操作,包括查环啊什么的
+    - Link
+    - Solution:
+
+        - Eclipse: NodeWithParentId
+
+- [ ] range maximum query, 给一个array, 求[start,end]中的最大。
+- 反正他就一直要求优化，写了三种方法（从最简单的开始）之后，楼主无能为力了，然后就谈谈time和space。
+
+    - 但求最值，和sum的性质不一样
+    - 我一上来就说用naive, 然后又写了用2-D map 记, 最后用segment tree, 然后我又和他说如果我们在一个node里面记录最大到kth 最大的 index, 其实就是从1-D 到2-D的过程。
+    - 提前store query用数组/map的都是O(1)时间， 相应的space则有简单的O(n^2)和复杂一些的O(nlogn)。
+segment tree 是O(logn) time + O(n) space
+难的是O(1) time + O(n) space. 好像得用上面有人说的RMQ->LCA->reduced RMQ， 没精力研究了。感兴趣可以看 https://courses.csail.mit.edu/6.851/spring12/lectures/L15.html
+
+    - Link
+
+- [x] 简化版有向图找环， 给一堆edges， 找到eg. 1->2 , 同时2->1的这种边的个数， 比如上面这个例子， 应该返回2。 秒答以后问了下复杂度。
+
+    - Link
+    - Solution:
+
+        - Iterate through the edges, if not seen a node, build hash map for the node as key, add target node to the neighbors
+        - If target node already in hash map, check if source node in the neighbors
+
+    - [ ] Follow up: Find if a directed graph has cycle
+
+- [x] 有一个double类型的数组， 找满足 [a, a + 1) 的最长序列含有的元素的个数， eg. [ 1.0 ,1.3 ,1.5 ,2.3, 3.5],  最长的是[1.0 1.3 1.5], 应该返回3。这种小学5年级的数学（数组操作）题对我来说是很困难的， 我直接说暴力解法呗， 然后面试官提醒了下用greedy的方法。 然而代码还是写的很艰难。。。大家可以自己写写O(n)的方法练习一下。
+
+    - Link
+    - Solution:
+
+        - Eclipse: NumberEnclosingMostDoubles
+        - Two pointer forward style
+
+- [x] 给一个tree，每一个treeNode多2个指针pre next但是是空的。要求按inorder的顺序把指针连起来。
+- Lz用recursion。写的不好。
+
+    - [x] followup是怎么实现insert方法。还问了时间复杂度和空间复杂度。
+    - Link
+    - Solution:
+
+        - Eclipse: TreeWithPreAndNext
+
+- [x] 一个 binary watch，类似下图的http://www.slipperybrick.com/wp- ... ed_binary_watch.jpg
+- 比如：ore.
+- 1000 >
+8
+000011 >
+3. 鍥磋鎴戜滑@1point 3 acres
+- . 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+时间就是08:03
+让输出所有亮三个灯的时间。
+刚开始感觉可以用backtracking来枚举情况，写了一会小哥不理解，然后提示用最naive的方式，写一个countones的函数，然后从 0000 -> 1111分别调用countones来枚举所有符合条件的情况。需要注意，小时必须小于12，分钟必须小于60.
+
+    - Sample code: Link
+    - Solution:
+        - Eclipse: LEDClockCombinations
+        - 1): Math or divide and conquer
+        - 2): backtracking with bit set, stop when over limit
+
+- [ ] 一直标准的系统函数read， 有一个功能 每次就读一个字节， 然后要经常读，在一个loop 里， 问如何优化。 结果就是一次点用read多读一些，放在缓存里，用没了再读。
+
+    - Link
+
+- [x] Baby phone:
+
+    - Given a sorting order string, sort the input string based on the given sorting order string.
+        - Example:sorting order string -> dfbcae; Input string -> abcdeeabc; output -> dbbccaaee
+    - Link: http://www.cnblogs.com/EdwardLiu/p/5138864.html
+    - Eclipse: CountingSortString
+
+- [x]  给一堆votes(candidate, timestamp)，问当前时刻T得票最高的人是谁。
+
+    - Original question: use hash map to count max count, update global max during counting, not count the timestamp bigger than current time
+
+    - [x] Follow up问得票最高的前K个人。
+
+        - Solution: Same as first question use hash map, and use priority queue with size k to get top k
+        - leetcode: TopKFrequenctItems
+    - Very high frequency google problem
+    - http://www.1point3acres.com/bbs/thread-183366-1-1.html
+    - Another link
+
+- [x] 问题是给一个函数String compress(String text), 让你自己想一个简单的实现方法，其他什么条件都没有。我问了下能不能做一些假设什么的，比如说没有数字只有字母等等，他说可以，然后就开始写，用的方法很naive，直接扫描然后记录结果，结果还有一些错误，最后一个字符没考虑到，后来他提醒了下改了过来。
+
+    - [x] 然后follow up了一下，如果里面包含数字该怎么处理，我说的是用一些特殊符号加到数字后，他又问怎么处理包含所有可能的字符，我想了一下，说了个hashmap,他说hashmap不好输出，我又说用List<int[]>作为输出，int[]包含2个数字，第一个数字代表字符，第二个代表它出现的个数
+    - Link
+    - Solution:
+
+        - (1): Eclipse: CompressString
+        - Follow up (all possible chars):
+
+            - Use the format [count]char
+
+                - escape ‘[‘ and ‘]’ with ‘/‘ and replace ‘/‘ with ‘//‘. When decoding, skip ‘/‘ and use the char after it
+            - Approach 2: allocate first five characters as count. same idea as encode and decode string. But would not be a good compression algorithm
+
+- [x] Print matrix diagonally:
+
+    - 1 2 3. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+    - 4 5 6
+print: 3,2,6,1,5,4
+    - http://www.1point3acres.com/bbs/thread-173890-1-1.html
+    - Solution:
+        - Eclipse: DiagonalPrintMatrix
+
+- [x] Create a method toreturn a unique collection of <count> random Integers between 0 and <maxValue>(exclusive of maxValue)
+
+    - Link: http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=191253&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26sortid%3D311
+    - Thoughts:
+        - This problem is a pseudo-random number generator. Need to use a hash map to indicate whether the generated number has been taken. If so, regenerate
+        - 第一题的意思是高效生成0-n中不重复的随机数。由于随机数是随机的，所以到了后期很有可能会产生重复的随机数。最简单的是用一个hashmap来判重，每生成一个元素放hashmap里，如果hashmap里有这个元素就重新生成。这样非常没有效率，因为如果n比较大，后期很可能直接循环到死都出不来。有一个比较好的办法是用knuth shuffle (aka Fisher–Yates shuffle)，这样也能保证等概2
+        - http://preshing.com/20121224/how-to-generate-a-sequence-of-unique-random-integers/
+    - Solution:
+
+- [x]
+
+- Create a filterediterator that skips over nulls. Create a class that implements iterator, takesanother iterator in its constructor.  Your class iterates through the other iterator except for cases where the initial iterator has a null value. In this case your iterator skips over the null and treats it as if it didnot exist.
+example:
+sourceIterator= ‘a’, null, ‘b’
+sourceIterator.hasNext()= true
+sourceIterator.next()= ‘a’
+sourceIterator.hasNext()= true
+sourceIterator.next()= null
+sourceIterator.hasNext()= true
+sourceIterator.next()= ‘b’
+sourceIterator.hasNext()= false
+yourIterator= new yourIterator(sourceIterator)
+yourIterator.hasNext()= true
+yourIterator.next()= ‘a’
+yourIterator.hasNext()= true
+yourIterator.next()= ‘b’
+yourIterator.hasNext()= false
+    - Link: http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=191253&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26sortid%3D311
+    - Solution:
+        - Eclipse: SkipNullIterator
+        - Need to have a flag indicating whether current element has been used
+
+- [x]
+
+- Give you an array of integers: A
+Goal is to find three indexes (i,j,k) such that
+   A[i] + A[j] == A[k]
+- . Waral 鍗氬鏈夋洿澶氭枃绔�,
+For Example:
+   A = [ -5, 10, 1, 8, -2 ]
+10 + -2 == 8
+    Good answer: i=1, j=4, k=3
+
+    - Link
+    - Solution:
+
+        - O(n^2) solution with hash map. First build hash map of each element to its index. For each element, do two sum hashmap
+        - If not allow extra space, sort and remember index, do two sum for each element
+
+- [x] 32位int表示四种颜色， RGBA， 比如R就是一个8bit，让转换成GBRA.
+- 用Bit操作完成，移位后和0xFF操作。一开始没用这个方法做，小哥提示了
+
+    - Link: http://www.1point3acres.com/bbs/thread-190883-1-1.html
+    - int change(int color) {
+    int r = color & 0xFF000000;. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+    -     int g = color & 0x00FF0000;
+    int b = color & 0x0000FF00;
+    int a = color & 0x000000FF;
+    return r >> 16 | g << 8 | b << 8 | a;
+}
+.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+int changeV2(int color) {
+    return (color & 0xFF000000) >> 16 | (color & 0x00FF0000) << 8 | (color & 0x0000FF00) << 8 | (color & 0x000000FF);
+}
+
+- [x] design class can realize isIntersect, getIntersection, getUnion.
+- 例如：[3,4] [5,6] --> isIntersect: False
+          [3,4] [4,5] --> isIntersect: True, getIntersection: [4,4], getUnion:[3,5]
+
+    - Link
+    - Solution:
+
+        - IsIntersect: sort and iterate through and check if start and end cross
+        - GetIntersection: sort and check start and end, intersection is second.start, first.end
+        - GetUnion: sort, first.start, second.end
+
+- [x] design a graph class, 要求返回node的successor （children，children's children， children's children's children， etc）
+-                                                    node的predecessor （parent，parent's parents，etc）
+                                                   node的direct successor （children）
+                                                   node的direct predecessor （parent）
+
+    - Link (No further details)
+    - Not very clear problem
+
+- [x] 大整数加法，追问如何用并行计算优化。我说按8位切片，在每个片里转成整数做加法，然后等更低位传过来进位。不过听烙印的反应似乎不太好
+
+    - Link
+    - 2016-03-12
+    - LinkedList: https://leetcode.com/problems/add-two-numbers/
+    - Follow up: Divide two integer to sections, add separately and merge.
+        - e.g. 123456 + 78912 can be divided to 56+12, (34+89)*100 + (12+7)*10000 with the carries
+
+- [x] 给一个推荐item的pool，每个item都有score，设计一个概率和score占比一致的随机pick item函数。
+
+    - [x] 有了第一个函数，现在要设计一个函数，每次pick一个item直到pool为空，然后生成一个新的序列。
+    - http://instant.1point3acres.com/thread/173644
+    - Phone, 2016-04-11
+    - Solution:
+        - Easiest: have an array size of sum of all score. each item takes ‘score’ number of entries. Generate a random number and see which item it is
+        - If score large: Cumulative score, each item have one entry. Array size is item size, generate random number between 0 and score sum, see which entry it falls into
+        - Optimization: Use binary search to search which entry it is in
+        - Follow up: 这个看起来不难，每次pick一个然后删掉然后直到pool为空。可是删除的复杂度是O(n)啊。。而且第一个函数已经写死了，也没法传dict进去了。。小哥问时间复杂度，我说O(n^2)，让优化。我写了一个flag数组记录某个item是不是被pick过，如果pick过就再pick一次。反正肯定不是最好的方法，面试的时候已经懵逼了。。
+
+- [x] 输入是一个array of numbers，一个size, 输出这个size的一个window (start, end) 所包含数字的和,最大
+- follow up: 2-d array, size => find a 2-d window. 矩阵是正方形的，window也是正方形的
+    - http://instant.1point3acres.com/thread/166752
+    - Phone, 2016-03
+    - Comment:
+
+        - First problem: just maintain a sliding window and add, subtract added and gone number
+        - Second: Can first compute sum to (0,0) with dp, then start from (d, d), compute sub matrix sum and update max.
+            - http://www.lintcode.com/en/problem/submatrix-sum/ (similar, can use first subroutine)
+
+- [x] 给出一个矩阵，里面包含了各种character，要求找出其中连续的（比如A-B-C）相邻字母，并返回其最长路径。类似的题也很多，
+
+    - [x] follow up是如何提高效率。
+    - Link: http://instant.1point3acres.com/thread/170364
+    - Phone + Onsite, 2016-03
+    - Memorization: Idea similar to this: https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+
+- [x] 你有 10^12个short integer，然后找出largest top100。最直白的方法就是用heap，分分钟完成。然后我想当然的说可以用hashmap，因为short integer 大概范围是-32000~32000，差不多64000个数，然后怎么弄key-value我不太清楚。他说heap is perfect enough，hashmap这个key-value pair不太好搞 - -。
+
+    - Link
+    - PriorityQueue
+
+- [x] find the minimum number of characters that needs to be added to make a string be a palindrome，比如abc,最少要加2个character变成abcba或者cbabc
+
+        - Link: Phone, 2016-04
+
+        - Comment: DP:
+        - Solution:
+
+            - Eclipse: PalindromeMinInsertion
+        - Reference:
+
+            - http://www.geeksforgeeks.org/dynamic-programming-set-28-minimum-insertions-to-form-a-palindrome/
+            - http://stackoverflow.com/questions/10729282/convert-string-to-palindrome-string-with-minimum-insertions
+
+- [x] 找后序遍历的下一个节点，
+
+    - Link: Phone and onsite: 2015-04-19
+    - Comment: Post order iterator?
+
+        - 1. Cannot be its children since post order root is iterated last
+        - 2. Check whether current node is left node of parent, if yes, grab the right node of parent and trace all the way down the left. If is right node, return parent
+        - 3. If is root node, return null
+
+- [x] Link:  Onsite, 2015-09 (but seen in phone too)
+
+    - [x] encode and decode list of strings。
+    - >标准题，不过是讨论性质的。我先说run length encoding，然后再提到了leetcode里的选取delimiter然后对原字符串的delimiter进行特殊处理的办法，感觉还挺满意，我提到可能用escape character也可以做到，他说是可以，也还有其他办法。然后让我不用写代码，"lets make it more complicated"
+[x] follow up，(binary tree serialization)binary tree of strings，就是每个node上写一个string，依然是encode和decode，可以基于上面的encode和decode函数。
+
+        - 先讨论如何表示这个tree，提到可以用类似leetcode（当然没说leetcode）那样的用＃来表示空叶子的方式进行前序遍历＋补全空叶子。表示空间消耗太大(2 ^ h)，然后直接提示我可以用array来存，每个元素存node和他的两个孩子的index。并且简单讨论了下为啥一次遍历无法restore（包括反例）。追加讨论了下如果用array的方式存，要如何encode和decode。
+        - 然后讨论如何序列化和反序列化一个树，因为想起来了双遍历序列化＋反序列化的算法，直接说可以两次序列化（前序＋中序或者后序＋中序），然后恢复的时候就用两个序列化恢复。表示很有兴趣，同时表示这样的空间消耗是两份的，不过可以用这个办法。
+        - 最后时间不是很多，就让我写了下从双遍历结果恢复tree的伪代码就结束了。（restore tree from post-order + in-order / pre-order + in-order)。
+
+    - [x] iterator design。
+
+        - 也是挺标准的iterator，他们家就那么几种iterator（横的，竖的，斜的），主要是处理好boundary condition和各种null check。因为聊项目花了大概20分钟，这里写完白板代码就差不多没时间了，他拍照了下就lunch break
+
+- [x] Link: Phone, 2015-12
+
+    - [x] 给一个image的size（x,y)和webpage的size（max_x,max_y), 然后在image propotion不变的情况下能输出的最大size，这题就是要handle error condition，因为pixel不能是float，然后还得考虑0，以及（2,1,1,1）返回的是（0,0)
+
+        - (not sure whether correct) k = min(float(max_x/x), float(max_y/y))，最后的size就是int(k*x), int(k*y)?
+        - Solution:
+
+            - Do binary search. First get (x, y) to least possible value. Then binary search smaller value of x, y with start as x, end as max_x and each time check if y < max_y. If no value found, return (0, 0)
+
+    - [x] Guessing game - I pick a number between 1 and 100 and you are trying to guess it. Every time you query a number I tell you if it is higher or lower.
+
+        - Part 1- Write the code of it, if cost of querying a number is equal.
+
+            - Comment: Binary Search
+        - Part 2- How about if cost of querying number x is x? How would you change the algorithm?
+
+
+            - Comment: start from 1and if too low then multiply by 2 till over the says too high, then do binary search. Idea similar to Lintcode Search in big sorted Array
+
+- [ ] Link: (Not sure whether onsite or phone)
+
+    - [ ] Considering there are N engineers in one company with id from 1 to N, Each of the Engineer has a skill rate R_i, we want to select one group of engineering whose ids have to be continuous. The size of one group is the number of engineers in it and the skill rating of the group is the lowest rating of all the members in the group. Now given N and array R, for each group from size X from 1 to N, we want to know the highest skill rating of all the groups whose size is X
+
+        - Comment: Use a sliding window of size X and see highest group rating. Similar to Lintcode Sliding Window Maximum
+
+- [ ] Link: (Not sure phone)
+
+    - [ ] 有一堆player，每个人beat 其他人的概率已知。然后已知初始的对阵表，问给定一个player，问他最后夺冠的概率是多少。 —-. From 1point 3acres bbs — —- a–b c—d e—f g—h 输入的format你自己决定。
+
+        - Comment:
+
+            - Can use a tree, each node have an array with arr[i] representing probability player i make it to the node. The leaf node array having player i as 1 and all other as 0. parent node array arr[i] = sum(arrLeft[i] * arrRight[k] * P(i win k)). And result is root node player i slot
+            - Tree is hard to build. We can use matrix with each two rows representing a pair. Every round even number row match against its neighboring odd number row and merge to a new row. The final array has the result. Can use queue to do that too, each time poll two arrays, and push one in
+            - Saw a dp solution in forum. need to check it out
+
+- [x] 自己设计接口，使得支持两个funciton：onUpdate(timestamp, price) 和 onCorrect(temistamp, price). 可以理解为有一个时间流，每一个timestamp都对应一个股票的时间，每次调用一次onUpdate的时候，就对我们设计的那个类更新对应的timestamp和price， onCorrect就是修改之前的一个timestamp的price。最后，我们的类要能返回latest price， max price 和 min price。
+
+        - Link: (not sure phone)
+        - Comment:
+
+            - Seems update means adding a new timestamp and price
+            - We can use a hash map with key as timestamp to support OnCorrect method. Maintain global max, min, update those value on OnUpdate and OnCorrect call. Maintain a latest price and update on OnUpdate method
+
+- [x] 一个byte encoding的题目，大概是给你一种编码的格式，然后给你一个byte数组，让你判断这个数组合不合法
+
+        - 这个编码的定义是，有1-7byte的character，每种character第一个byte有一个固定的前缀，比如1 byte character第一个byte的前缀是0，2 byte是110, 3 byte 是1110以此类推， 8byte是11111111。
+有一个特殊的前缀是10，这种byte是每个多byte character的组成部分。比如一个2 byte character: 110XXXXX 10XXXXXX。一个3 byte character: 1110xxxx 10xxxxxx 10xxxxxx。
+如果字符被打段或者超长都要fail。
+        - Phone, 2015-07; Link:
+        - Comment: Use bit mask AND operation to test the beginning bits. Google search check valid utf-8
+        - code: http://codereview.stackexchange.com/questions/59428/validating-utf-8-byte-array
+
+- [x] Given a string of digits, split it into 7-number lottery ticket, each number is from 1-59 and unique. return all possibilities
+    - 2016.3.11
+    - Backtracking
+
+- [x] Given several coins with values in a bag. How many different values of the sum of any number of coins?
+    - 2016.2.6
+    - Combination Sum with backtracking
+
+- [ ] 有两个tree，要判断两个tree的叶节点是否都相同。要求：1. 只判断叶节点，就算两棵树不一样，如果他们的叶节点以及叶节点在inorder traverse时的顺序一样，哪也算两个树相同；2. 没内存，也就是空间复杂度O(1)。我先想着用iterator同时traverse两棵树，但是写的时候发现太难没写出来，之后想出第二种解法：设定一个global variable，先inorder遍历第一棵树，发现第一个叶节点的时候把这个叶节点存在global variable TreeNode里，然后暂停遍历，跳到第二棵树遍历第二棵树，直到发现第二棵树的第一个叶节点，把这个叶节点根global variable存的节点比较，如果不同说明两棵树的叶节点的顺序不一样，返回false。如果相同则直接跳回第一棵树去找第一棵树的第二个叶节点，如此往复。可以用multithread来实现从而达到O(1)空间同时遍历N棵树比较他们是否相同。
+
+    - Link
+    - 2015-10-23
+
+- [x] 首先给一个字典，比如：{apple, people,...}
+- 再给一个misspelling word，比如：adple，返回它的正确拼写，即 apple. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 还知道一个限制条件，misspelling word只跟原单词有一个字母的区别。如果输入是addle，返回null。如果字数不同，也返回null
+
+    - Link
+    - For each character, iterate all other 25 chars and see if in the dictionary, subroutine of word ladder
+    - http://www.lintcode.com/submission/3865692/
+
