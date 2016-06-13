@@ -1,0 +1,411 @@
+- [x] 给我一堆unsorted数字，问我可不可以等分成若干组，每组由五个连续的整数组成。
+- eg: 1,2,3,4,5,4,5 -> false.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- 1,2,3,4,5,2,3,4,5,6 ->true
+follow up: 问我可不可以等分成若干组，每组由五个重复数组成。
+follow up2: 每组由k个连续数组成。   k>=3
+
+    - Link
+    - Solution:
+
+        - Eclipse: DivideConsecutive
+        - Use TreeMap
+
+Phone questions:
+
+- [x] 一个string decompression的题。。不知道是不是原题反正没见过。。题目如下. from:
+- 2[abc]3[a]c => abcabcaaac;     2[ab3[d]]2[cc] => abdddabdddcc
+     输入                   输出
+一开始用了一个栈，写着写着嵌套的逻辑卡住了，最后用俩stack解决。。然后follow-up问的是不要输出string而是输出解压后的K-th character，主要也还是嵌套情况就从内到外把疙瘩解开以后再算
+
+    - Solution:
+
+        - See Eclipse StringDecompression.java.
+        - Two solutions, first use one stack, decompress on close bracket; second use recursion + a hash map of open bracket index to close bracket index
+        - Follow up: maybe can use the recursion approach and stop when top level string builder reaches k. But not much better than decompress total and return kth character
+
+- [x] Find the total number of patterns of the Android lock screen. The number of key used has to be at least 4, and max 9.
+
+    - Solution:
+
+        - Eclipse: AndroidLockPattern
+
+            - Backtracking. Start from each position and dfs on neighbors. If size bigger than 4 and less than 9, add to result, count total at the end
+            - The most basic version assumes the visited point cannot be visited again in one pattern (use hashset to record visited)
+            - Time complexity: O(2^n)
+        - Reference: http://www.cnblogs.com/EdwardLiu/p/5141771.html (more complicated)
+
+- [x] 设计乌龟，一开始有两个方法，往前走一步，右转90度。然后说设计个方法可以执行一串命令：e.g., "FRRF"代表走、转、转、走。然后命令要支持括号和数字：e.g., "F97[RF[F]]"代表走一步，然后执行括号里的命令9*7次。
+
+    - Solution:
+
+        - Eclipse: Tortose Move class
+        - Map Enum direction to moves with {0, 1}, etc. Put the directions on a ring buffer with order of 90 degrees turn
+        - Decompress complicated command by problem 1 (string decompression) way
+
+- [x] 给一个 array of words，和favorite letters， 让重新排序array，使得按照favorite letters的priority 排列。 没有包含 favorite letters 的 words 则继续按照原本字母表排序
+- 举个栗子：array：['animal','duck','snake','zebra','horse','mouse'], favorite letter:'zh',  output--->['zebra','horse','animal','duck','mouse','snake']
+array：['aab','baa','caa','aaa','aaaa'], favorite letter:'ab',  output--->['aaa','aaaa','aab','baa','caa']
+
+    - Thought:
+
+        - Approach 1: sort with custom compare method. O(nlogn*k)
+        -  Approach 2: radix sort or bucket sort. Counting sort: https://gist.github.com/yeison/5606963
+    - Solution:
+        - Eclipse: SortWordsOnLetters
+
+- [x] 第一题：给一个 sorted Integer array, 返回square后的array.主要是要考虑负数的情况，很多trick的地方比如全都是negative或者全都是positive
+
+    - Solution:
+        - Eclipse: SquareSortedArray
+        - Use two pointer point to largest negative and positive and write to array from backward
+
+- [x] A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string.
+
+    - Example: 01?0.  -->0100, 0110
+    - Clarification: The question is asking to substitute ‘?’ in existing string with ‘0’ or ‘1’, not generate all combinations of 0, 1 or ?
+    - Discussion and code: http://www.1point3acres.com/bbs/thread-184034-1-1.html
+    - Solution:
+        - Eclipse: QuestionMarkCombinations
+
+- [x] 判断一个树是不是另一个的subTree (Value same. worst case time complexity: O(n^2))
+
+    - Solution:
+        - Lintcode: SubTree: http://www.lintcode.com/submission/4440464/
+        - Use recursion. If T1, T2 value same => check same tree, careful about base case null check. If value not same, go left and right
+
+- [x]
+
+
+
+- top 4 LEDs  is binary for hours
+bottom 6 LEDs for minutes涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- _ _ _ _ = hours
+_ _ _ _ _ _ = minutes 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 0001
+000011
+1:03
+3 LEDs to be lit up?
+1) find total number of combinations for 3 LEDs lit up
+2) follow up: return all the actual combinations of hours: minues
+    - Solution:
+        - Eclipse: LEDClockCombinations
+        - 1): Math or divide and conquer
+        - 2): backtracking with bit set, stop when over limit
+    - TODO: Check correct solution
+
+- [x] 一个字典，里面很多单词，例如
+- google, leg, about, lemma, apple, time
+找这样的pair <A, B>，有两个条件, (1) A单词的后两个字母和B单词的前两个字母一样 （2）A单词的第一个字母和B单词的最后一个字母一样，例如<google, leg>就是一个合格的pair，<apple, lemma>也是一个合格的pair， <about, time>不可以
+然后求这样的pair的最长长度，<google, leg>的长度=6+3
+我开始没听见他说这个dict是sorted，太紧张了唉。
+
+    - Solution:
+
+        - Eclipse Longest Pair
+        - Idea similar to palindrome pair. HashMap map compress string with last two char and first char as key and list of corresponding words as value. Iterate the set again and compress with first char and last two chars. If compress in dictionary, check each in list and take length if not equal (avoid string like ‘aaaa’ to match itself)
+
+- [x] 题目是给你一个board，里面存储user的信息，user有id和socre。
+- board有adduser(id, score)(返回add进去的user当前的rank), findByRank(k) (这个返回id)。
+Add如果本身已经有id在board中，需要对这个id的score进行update。(BST insert, delete)
+
+    - Link: http://www.1point3acres.com/bbs/thread-183346-1-1.html
+    - Solution:
+
+        - Eclipse: FindByRank
+    - Thought:
+
+        - BST insert, delete. Add: O(log(n)), Delete: O(log(n))
+        - ArrayList ordered by score: Add: Insertion sort: O(n), FindByRank: O(1)
+        - Cannot use heap since would be hard to do findByRank
+
+- [x] 自己实现一个hashtable的insert，delete，search，getRandom，全部都要O（1）.
+
+    - Link: http://www.1point3acres.com/bbs/thread-178900-1-1.html
+    - 這個題我 Twitter 的電面考過，可以建一個 class 裏面有一個
+1) 一個 Array —— 用於 random generate index 後 O(1) access element
+2) HashTable（dict in Python），key 是要添加的 element，value 是那個 element 在 Array 裏面的 Index —— 用於通過 object 來 O(1) 作刪除操作。
+put:
+將 object 添加到 HashTable 中，同時 append 到 Array 的最後
+delete:
+通過 passed in 的 object 找到它在 Array 中的位置，將 Array 的最後一個 element 移到剛 delete 的 Index 然後把 object 從 HashTable 刪除，並 update HashTable 裏面剛改動過的 Index （被 move 的 Array 最後那個 element 的 Index 會變）
+get_random:
+index = int(random() * len(hash_table)) # random function 是 Python 自帶的，返回 [0, 1) 之間的小數
+return array[index]
+    - Solution:
+
+        - Eclipse HashtableGetRandom
+
+- [ ] TODO: 给一个undirected graph，举个栗子如下：
+- 0-(0)--1--(1)--2
+\        \
+  (1)    (1)
+    \        \
+     3-(0)--4. from
+- 给两个数字，代表起点和终点，请问最短的从起点到终点的路径，且最多经过一个（0）的arc
+
+    - Link: http://www.1point3acres.com/bbs/thread-174444-1-1.html
+    - Solution:
+        - Eclipse: ShortestPathWithArc
+    - Thoughts:
+        - use backtracking and update the shortest path
+
+- [x] Given a set S of 10^6 doubles. Find a number X so that the [X, X+1) half-open real interval contains as many elements of S as possible.For example, given this subset:[…] 2.7, 0.23, 8.32, 9.65, -6.55, 1.55, 1.98, 7.11, 0.49, 2.75, 2.95, -96.023, 0.14, 8.60, [...]the value X desired is 1.98 because there are 4 values in the range 1.98 to 2.97999 (1.98, 2.7, 2.75, 2.95)
+
+    - Solution:
+
+        - Eclipse: NumberEnclosingMostDoubles
+        - Two pointer forward style
+    - Reference solution:
+
+        - Two pointers. See link: http://www.1point3acres.com/bbs/thread-174637-1-1.html
+        - double maxLenSub(vector<double> & subset) {
+    int beg=0, end=0, len=1, n=subset.size();
+    if(n==0) return 0.0;
+    sort(subset.begin(), subset.end());
+    double X=subset[0];
+    while(end<n) {
+        ++end;
+        while(subset[end]-subset[beg]>=1) ++beg;
+        if(end-beg+1>len) {
+            len=end-beg+1;
+            X=subset[beg];
+        }
+    }
+    return X;
+}
+
+- [x] 一个string, 有空格，有引号，parse string, 两个引号中间的部分的空格不处理, 引号外面的空格将前后划成两个String。
+- 做法就是traverse一遍就搞定了，细节处理一下。
+
+    - Solution:
+
+        - Eclipse: ParseSpaceDelimitedString
+        - Have flag indicate whether in quote and flip inquote flag when encounter a quote. If see a space and not in quote, add temp string to result
+
+- [x] 給一個車牌號碼(美國的)，以及一個dictionary，請找出dictionary裡含有所有該車牌號碼裡的所有英文字母(case insensitive)的最短字串
+- ex:
+車牌 RO 1287 ["rolling", "real", "WhaT", "rOad"] => "rOad"
+follow up:
+(1) 如果dictionary裡有上百萬個字，該如何加速
+(2) 如果dictionary有上百萬個字，然後給你上千個車牌號碼，要你回傳相對應的最短字串，該如何optimize?.
+
+    - Link: https://instant.1point3acres.com/thread/172640
+    - Solution1: integer array as hash map
+
+        - Key is how to find whether a string include all character in another string in linear time
+
+            - integer hash: put tag in array with occurrence count in each and compare with each
+        - Follow up (1): hash dictionary to different machines
+        - Follow up (2): hash dictionary to different machines, compute for each machine (all machine have the thousands of car tags). compare at the end
+    - Solution2: bitmap
+
+        - 每个单词的字母map到32bit int的26个bit上 遍历dic，用编码以后的车牌编码和字典单词编码做and看是不是还等于车牌的编码 记录candidate和长度 用了 O(n) time和O(1) space (1)可以跳过的的情况，比如长度大于candidate了 (2) 对dic编码，然后对每个编码的bit从大到小or从小到大建立一个trie，同时在插入的时候，在每个节点保留一个当前子树下最小长度的单词 用O(n)的space和time 查询的时候直接返回该节点的结果 貌似是wrostcase O(mlg n) 总共O(n+mlg n) 约等于O(n)
+
+- [x] 给你一组Treenode，他们每个有一个id，一个parentId，一个value，让你输出所有subtree的sum of value
+
+    - Solution:
+
+        - Eclipse: SubTreeSum
+        - DFS: For each id, iterate the nodes list and recurse on all nodes whose parent is current node and print the sum. Use hash map for memoization
+
+- [x] 给一个sorted int array 定义popular item的frequency/occurerence 大于N/4. 求item 值最小的frequency.
+
+    - Link: http://www.1point3acres.com/bbs/thread-181863-1-1.html
+    - 只可能在n/4, n/2, 3n/4. Binary search of range
+    - Solution:
+        - Eclipse: PopularItem
+    - 5/17
+
+- [x] atoi 只考虑正数
+
+    - Solution:
+
+        - Eclipse: StringToInteger
+        - Leetcode: https://leetcode.com/problems/string-to-integer-atoi/
+        - current multiplied by 10 each time and add current number. use long type to avoid overflow
+
+- [x] 有一个4-way stop的路口，4条lane， 给两个function getNextCar（）， arriveCar（Car car， Lane lane），要求实现这两个方法。
+
+    - http://www.1point3acres.com/bbs/thread-188010-1-1.html
+    - Solution:
+
+        - Eclipse: GetCarInLane
+    - Thoughts:
+
+        - Have a main queue and one queue per lane.
+        - Need to realize even if the second car in lane 1 is earlier than lane 2, would still have lane 2 car go first
+        - Important: copy car to central ready queue, not move there
+
+- [x] Leaf node of the longest path in binary tree
+
+    - Solution:
+
+        - Eclipse: LongestPathLeafNode
+        - longest path pass leaf node up
+    - 5/17
+
+- [x] 有一个办公室，in代表进入办公室的时间，out表示出办公室的时间， 每一个event都有in和out两个参数
+
+- A in:5 out:10
+C in:12 out: 15
+D in: 25 out:30
+B in:7 out:13
+求最长的办公室被连续占用的区间
+
+    - http://instant.1point3acres.com/thread/152509
+    - Phone, 2016-03
+    - Number of airplanes in the sky (Lintcode), Meeting Room II (leetcode)
+
+- [x] 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
+
+    - [x] 2 heaps + TreeMap<Count, Hashset<Numbers>> + HashMap<Number, Count>:
+
+        - Insert: O(logn)
+
+            - update heaps and median
+            - HashMap update: if key in map, add count, otherwise, add entry
+            - TreeMap update: remove number from current count, add to new count
+        - Delete: O(n) -> can use hash heap to make to O(logn)
+
+            - update heap and median with hashheap
+            - hash map delete: update count, if not count, remove key
+            - TreeMap delete: find count and remove number, add to new number
+        - Median: O(1)
+
+            - take median of heaps
+        - Mode: O(1)
+
+            - max of tree map
+    - Balanced binary search tree:
+
+        - TreeNode has node count of subtree and count of node with the number
+        - Insert: O(logn)
+        - Delete: O(logn)
+        - Median: Worst case O(long): Need to maintain node count of subtree
+        - Mode: O(n): This is a disadvantage against the first solution
+    - Solution:
+
+        - Eclipse: MedianAndMode (not implemented)
+        - Important is to discuss trade off between different data structures
+        - Link
+
+- [ ] TODO: 题目：.input 是一个游戏的后台log (可以自己定义结构)：
+- （1） update log，每条记录是 (time, player, role)，比如 (2016 March 11 13:10 UTC, 'mark', 'knight')
+（2） play log，没条记录是（time，player），比如 (2016 March 12 12:10 UTC, 'mark')
+output是每个role出现的次数。
+
+    - playMap<player, List<time>>
+    - roleMap<player, map<role, time>>
+    - for each player:
+     for each role’s start and end time:
+          binary search first occurrence in playMap that’s after start
+          binary search last occurrence in playMap that’s before end
+    - Link
+
+- [ ] 给了一堆点（x_0,y_0)....(x_n,y_n)问怎么判断是不是关于任意vertical line 轴对称
+
+    - 找对称轴： (x0 + … + xn)/n
+    - put all points into map -> (x, y)
+    - for (all x) -> check if map contains(2 * mid - x) and if y are equal
+
+- [ ] 第一轮，给一个float number P (e.g = 1.4523), 给定另外一个float number x，求x的sqrt是不是和P前k位相同。二分法改进一下。必要的时候用Math.ceiling()。
+
+static float sqrt(float n)
+        {
+                float low=0,high=n;
+               float mid=(low+high)/2;
+               while(Math.abs(mid*mid-n)>0.00001) //IMPORTANT! 0.00001 is 10^-k
+                {
+                        if(mid*mid<n)
+                                low=mid;
+                        else if(mid*mid>n)
+                                high=mid;
+                        mid=(low+high)/2;
+                }
+                return mid;
+        }
+
+    - Thoughts:
+
+        - k first digits of P and that plus 10^(-k-1) see if those square include x
+        - Approach 2: the above solution
+
+- [x] 第二轮，two sum改版，求所有的pairs，他们的和小于input num。先写了brute force，然后用two pointers优化，面试官问还有没有其他方法，我说可能可以用segment tree，结果自己把自己作死了。他好像期望我用tree的方法做出来。
+    - 2 pointers:
+sort
+i = 0;
+j = length - 1;
+while (i < j) {
+      if (arr[i] + arr[j] >= target) j—;
+       else
+    -              add all pairs (i, k) k from i+1 to j to result; i++;
+}
+    - Thoughts:
+
+        - Tree: use tree set? or hash table
+
+- [x] 给出一个 list of int, the target, 输出这个 list 中所用的数能否通过4则运算 得到 target。
+- boolean EvaluatesTo(list numbers, int target)
+［2 3 6 9］ → 75(2+3)*(6+9) = 75 return true
+［2 3 6 9］ －> 11 return false
+
+    - http://instant.1point3acres.com/thread/173938
+    - Phone, 2016-04-12
+    - Comment:
+        - Get all permutations first
+
+    - Solution:
+        - Eclipse: EvaluateExpression
+
+- [x] Given a rectangular grid of colored pixels and a particular pixel in the grid, find the perimeter of the same-colored blob containing that pixel
+
+    - 补充一下，因为是求包含所给像素的图形的周长，所以就是DFS到每个相同颜色的邻接像素，然后检查这个像素周围四个像素的颜色，如果颜色不同或者越界了，周长+1，否则就继续DFS到那个像素。最后得到周长
+    - Solution:
+
+        - Eclipse: Perimeter
+    - Thoughts:
+
+        - DFS, not the same as leetcode smallest rectangle enclosing black pixel since the pixel are of different colors, not just black and white
+
+- [x] 函数签名为 int countChunk(String input)， 给定一个字符串，找出最多有多少个chunked palindrome,
+- 正常的palindrome是abccba, chunked palindrome的定义是：比如volvo, 可以把vo划分在一起，(vo) (l) (vo)，那么它是个palindrome。求实现返回最大的chunk 数量。
+
+    - Link: http://www.1point3acres.com/bbs/thread-148741-1-1.html
+    - Solution:
+
+        - Eclipse: ChunkedPalindrome
+        - Interval DP
+    - 5/17
+
+- [ ] design an addAlarm function
+- struct alarm
+{.
+-   int timestamp;
+  void call()==0;.
+- }
+void addAlarm()
+{
+   //add function body.
+-    synchronized (Alarm.class) {}
+- }
+
+    - TODO: https://instant.1point3acres.com/thread/155754
+    - Have a priority queue for all time stamps sorted by time. timer checks first element in queue
+    - Use Synchronized keyword for thread-safe
+    - Thoughts:
+
+        - While loop with sleep(1ms) and when woke up, check the top of priority queue
+        - 我的想法是单线程，timechecker每次和curlist的第一个element比较，如果时间到了就alarm()，然后把第一个元素poll出来。curlist是一个double linked list
+
+- [x] 第一题：解多项式 一元二次方程的解法
+
+    - find range of answer and binary search
+    - If quadratic formula - ans = (-b +- sqrt(b^2 - 4ac)/(2a)
+    - Solution:
+
+        - binary search with low of Integer.MIN_VALUE, Integer.MAX_VALUE if function is monotonously increasing
+
+- [x] 给一堆interval 算出total cover的区间，输出list.
+
+    - Leetcode: Merge intervals
+
