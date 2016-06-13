@@ -1,0 +1,173 @@
+第一题没让写代码，就讨论，用hash map。-google 1point3acres
+
+- 第二题说了用stack 保存状态来解析，但是在设计结构的时候纠结了一会。最近缺乏运动，因而下午有小睡的习惯，结果在这个问题上卡了一会。说用nested hashmap，他表示make sense，就是想了半天没想到用下面这个结构，他提示我可以用vector<unordered_map<string, Node>>的结构，表示恍然大悟，然后发现应该并不需要vector。写完之后follow up就是如果tag不匹配怎么检测。
+Node {
+  string name;
+  string value;
+  unordered_map<string, Node>;
+};
+
+- [ ] 题目： tic tac toe的m*n版本，也就两个人是在一个m*n的board上玩。（LZ最讨厌玩游戏了。。。）
+- 规则如下：-google 1point3acres
+- （1）获胜方式依然是横竖对角线有三个连在一起的symbol。
+（2）每次movement不能任意放置，只能放在 每一列 的 最下方的空白处，也就是说每个玩家每轮最多只有 n （行数）个选择。 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- 要求实现以下API：
+（1）valid()。检查当前board是否有效，有效board必须满足 (i) 没有人获胜  (ii) 不能违背第二条规则。. from: 1point3acres.com/bbs
+- （2）nextMove()。返回当前玩家的任意一个movement，要求对手无法获胜，如果找不到报错（我选择了返回-1）.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+
+- 脑子实在累了，讨论了一下给出了bruteforce的方案。
+（1）valid主要难点在怎么判断已经有人赢了，LZ用check8个方向一共16个格子的方法，于是O(16*N^2)。跟小哥交涉，表示常数可以减小，不过16也合理可以写。
+（2）假设当前为player A， 则枚举A的n个选择，每个选择会对应B的n个选择，复杂度依然是O(16*N^2)。但实际上如果不保存board state，不管是A还是B都得先找到每一列放置的位置，每次都扫描一遍就会多出O(N)的时间，总时间会变成O(N^3)，所以需要保存一下状态。
+加上一些细节的调整，最后写完但依然没时间测试debug了，两人一起表示过了一遍应该work
+
+- [ ] k sorted list
+
+- [ ] rate limit scheduler   设计一个同时run k个任务  其余任务按照priority 在queue中等待. Waral 鍗氬鏈夋洿澶氭枃绔�,
+
+- [ ] search in rotated sorted array
+
+- [ ] graph    find min steps from source to destination
+
+- [ ] 问了一道常见的画图软件实现color fill的feature，就是2d color image，现在给一个pixel填充new color去换掉之前的color，跟这个pixel联通并且有相同color的pixel都得换成new color。很快写好代码，不过有个corner
+- case没考虑，就是new color跟old color可能会一样，他稍微提醒了下找到了。之后问如何做test，这个答的不是很好，他期望我能给一些比较复杂的test case。之后跟他又很happy的聊了一会儿，问了他为什么要跳槽之类的就结束。
+解法：BFS/DFS
+
+- [ ] Big Float:
+
+    - [ ] 解法：就是把一个float分成两部分，point之前的跟point之后的，然后用类似big int加法的做法做，先处理point之后的部分，然后处理之前的那部分，注意进位就行
+
+- [ ] 问了一道amicable number，可以google上搜一下，给一个数n，求所有满足条件的a, b的pair。我先给了一个O(n^2)的解法。后来小哥让我优化，又给了个O(n^3/2)的解法。然后小哥问我如何实现inverted index，实际上是想问怎么做insert/query string，我给了三种数据结构，BST/HashTable/Trie，然后小哥让我分别分析下insert/query时间复杂度，然后又问用Trie有什么缺点，又问如果是Unicode如何处理，然后让我写了一下Trie的code，接着问Trie在多线程上如何设mutex以及lock/unlock，以及按照我给的加锁方式，是否会产生deadlock，基本都答出来了，小哥也比较满意。
+- 解法：amicable
+number的解法就是枚举a，然后再枚举a的所有divisor构成b，然后再枚举b所有的divisor构成a'，然后看a是否等于a'，优化就是枚举出一个d是a的divisor的话，那么d'=a/d也是a的divisor，所以只要枚举到sqrt(a)就能找到所有的divisor了。Trie那个题主要是多线程上的问题，应该是给每个TrieNode设一个mutex，具体怎么lock/unlock，自己可以画图想一下，deadlock的话是不会产生的，因为Trie是一个top-down结构，没有环。
+
+- [ ] 给一个DAG, 求出进行inorder traversal后的第k个node。此DAG上每个node out degrees最大为2.但是in degree可以大于2。这个题目我当时没做出来。因为一个点可以被visit好多次。
+
+    - [ ] 这个DAG的每一个节点都是一个树节点，并且这个DAG有且只有一个根
+
+    - [ ] 这道题，seq的长度公式是
+
+    - f(node) = f(node.left)+f(node.right)+1
+那么很显然，如果每个点的左右都相同是最差情况（即一个有两个next指针的链表），都不同是最好情况（即一棵二叉树）
+worst case f(n) = 2 f(n-1) + 1，这是一个差比数列
+因此worst case复杂度为O(2^n)
+
+- [ ]
+
+- [ ] Metric Collection System
+
+- [ ] Design and implement the apis below:
+
+- [ ] void addRecord(double value, long timestamp)
+
+- [ ]         double getAverage
+
+- [ ]         double getMax
+
+- [ ]         double getMin
+
+- [ ]
+
+- [ ] 题目是按层打印公司结构。这个题很多snapchat的面经都有，大家可以去找找。我碰到的题还更简单一些。只需要每一层打印适当的空格为开头就行了，不需要考虑到是否是这个manager的最后一名员工的情况。就是通过vector<pair<string,string>>建树，DFS打印。
+
+- [ ] Input是”first name, full name, jointime, boss” 我定义每行为size 是4 的vector<string>。 然后’join time’不需要管
+
+- [ ] 出一道题，给定一个positive的数组，问有多少种取法能取到和为target的subset。数组中的数可以重用。我说可以用DP来做。发现黑哥们不置可否，以为他对这个办法不满意，解释之，然后询问意见。面试官催我先写。写完了返现有bug，手忙脚乱的改完，算是运行通过了。其实运行完了我发现我理解的题意似乎和他想要的有偏差，例子跑出来的结果跟他一开始说的答案都不一样。。不过他并没有说什么，我也不知道到底是谁糊涂了。Followup 是如果数组里有负数，但是限定一个解法里含有负数的最大个数，比如一个解法最多只能有一个负数。解法总数是多少？我想update我前面的function。他说你这复杂度太高啊，直接recursive做不就行了，刚才你就该这样做啊。Md，我刚才问你半天对我的办法满意不满意，你怎么不说？最后这题没写完，有个bug，大家可以试试
+
+- [ ] 设计一个library。 提供一个method， add(task,delayms). 添加task， delayms表示的是从现在过后多久开始运行这个task。这是个多线程的设计题，问了怎么保存task，怎么consumetask，怎么开始新的thread，memoryusage， 设计thread pool等等，还要我写multi-thread的code。虽然不是要写可以跑的code，不过那些C++的con-currency的interface基本忘光了
+
+- [ ] [1, [3, 4]], 类似这样的数据结构，计算和，最外层权重1，内层2，越往内权重递增。这个例子就是1*1 + 2*(3+4) = 15
+- followup，权重反过来，也就是最外层最大，问如何解决。答：用比最大权重大一的数乘以所有的数字和，然后减去原来权重的结果，3*(1+3+4) - (1*1 + 2*(3+4)) = 9
+
+- [ ] find median from data stream
+
+- [ ] 1. 输入是一串不断更新的数据流，要求输出是其中k个随机数据，每个出现过的数据被输出的概率相同。
+- 楼主之前做过随机输出一个数据的类似题目，当时跟面试官交流的也不好，就直接照搬过来把一个随机输出复制了k遍，然后被告知输出数据不能重复。。。然后思路就卡住了，被提示后知道分两步走，第一步用随机函数得知每次一个新数据来了之后是否使用，第二步如果要使用该数据再用一个随机函数得知替换掉哪个原来存在的数据
+之后要求在电脑上自己写出来各种test case来检测函数的正确性
+
+- [ ] 给我看了一个snapchat给好友群发消息的功能，说是可以任意选中和删除想要投递消息的好友，并显示群发好友的list，要设计一个数据结构实现。答曰linked hash map，没要写代码
+- 第二题detect cycle in directed graph，我写了个标记node颜色的解法，小哥表示满意
+
+- [ ] 写一个函数，返回boolean，表示任意两个snapchat好友之间是不是可以通过最多6个中间好友认识
+- 楼主说BFS，提示说时间空间复杂度太高，改成dfs，提示说还是太高，最后楼主写了个从两头开始dfs的减法，然后两边总共限制走6步。大哥说看上去可以，但有些corner case肯定没cover到，我一时也看不出来
+
+- [ ] 第一题是给你一个string和一个字典，返回可由string里的字符组成的字典单词。比如cadat， 字典是cat，dc，aaa，前两个是符合要求的，第三个不符合要求。这里顺序是无所谓的。我一开始纯用hash map做，面试官说字典非常大，于是提示了一下改用trie建字典树。 第二题则是给你若干个单词和若干个字典，返回由这些单词字符重新排序组成的word list。举个栗子，bad cat是单词，字典是dad， tac， bat， cad， 返回［［dad，tac］，［bat，cad］］。单词里的字符要用完。我一开始有点懵，说先枚举，面试官提示说要用到第一题，因此就是用第一题返回的word list进行组合，找可以吧所给单词字符用光的单词组合。这一轮没有run，只是写了写，面试官说为了节省时间不用实现trie。
+
+- [ ]
+
+- [ ] lower median of a stream:
+
+- [ ] 比如 : 1 2 3 4 返回  1 1 2 2 及奇数位时候返回中间数，偶数位时候返回低位中间数，做法是用一个max heap一个min heap 整个过程中 max heap size顶多比min heap大一 或者相等，并且max heap中所有元素都小于min heap中所有元素
+
+- [ ] serialize 和 deserailize 一个graph，要求最节省空间。做法是存ajacent lists，期间还问了为什么不用matrix
+    - follow up是问图有多满的情况下用bitmap更加合适
+Answer:
+
+    - An adjacency matrix occupies n2/8 byte space (one bit per entry).
+    - An adjacency list occupies 8e space, where e is the number of edges (32bit computer).
+If we define the density of the graph as d = e/n2 (number of edges divided by the maximum number of edges), we can find the "breakpoint" where a list takes up more memory than a matrix:
+    - 8e > n2/8 when d > 1/64
+    - So with these numbers (still 32-bit specific) the breakpoint lands at 1/64. If the density (e/n2) is bigger than 1/64, then a matrix is preferable if you want to save memory.
+
+- [ ]
+
+- [ ] 设计一个数据结构能实现以下api
+
+- [ ] void add(long timestamp, double value)
+
+- [ ] double getMin();
+
+- [ ] double getMax();
+
+- [ ] double getAvg();
+
+- [ ] 最后三个均返回过去X分钟内的值。
+
+- [ ] add方法中的timestamp只会增加 不会减小，可以想象成一个push metrics的service
+
+- [ ] 做法是用list 按时间顺序存 value，每次getAvg之前先移除expired的数据，再更新值。至于getMin和getMax则参考min stack的做法
+
+- [ ] 设计一个数据结构 能支持 insert(int val), getRandom(), delete(int val) 均在 O(1) time完成
+
+- [ ] 给一个字符串，问最少删去多少个字符可以得到一个是回文的字符串, 只能删去头尾处的字符 eg "abxyyxc" -> 3
+
+- [ ] 给一个整数n，输出俩数x和y，使得x*y的值在 [n, n+2] 的范围内，同时保证 |x - y| 最小， e.g. n=25, return x=y=5 或  n=22， return x=4 y=6. from: 1point3acres.com/bbs
+
+- [ ] given an int n, write a function to generate false in a probability of 1/(2^n), e.g. n = 3, 那么函数以1/8的概率返回false， 以7/8的概率返回true
+
+- [ ] 给一个二次函数y=ax^2+b，求这个函数与x y轴截出的图形的面积。这轮是写完一个题后，面试官说还有时间，问个他自个儿想的新题，积分早就忘光了，只是讨论了下的思路，估计挂在这里或是那个求sum的题了
+
+- [ ] design system，实现每一个commit，都能自动进行一次test。大家可以随时commit code，有很多device可以跑test。其实就是design一个distributed system咯~。followup问这个system里面的bottleneck是什么，如何提高。这个题大部分看经验了，如果工作过，知道commit，build，test的过程就还好。
+
+- [ ] 问了一个coding，给一个字典，和一个2-9组成的string，问这个string对应字典里哪些词，用原来12键手机的那种对应方法，2-abc那种
+
+- [ ] word ladder 1 和 返回一条路经 & word ladder II
+
+- [ ] dulplicated nums 返回是否有重复数字 follow up 是否有重复数字相距小于k 和 如何解决网页打开慢
+
+- [ ]  longest increasing subsequence
+
+- [ ] Given a String digits (0 - 9), adding + - * () to get the max result. 注意这里和其他面经里面 given int[]，里面有 正，负，0，adding + * () 不一样。这里输入是一个字符串digits，保证是 0 － 9 之间的。
+- 回过头来想想，此题被改的略坑爹：首先插入 “－” 的情况不需要考虑，因为digits都不带符号，只考虑 ＋ 和 ＊就好； 其次允许几个digits连在一起构成数字，而不是每个数字之间必须插入 ＋ － ＊，比如输入 “11”，结果不是1+1 ＝ 2 而是 11。 貌似无论怎么输入都是连在一起构成的数字为最大结果。
+
+    - [ ] 一堆数，中间插入*，+或者括号，求最大值，dp就可以， 但是如果数字全部是正整数的话，只用通过判断1的个数是奇数还是偶数来求最大值，0(n)就可以了
+
+- [ ] N-queens I & II
+
+- [ ] n叉树判断是否有回路，dfs, 但是不希望一直维护一个祖先节点的哈希表，所以可以设计一个类，里面存一个布尔型的变量，访问过的设为true，回溯之后设为false
+
+- [ ] 给你一个数组，range［1，n］inclusive，然后说如果有个n＋1的数组的话这里面有没
+- 有重复？为什么？
+pigeon hole principle
+然后followup：怎么找到那个重复的数字？有可能有多个重复
+继续followup；如果说不让你交换数字，即不能排序怎么办？可以用空间
+继续followup：如果说没有空间怎么办
+
+- [ ] 一个矩阵里某些位置有墙，给一个出发点及目的地，求最短距离。 follwup是现在墙可以打破，没打破一个cost为1，求cost最小的路线。
+
+- [ ] coding题目是queue using stack, follow up 是多线程版本，最后让我自己实现mutex那些，自己写测试，问了我如何设计测试等等
+
+- [ ] 题目是手机上的通讯录，每条记录只有(name, number)这种pair,有些记录名字重复，有些记录号码重复，让我返回一个list<list<Record>>，将所有记录按人分组。比较tricky的点在于(ABC,123), (ABC, 456), (BCD, 456)三条记录，第一条和第三条也属于同一个人。要求时间复杂度尽量小。
+
+- [ ] coding题目是XML parser，follow up是一开始我们假设xml是well-formatted,如果不是的话，比如有不成对出现的<p>或者</p>，怎么破
+
+- [ ] coins in a line II 变形：给一个整数数组表示一列整数并定义这样一个游戏：两个玩家A和B分别轮流从数组的两端取一个数字，并在游戏结束之后计算自己的收益（取得的整数的总和）。假定玩家A可以先取，求在玩家B采取贪心策略和最优策略这两种情况下，玩家A所能获得的最大收益。
