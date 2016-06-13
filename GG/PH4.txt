@@ -1,0 +1,338 @@
+Leetcode:
+————————————————————Most Recent————————————————————————————
+
+- [ ] Longest consecutive sequence in BT
+
+- [ ] longest consecutive sequence in array
+
+- [ ] spiral matrix 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- 稍微改动了下成了x,y坐标的image上色，解释题目解释了半天，其实换汤不换药。这个时候加上前面找doc和看小哥演示链接的时间
+
+————————————————————Most Recent————————————————————————————
+
+- [x] Iterator
+
+    - [x] ZigZag Iterator:
+        - Careful about empty list
+        - Supports k lists: https://leetcode.com/submissions/detail/62195077/
+        - Support 2 list: https://leetcode.com/submissions/detail/58165502/
+
+    - [x] Peeking Iterator:
+        - Use a peeked flag
+        - https://leetcode.com/submissions/detail/62195464/
+
+    - [x] 2D Array Iterator (Flatten 2D Vector):
+        - Not use iterator: https://leetcode.com/submissions/detail/58166940/
+        - Use iterator: https://leetcode.com/submissions/detail/62196275/
+
+    - [x] Nested Iterator:
+        - https://leetcode.com/submissions/detail/61098880/
+
+- [x] Range sum query 2D - Mutable
+
+    - [x] 第一问update远多于sum的情况，lz迅速给一个暴力解；
+
+        - add all values in the rectangle
+
+    - [x] 第二问sum比update多的情况，dp用一个矩阵存左上角数的和，更新时要更新矩阵右下角所有值O(n^2);
+
+        - https://leetcode.com/submissions/detail/59404387/
+
+    - [x] 第三问sum和update一样多，列之和，解法。 Sum: O(n), Update: O(n)
+
+        - https://leetcode.com/submissions/detail/62198376/
+
+    - [x] 最后面试官说这题有logn解法，讨论了下线段树，面试官说Fenwick tree也可以。
+
+        - https://evanyang.gitbooks.io/leetcode/content/LeetCode/range_sum_query_2d_-_mutable.html
+
+    - [x] Range sum query 1D - Mutable:
+
+        - Segment tree: https://leetcode.com/submissions/detail/59411579/
+
+- [x] Strobogrammatic number I, II, III
+
+    - Reference: (All three) https://segmentfault.com/a/1190000003787462
+    - https://leetcode.com/submissions/detail/62199398/(I - determine if number is strobo)
+    - My submission: https://leetcode.com/submissions/detail/58253936/(II- generate all with n digits)
+        - (Preferred) Cleaner solution with array of size n: https://leetcode.com/submissions/detail/62202544/
+    - https://leetcode.com/submissions/detail/62203442/ (III - count between low and high)
+        - Use the same technique as II, count when qualifies
+
+- [x] Longest substring with at most k distinct characters
+
+    - [x] https://leetcode.com/submissions/detail/62203986/
+
+    - [x] Follow-up:
+    - There are now new requirements for getLongestSubstring! The string doesn't fit into memory. Instead you get an object of type BigString:
+interface BigString {-google 1point3acres
+    -         public boolean hasNextChar(); 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+    -         public char getNextChar();}
+
+        - Answer to follow-up: http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=184034&pid=2365791&fromuid=206597
+        - Instead of using HashMap<Character, count>, use HashMap<Character, LastPos>.
+        - When map size is k, remove the char with smallest lasPos in map and start from there
+        - Substring getLongestSubstring(BigString s, int m){
+        int finalStart=-1,int finalEnd=-1,maxLength=0;
+        int start=0,end=0;
+        Map<Character,Integer> map=new HashMap<Character,Integer>();
+        while(s.hasNextChar()){
+                char endC=s.getNextChar();
+                if(map.containsKey(endC)){
+                        map.put(endC,end);
+                }else if(map.size()<m){
+                        map.put(endC,end). 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+        -                 }else if(map.size()==m){
+                        if(end-start>maxLength){ // record max before change
+                                maxLength=end-start;. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+        -                                 finalStart=start;
+                                finalEnd=end;
+                        }
+                        int startIndex=Integer.MAX_VALUE;
+                        Character removeC=null;
+                        for(char startC:map.keySet()){
+                                if(map.get(startC)<startIndex){ // find the smallest index of a char to jump to, essentially remove a char
+                                        startIndex=map.get(startC);
+                                        removeC=startC;
+                                }
+                        }
+                        start=startIndex;. Waral 鍗氬鏈夋洿澶氭枃绔�,
+        -                         map.remove(removeC);
+                }
+                end++;
+        }
+        if(finalStart==-1&&finalEnd==-1&&map.size()<m)throw Exception…
+        return new SubString(finalStart,finalEnd);. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+        - }
+
+- [x] shortest palindrome
+
+    - from back of string, check if previous is palindrome, if is, reverse the last part as prefix
+    - https://leetcode.com/submissions/detail/60464513/
+
+- [x] Gray Code https://leetcode.com/problems/gray-code/
+
+    - DFS solution:
+        - Try flip each bit on dfs and see if already in set
+        - https://leetcode.com/submissions/detail/62206461/
+    - DP solution (pattern finding):
+        - https://leetcode.com/submissions/detail/60024938/
+
+- [x] Count of smaller numbers before itself, Count of bigger numbers after self
+
+    - Both can be solved with either merge sort or bst
+    - All solutions:
+        - https://kennyzhuang.gitbooks.io/algorithms-collection/content/count_of_smaller_numbers_after_self.html
+    - Segment Tree solution:
+        - Need to give a number range
+        - https://leetcode.com/submissions/detail/62207175/
+    - BST solution:
+
+        - https://leetcode.com/submissions/detail/62207854/
+
+    - [ ] TODO: Merge sort:
+        - https://leetcode.com/submissions/detail/62208034/
+    - Binary Search:
+        - https://kennyzhuang.gitbooks.io/algorithms-collection/content/count_of_smaller_numbers_after_self.html
+
+- [ ] TODO: Count of range sum:
+    - http://www.lintcode.com/submission/3552983/
+    - BST and brute force:
+        - http://www.cnblogs.com/EdwardLiu/p/5138198.html
+
+- [x] Binary Tree Longest Consecutive Sequence
+
+    - https://leetcode.com/submissions/detail/58094780/
+    - Editorial solution: https://leetcode.com/articles/binary-tree-longest-consecutive-sequence/
+
+- [x] Longest Consecutive Sequence
+
+    - Use hashset and do neighboring number search
+    - https://leetcode.com/submissions/detail/62209788/
+
+- [x] Number of Islands I & II
+
+    - [x] I - https://leetcode.com/submissions/detail/62210416/
+
+    - [x] II - http://www.lintcode.com/submission/3439424/
+
+    - [x] Follow up one: 如果地图数据经常会更新，每次都要算山峰数量，如何提高效率。
+
+        - 我感觉他是想问island II里那种情况，经常添加或更新新地图信息。因为这题只要求岛屿得数量，并不要知道具体的位置。可以用Union-find set做。每更新几个点就把那几个点做一下union-find操作，这样以前已经算过的数据就不用再算了，速度就快了。
+
+    - [x] Follow up two: 有什么其他算法可以完成题目，除了DFS和Union-Find Set。
+
+        - 我说可以用DP做，把每个点左上角区域的岛的数量算一下。本质上和union-find set的意思是差不多的。然后他就问了large scale情况
+        - 其实DP我觉得没什么速度优势，不过面试官追问还有没有其它方法，所以急中生智想到了DP。我感觉可以用DP Matrix，存好左上角区域有几个岛。然后计算下一个DP值的时候，从之前几个DP submatrix的边界点开始BFS。不过我感觉速度不会快到哪去，估计也不是常用方法，因为space complexity太大了，面试官也没有再追问转移方程是啥
+
+    - [x] Follow up three: 如果地图数据量特别大，单机处理不了怎么办。要求说思路或写伪代码。
+
+        - 其实就是应该用map reduce做。但是我没用过，然后就说了思路，然后最后提到了map reduce，面试官好像感觉挺满意。
+        - Need to merge mountain boundaries to one island
+
+- [x] Unique Word Abbreviation
+
+    - Assume you have a dictionary and given a word, find whether its abbreviation is unique in the dictionary. A word's abbreviation is unique if no other word from the dictionary has the same abbreviation.
+    - https://leetcode.com/submissions/detail/62211303/
+
+- [x] Perfect Square
+
+    - DP: http://www.lintcode.com/submission/3814580/
+
+- [x] Missing Range
+
+    - https://leetcode.com/submissions/detail/62212021/
+
+- [x] Square root
+
+    - Binary search
+    - https://leetcode.com/submissions/detail/60211702/
+    - Square root of float (while (Math.abs(mid * mid - target) > 0.00001)
+
+- [x] Best Time to Buy and Sell Stock
+
+    - I: https://leetcode.com/submissions/detail/61526514/
+    - Best Time to Buy and Sell Stock II - https://leetcode.com/submissions/detail/61551732/
+    - Best Time to Buy and Sell Stock III - http://www.lintcode.com/submission/3400430/
+    - Best Time to Buy and Sell Stock IV - http://www.lintcode.com/submission/3804076/
+
+- [x] Construct Binary tree from preorder and inorder
+    - http://www.lintcode.com/submission/3281444/
+    - Post order and in order: http://www.lintcode.com/submission/3281837/
+
+- [x] kth smallest number in sorted matrix (lint code)
+    - Problem is same as merge k sorted list, but with each list being a column
+    - http://www.lintcode.com/submission/3518149/
+
+- [x] Maximal Rectangle
+    - https://leetcode.com/submissions/detail/61612964/
+
+- [x] Palindrome Pair
+    - https://leetcode.com/submissions/detail/62213158/
+
+- [x] Kth Largest Element
+    - http://www.lintcode.com/submission/4073190/
+
+- [x] find the element in the rotated sorted array
+    - http://www.lintcode.com/submission/4414396/
+
+- [x] Merge Intervals
+    - Breaking intervals apart: https://leetcode.com/submissions/detail/61585693/
+    - Use tmp buffer: http://www.lintcode.com/submission/3859715/
+
+    - [ ] follow up是写addInterval和getAllIntervals的函数，LZ提出的先按start time sort再插入进去的方案被面试官说复杂度太高，想了想说，就sort一次，之后用binary search找第一个有overlap的interval和最后一个有overlap的interval,然后把中间的删了加一个新的
+        - GetAllIntervals: 返回一个iterator，这个没怎么提到，光是讲addInterval了，感觉类里面弄一个成员变量maintain好list就行了，这个函数就返回list的Iterator就好了
+
+    - [ ] TODO: InsertInterval binary search solution
+    - Insert interval: http://www.lintcode.com/submission/3882540/
+
+- [x] Distinct subsequences
+
+    - 复习所有subsequence的dp
+    - distinct subsequences: http://www.lintcode.com/submission/3302428/
+    - longest increasing subsequence:http://www.lintcode.com/submission/3281351/
+    - longest common subsequence: http://www.lintcode.com/submission/3297879/
+
+- [ ] TODO: Basic Calculator / Evaluate target
+
+    - [ ] https://leetcode.com/submissions/detail/60265668/
+
+- [x] Minimum window substring
+    - Forward two pointers: move slow forward if covers substring. Use integer hash
+    - http://www.lintcode.com/submission/3772004/
+
+- [x] Encode and Decode String
+    - Fastest solution: length#str format. e.g. ab,cd => 2#ab2#cd
+        - https://leetcode.com/submissions/detail/62237733/
+    - Use ‘*’ as separator and escape ‘*’ with ‘/‘:
+        - https://leetcode.com/submissions/detail/58042384/
+    - Slowest: use 10 chars at the beginning to record the length and take the string
+        - https://leetcode.com/submissions/detail/58043159/
+
+- [x] Remove node in BST
+    - Need maintain parent and current node. Three scenarios: leaf, has left child, only right child. The last one is more complicated
+    - http://www.lintcode.com/submission/4503040/
+
+- [x] Closest Value in BST I, II
+    - Leetcode: Binary tree closest value: Recursive, Iterative (preferred)
+    - II:
+        - Successor and predecessor: https://leetcode.com/submissions/detail/58272075/
+        - Two stacks: https://leetcode.com/submissions/detail/58276153/
+
+- [x] Super Ugly Number
+    - https://leetcode.com/submissions/detail/58591571/
+    - Phone, 2016-04-12
+
+- [x] ReadNCharsByRead4
+
+    - https://leetcode.com/submissions/detail/62216273/
+    - Onsite, 2016-03
+
+    - [x] II: https://leetcode.com/submissions/detail/58163529/
+
+- [x] Recurring decimal
+
+    - Phone, 2015-07
+    - https://leetcode.com/submissions/detail/60945095/
+
+- [x] Find the duplicate number:
+    - Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+    - Binary search
+    - https://leetcode.com/submissions/detail/58358956/
+
+- [x] Generate parenthesis: 2016-03
+    - http://www.lintcode.com/submission/4053875/
+
+- [x] Group shifted strings: 2016-03
+    - Get all to the original form. Careful if below 0, need to take mod or add 26
+    - https://leetcode.com/submissions/detail/58057257/
+
+- [x] 3Sum Smaller
+    - https://leetcode.com/articles/3sum-smaller/#approach-2-binary-search-accepted
+    - Two pointers: https://leetcode.com/submissions/detail/58000706/
+
+- [x] Rotate image
+    - https://leetcode.com/submissions/detail/62315853/
+    - Flip diagonal (lower left with upper right, then swap vertical midline
+
+Java Questions:
+
+- [ ] 第一个是问我比如有一个输出哈喽沃德的程序，在命令行里敲下执行命令之后，在屏幕上显示哈喽沃德的字符之前，是怎样一个详细的过程？（比如程序编译，以及输入输出流之类的），这个问题我基础不牢靠吭哧吭哧瞎答了一气。
+
+    - Java: first use javac to compile to JVM byte-code, then JVM executes it
+
+- [ ] 如果肉眼看java代码，class之间的引用关系怎么找？看reference的type；new operator之后跟来的class name。 或者分析用reflection写的object construction代码。
+
+- [ ] java基础知识，包括 access controller, static final, interface...
+
+External Resources:
+
+-  Google 题总结      https://hellosmallworld123.wordpress.com/2015/07/23/g%E7%9A%84%E5%87%A0%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/
+- Range Minimum Query
+    - https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/
+- Reservoir Sampling
+- 读大数据处理文章
+- java Basics (how is object passed around in java)
+- time complexity calculation - especially for recursion functions
+
+Sorting:
+
+- Quick sort: http://www.jiuzhang.com/solutions/quick-sort/
+- Merge sort: http://www.jiuzhang.com/solutions/merge-sort/
+- Radix sort: https://gist.github.com/yeison/5606963
+
+Java Basics:
+
+- Override hashcode and equals:
+    - public boolean equals(Object o) {
+    if ((o instanceof XXX)) -> ((XXX) o) => downcast
+}
+    - public int compareTo(Student other) => class need to implements Comparable
+
+Time Complexity:
+
+    - Backtracking: (Almost always exponential or n!)
+
+        - permutation/ n queens: T(n) = T(n-1) + C => n!
+        - word break: 2^n
+    - Divide and Conquer - there is a formula: http://digital.cs.usu.edu/~allanv/cs5050/W2Handout.pdf
