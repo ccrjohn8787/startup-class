@@ -1,3 +1,20 @@
+1. Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.
+
+The returned array must be in sorted order.
+
+Expected time complexity: O(n)
+
+Example:
+nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,
+
+Result: [3, 9, 15, 33]
+
+nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
+
+Result: [-23, -5, 1, 7]
+
+2. Strobo number: https://segmentfault.com/a/1190000003787462
+
 5. 题目是给你一个board，里面存储user的信息，user有id和socre。
 board有adduser(id, score)(返回add进去的user当前的rank), findByRank(k) (这个返回id)。
 Add如果本身已经有id在board中，需要对这个id的score进行update。(BST insert, delete)
@@ -48,3 +65,46 @@ output是每个role出现的次数。
      for each role’s start and end time:
           binary search first occurrence in playMap that’s after start
           binary search last occurrence in playMap that’s before end
+
+14. 实现一个数据结构，要有insert（）， delete（），median（），mode（）方法，怎么写。
+
+    - [x] 2 heaps + TreeMap<Count, Hashset<Numbers>> + HashMap<Number, Count>:
+
+        - Insert: O(logn)
+
+            - update heaps and median
+            - HashMap update: if key in map, add count, otherwise, add entry
+            - TreeMap update: remove number from current count, add to new count
+        - Delete: O(n) -> can use hash heap to make to O(logn)
+
+15. n个文件(共100G)，找出含某个词的文件将它们归档为一类。
+  e.g. A: small cat and small dog
+        B: small cat
+        C: cat and dog
+    then given ['small cat', 'dog'], return [[A,B], [A,C]]
+  写了个暴力后，问我怎么做更快，然而我并不知道。不知道他想用分布式还是某些算法(自动机？)，胡扯一通
+  
+ 
+
+            - update heap and median with hashheap
+            - hash map delete: update count, if not count, remove key
+            - TreeMap delete: find count and remove number, add to new number
+        - Median: O(1)
+
+            - take median of heaps
+        - Mode: O(1)
+
+            - max of tree map
+    - Balanced binary search tree:
+
+        - TreeNode has node count of subtree and count of node with the number
+        - Insert: O(logn)
+        - Delete: O(logn)
+        - Median: Worst case O(long): Need to maintain node count of subtree
+        - Mode: O(n): This is a disadvantage against the first solution
+    - Solution:
+
+        - Eclipse: MedianAndMode (not implemented)
+        - TODO: Implement if have time
+        - Important is to discuss trade off between different data structures
+        - Link Idea: Link
