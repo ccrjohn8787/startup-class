@@ -1,0 +1,535 @@
+- 1. 美国大叔，人很nice，就是面经里的比较两个quad tree。然后return 一个新的，这题虽然简单，但是很容易出bug。最后面试官引到了一下帮助发现bug。
+- quadtree。大概就是说一个黑白image，用的是quadtree表示的。黑的就是0，白的就是1。问求这个quadtree表示的image里黑像素的比例。
+然后follow up就是求combine两个quad tree后产生一个新的image的quadtree，rule是就是只有两个images都是黑merge后才是黑，其他都是白
+http://www.1point3acres.com/bbs/thread-156466-1-1.html
+- 2. 临时换了一个亚洲大哥。哥们出了一个画图题，给一个class {draw(boolean), move(x,y) // absolute coordinate}. draw 为true的时候是画线，draw为false的时候是抬起笔，move就是把笔移到某个位置。然后让画一个m*n 的矩形，每个格子长度为L。要求中心对称。（有俩bug，一是算float的时候两个整数相除， 2是for loop 时<= 写成<）
+-     follow up： 如何一次性画完这个矩形，运行overlap某些edge。
+    follow up： 如何一次性画矩形，不允许overlap。
+    follow up： miniMize overlap 的edge，如果证明为啥你的方法是minimize的。（只能达brute force所有的可能性，然后算出最小的一个。 然后问brute force有何优化（答：memorization， 貌似不对。））
+3. 中国大叔吧，人比较nice。题也比较简单，二维矩阵n个点，找一个最近的，带障碍。
+4. 这大叔没看出来是哪的，开始看名字像日本，后来发现是老毛子。虽然题很简单，但是不知道他什么毛病，也不满意的样子。f(x) = ax2 + bx + c, 给一个input，结果也顺序输出。这人上来迟到7分钟，导致写的时候时间紧。最后匆匆忙忙写完，也没问啥别的， 最后take picture走人。input is a sorted array, output should also be sorted: depending on a, peak value is at -2a/b
+- 5. abc小哥吧，小哥上来很有激情。问了问简历。出的题目说难也不难，说简单没见过也不好答。就是有一堆player，每个人beat 其他人的概率已知。然后已知初始的对阵表，问给定一个player，问他最后夺冠的概率是多少。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+-                ----
+    ---                  ----
+a--b   c---d    e---f  g---h
+输入的format你自己决定。楼主当时真心也不知道啥好做法，很想用tree，但觉得用tree吧，从leaf node开始遍历到root 又很奇怪，而且很难找到一个node 的siblings。所以给了一个暴力解法，最后被证明是exponential memory usage。code也不是很好写，而且有些case也没处理。基本idea就是列出所有的对阵可能性，然后每一个可能性都有一个probability，最后结果相加。有点类似bfs。
+
+    - link
+- 1. 美国大叔。 warm up 问题：求 int(log X).  第二题， 给一堆strings 和一个input string, 在input里找出minimum unused char. (dfs?)
+- 2. 国人小哥。特别nice！给一个数字的array，两个数字间只用+或者* 算出最大的值。
+- 3.烙印大叔。 给一个array 和一个 target求出 array里有几组tuple相加是小于等于target的。 第二题是一个array里面只有0-9的digits, 有一个target， 判断是否存在一种组合可以等于target。eg: [6,3,1,0,5]  target=78,这个return True. 63+10+5 = 78 如果target= 636 return True. 631+0+5 = 636
+- 4.烙印小哥。 rearrange array，使得相邻两个字符是不一样的。
+5. 俄罗斯小哥？长得像格格巫。。。LRU~~
+
+    - link
+- 1.
+[ 0 2 1
+  1 0 1
+0 是障碍物，2是食物，1是可走的路径。 要求着到可以走到所有食物一次最短的点。 我用bfs做出来，最后的时候他说我有个case没考虑到，就是没有最佳路径的时候怎么办。 其他的都没问题。2. given a infinite stream of real number, 随时找median. 我说用 2 heaps， 但是他说infinite的数字要infinite的空间怎么办。然后我就说2heap应该也可以，就是保证一定size把多余的扔掉。我又挣扎说了一些其他方法，都不大行。 最后他说你用2heap做做吧，我大概做了出来，然后他就给我看了个case说这个方法什么时候会失败。 他最后说其实实际应用中2heap可以用，只要n够大就行。感觉这个面试比较惨。     bucket sort?
+- 3. given a probability = [.5 .1 .2 .2], label = [A B C D], write a data structure that generates the label based on the prob. 我说先找cumulative probability［.5, .6, .8 1]， 然后弄个0～1之间的random数字比较过去找它的位置就好。他就说有没有更快的方法。 其实他想叫我用binary search，但是我一直以为是不是有什么O（1）的解法，浪费了一些时间后才发现原来他想要binary search， 最后弄出来了。
+- 4. first is summary missing range problem. ［0 1 2 45 99］ output “3-44，46-98”。 做了出来但是做法没有最优，我说可以改，他就说我相信你可以改就下一题了。second is given a dict of words [aba, cbc], find the letter to letter probability. b->a 50%, b->c 50%. 这个做的还可以，有一个小bug
+- letter of probability的题目是这样， 做一个27x27的matrix， 26 个代表字母，最后一个代表开始或者结束，然后你每个字母走过去找它出现的次数，最后除一下row sum求概率就好
+5. hamming distance between a and b, a, b < 2^64. 这题很快就做了出来。就是把a^b>>i &1  64 次。 然后他就说要想办法speed up，说给我64G的ram。我想了很久最后说可以搞个2^8的字典，然后把a^b分8段比就好。 他就说为什么用8， 然后就问我2^8的字典要用多少空间. 我没记空间大小的那些知识，所以不会做...几经提示后结论是可以用2^32的字典要4G空间，这样比两次就好。他最后又问说如果你用这个方法，但是ram只有2g，那会发生什么情况。 我就说那会有error吧。他就说什么error。我说不出来。他就说“you clearly have never used win 95 swap space”. 然后差不多就结束了。我觉的最后这个哥么应该给我差评了。
+
+- 总结失败经验：
+1. 应该多考虑corner case， 总是写完被人问有什么case会有问题
+2. 尽量一次算法最优，像什么能用binary search的时候就不要用O(N)的
+3. 一些cs基础的东西要懂，什么swap space的。转行不容易啊。。
+. 1point 3acres 璁哄潧
+补充内容 (2016-3-9 12:27):
+第一题就是leetcode 317. Shortest Distance from All Buildings.
+第2题是 295. Find Median from Data Stream 变种。你先把基本的做出来然后讨论一下无限数据该怎么办。我现在觉得应该是要用到reservoir sampling.
+
+    - link
+- (1) coding implement hash table (insert, find, remove).
+- (2) coding
+you have 1 meter walkroad, and randomly generate rain, the rain is 1 cm. simulate how many rain drops to cover all the 1 meter [-0.01~1].
+merge intervals 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- . 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+(3) coding
+give a dictionary with many words,
+ape
+apple. From 1point 3acres bbs
+- ...
+randomly generate a word from the dictionary.
+calculate the probability from one letter to another and one letter to the end.
+and the start probability of each letter
+(4) coding
+valid unicode (几个bug，自己修改了)
+（这一轮是个中国人，我只能说这个人真不怎么样，全程没有从椅子上起来，behaiveor question，我说什么他也说不是这样的，很不友好。然后，做题，直接给我一张纸，说题目就在纸上，其他的面试官都是和我讨论题目，写在黑板上。最后这一轮挂了，中国人为什么非要为难中国人）
+
+    - link
+- 第一轮：
+Find Longest Increasing Sequence (nodes必须相邻）
+比如[1, 2, 5, 3, 4] LIS 是 [1, 2, 5]，[1, 2, 3, 4]不算。
+考了四种数据结构:
+1. Array: 扫一遍就好
+2. Tree: BFS就好
+3. Directed Acycle Graph: DFS从入度为0的nodes出发＋记录已经找过的node的计算结果避免重复计算
+- 4. Undirected Graph: 从每个node都要搜一遍，但是碰到decrease就可以停止了
+- 第二轮：
+Item[] findKLargest(Item[], k)
+我说了heap方法和快排的partition方法，面试官喜欢partition就写了partition
+第三轮：
+1. 写一个class找一个window内sensor的均值
+class Sensor{
+        public Double smoothData(Double point);
+}
+还问了一个怎么处理wild number的问题: 就是突然出现极高或者极低的数据怎么摒弃掉
+
+- 2. 输出一个string所有可能的compress strings, compress之后必须比原string短
+比如 abcdef => [a4f, ab3f, abc2f, a2def, a3ef]
+第四轮：
+给一串灯，要求返回所有光照重合区域的两个灯的组合。
+List<Pair> getOverlap(List<Light> lights) {
+}
+. 鍥磋鎴戜滑@1point 3 acres
+class Light {
+        int x; // x 坐标å
+        int y; // y 坐标
+        int r; // 发光半径
+}
+.
+class Pair {
+        Light l1;
+        Light l2;
+}
+后面有follow up问如果r都一样的话有什么优化，那么可以大概nlogn。
+方法是把所有lights先排序一遍（比如先根据x再根据y），然后过一遍排好序的lights，用个queue存所有还有可能组成pair的灯，然后如果当前灯的x＋queue首灯的x > 2 * r 的话就可以把queue首的灯扔出queue。
+但其实这个算法跟r有关系，如果r特别大的话也没用。。。事实上是nlogn和nr之间比较大的那个吧
+
+    - link
+- 1. 两个数组A，B，找在B里不在A里的。第二题记不得了，汗
+2. 第一题无限长输入，统计win内的平均值，并问时间长了double精度drift怎么办（重新算）； 第二题LRU设计和psuedocode。
+
+- 3. design, 本来要问LRU，发现问过了，就改问类似youtube的系统如何设计cache
+4. 午饭，小mm说不写feedback
+5. 第一题算x^y，第二题serialize/deserialize string
+6. 第一题若干人赛跑，已知是一个pair list, 譬如（1，4）表示1在4之前到达，求最后的排名，和scheduling一个意思吧；第二题是shuffle数组，问了些概率
+
+    - link
+- 1. dictionary and license plate
+2. 一元二次方那道。
+3. html 建树对比。. 鍥磋鎴戜滑@1point 3 acres
+- 4. frog game
+Design an algorithm to play a game of Frogger and then code the solution. The object of the game is to direct a frog to avoid cars while crossing a busy road. You may represent a road lane via an array. Generalize the solution for an N-lane road.
+https://www.quora.com/What-is-the-algorithmic-approach-to-solve-the-game-of-Frogger
+Graph: vertice is position + time. edge exists if can cross from one vertices to the next. do BFS
+5. given a list of node with containing its parent id， and a list of remove node list. remove all the subtree.
+
+    - link
+- 第一面，一个很屌很拽的三哥。上来就聊social newtwork，讨论里面的connection怎么去assign weight，没什么经验，直接各种脑洞，也不知道说得有没有道理。然后让写一个从一个social graph中找出N个朋友的function，这里我一直以为要用着那个edge的weight，结果开始往最长路径上去想，结果就GG了。后来就写了一个BFS到N个的时候就停止，结果被指出来一堆bug，比如visit的节点忘记加入set了，没处理null的情况，没处理N为非正数的情况啥的。主要还是一上来就被问懵了，这一面感觉就跪了。 第二面，一个中年白人。第一个题返回一个字符串中出现次数最多的字符，然后把这个题用MapReduce重新写一遍。第二个题写二叉树的最深深度。第三个题是leetcode上那个把二叉树每一层的节点水平的连接起来。第四个题写N！中0末尾0的个数。这一面感觉没什么bug的地方，感觉一般。 第三面，一个很geek的三哥。实现SQL里面的group by的functionality，用最直接的方法实现后，更改一下文件的存储方式从而实现更快速的方法。最后拓展到distributed storage上面去，有多个machine在运行你的database，问怎么设计文件存储的方式，从而使你的query尽可能快的完成。这一面感觉一般。 第四面，一个年轻白人。自己设计接口，使得支持两个funciton：onUpdate(timestamp, price) 和 onCorrect(temistamp, price). 可以理解为有一个时间流，每一个timestamp都对应一个股票的时间，每次调用一次onUpdate的时候，就对我们设计的那个类更新对应的timestamp和price， onCorrect就是修改之前的一个timestamp的price。最后，我们的类要能返回latest price， max price 和 min price。一开始题目描述的太模糊了我都不知道到底要干啥，墨迹半天才知道是想设计一个类，然后中途也写的乱七八糟的，用了两个Deque来存储一个递增和一个递减的序列，类似窗口题的方法。当onCorrect的时候就去看队列里面有没有对应的timestamp，有的话移除然后重新入队。感觉这面面的也不是太好。
+- 我想用一个hashmap, key 是时间，value 是那个node，那就可以修改了. Use 2 heaps - minHeap and maxHeap
+其实也不用重排，再node中加一个latest的flag；当有update时，就旧的node的latest设成false，同时创建一个新的放入heap；当要取top element时，如果发现不是latest的，就弃掉，再取下一个
+
+    - link
+- 1. Design alarm class 请见 http://www.1point3acres.com/bbs/thread-168090-1-1.html. Waral 鍗氬鏈夋洿澶氭枃绔�,
+- 2. Producer and Consumer. 最后让写了template， 写出来类似http://www.fgdsb.com/2015/01/03/provider--consumer/
+
+- 3. lunch
+4. Thesis
+5.1 Decode ways 感觉最近还比较常见
+5.2 Return the total coverage of intervals. 就是merge intervals，就是返回 merge 完后的 总长
+6.1 Two arrays A, B have same elements in the beginning, if we insert a number into one of the arrays, find that element.  XOR就好了
+- 6.2 number of unique trees, leetcode 原题
+6.3 maximum contigues subarrary sum. 原题
+
+    - link
+- 1.一堆密码箱，每个密码都是四位0-9之间，算一个暴力破解序列，包含所有可能的四位序列，让这个序列尽量短 没有找出最佳解法http://www.1point3acres.com/bbs/thread-133413-1-1.html
+- http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=133413&pid=1947712&fromuid=206597
+2.设计blocking queue
+3。二叉树 同列 node right pointer，不允许额外空间
+
+    - link
+- 原面经： Unique Paths 变体. more info on 1point3acres.com
+- m * n的矩阵， 每一格有一个数字
+求从左上角到右下角，和最大的路径-google 1point3acres
+- followup： 如果两个人一起从左上角走， 每个人到了一个格子之后会把该格子的数清零。 求两个人走的路径和的最大值
+- follow up我的思路：建一个三维的[][][], 存第多少行，第一个人在哪一列，第二个人在哪一列， 但具体还没想清。
+
+    - link
+- 第一轮是一个中国小哥，在google干了一年多，这一轮我感觉答的最不好，最后feedback也确实如此，不过感觉小哥还是放了我一马的，感谢！！
+1. 给一堆meeting(start_time, end_time)，说假设你只有一个meeting room,问最多能有几个meeting。sort and dp
+- 2. Stock Price I
+3. OO Design elevator
+第二轮是一个印度小哥。.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+
+- 1. warm up question, 很简单→_→所以忘记了，总之是一道leetcode原题
+2. 这道题说起来比较复杂。假设你有一张表，这个表是每个字母在其他字母后面出现的概率。然后这个概率是根据一些东西算出来的，比如说一本字典。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+- 举个例子吧
+假设字典是 ["cat", "cap"]
+那表格就会是
+        a     c       p     t
+a     0     0.5    0    0
+鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+c     0      0      0    0
+p    0.25  0      0    0
+t    0.25   0     0     0
+ok，不知道格式会不会坏><，总之就是你有这样一个表格，然后他们的概率加起来是1嘛，但你不用担心这个表格是怎么来的。. 1point 3acres 璁哄潧
+
+- 然后如果你有这本字典，让你返回长度是4的最可能出现的单词（保证只有一个）
+- follow up是如果没有这本字典，你如何算长度是4的最可能出现的单词（保证只有一个）https://en.wikipedia.org/wiki/Viterbi_algorithm
+- 再follow up是，假设你现在根据比如说google search query有一个，2014年最经常搜索的单词list，然后根据这个list算出一个概率表格以及最可能出现的单词，然后现在你知道2015年添加了一些单词，如何更efficient的算出新的概率表格以及最可能出现的单词。- convert percentage back to absolute value and calculate?
+- 第三轮白人大叔，人也特别nice，一直 very cool, very very cool
+1. longest common prefix 没让写code，就谈了idea
+2. longest common substring
+- follow up是优化空间（因为楼主一开始用了n*n的space，大叔让我用n）
+第四轮是白人小哥，人也挺好的，全程狂写笔记
+就一道题，滑雪。跑test case跑得楼主口干舌燥+腰疼: 滑雪是lintcode longest Increasing Continuous subsequence II
+
+- follow up是如果这个matrix特别特别大，一个machine装不下要怎么办。
+我当时说的是，把matrix分成四份，在四个machine上分别计算longest subsequence，然后边界要特殊处理，因为边界有可能会连接到另一个小matrix。
+在边界处理这边，后来是面试官提供了一个思路，他说可以用类似hashmap的数据结构把边界上在这个小matrix连着的点存起来（一头，一尾），然后一个一个小matrix的边界再连接起来算。.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+
+- 我讲的有点乱><，当时面试官也没有再go to detail，讨论了一下思路，然后问我比如那个大matrix上最长的一条是一个U型啊，或者画个其它形状，问我会怎么实现刚刚讨论的 算法。
+
+    - link
+- 第一轮，有人shadow
+http://rosettacode.org/wiki/Maximum_triangle_path_sum
+. 1point 3acres 璁哄潧
+然后一个小印带我去吃午饭
+第二轮，
+先问了我 youtube 如果产生向用户推荐的视频列表。 我说了当前播放视频的{标题，内容，介绍}，该用户的观看记录，观看了该视频的其他用户的观看记录，已及该用户的 IP 地址类型（家庭用户或企业用户）。又问如果是一个新用户怎么办，我就说可以随机推荐当前最热门的视频。似乎这不是他满意的答案，他提示说如果用户是从 facebook 中点击视频连接进来的呢？我就说那就可以获得该用户的社交网络信息，根据他的爱好来推荐视频。
+然后就做题，字符串匹配，“.” 代表一个任意字符， “*” 代表0个或者多个任意字符。
+例如 youtube
+y.u.u.e --> true
+you*be --> true
+you.. --> false
+*u*u* --> true
+第三轮，
+小哥自我介绍他们组是根据用户播放的 MV 推荐相关 MV 播放列表。我说我知道这个功能，我很喜欢。. Waral 鍗氬鏈夋洿澶氭枃绔�,
+
+- 然后问我如何从 Youtube 的视频列表中找到圣诞相关的歌曲。我就先说哪些信息可以提取出来做特征来训练分类器，基本上跟上一轮说的差不多。
+然后问如何选择training data
+然后又问如果圣诞歌曲在所有的 MV 中所占的比例特别小怎么办，小于 1% 甚至 0.1%
+然后聊了一下我的 thesis。最后剩的时间不多了，就让我实现了一下 sparse matrix 类。我说用 hash table 来保存非零元素，用 truple (x,y) 做 key。然后让我实现两个 matrix 相加的算法。做完以后，他提醒我如果 M1(x,y) = -M2(x,y) 怎么办。我发现如果 M[(x, y)] == 0 的话，应该将该元素从 hash table 中删除。
+第四轮，
+白人大叔一进来就看了看面试记录，说我先看看别人都问了什么问题，我别问重了。如何找圣诞歌曲，有意思。
+然后说他的问题是开放性的。有一个图，图中每一个节点的label是一个整数，找到最长的连续整数序列的长度。
+计算可能的 Android 解锁图案的个数
+
+    - link
+- 1. 同专业小伙伴面经的第三题，两个人拿数字的游戏，然而没写出来，唉……血的教训是面经看完一定要想清楚解法啊啊啊啊！这轮简直是灾难……本来第一轮困得要死就没进入状态……http://www.1point3acres.com/bbs/thread-144376-1-1.html
+
+- 2. 一个sorted array,找出现次数大于n/4的popular number，n是数组长度。写了O(n)之后要求优化时间复杂度，想优化成O(logn)不过要分成四份再找想的有点复杂
+3. 给一个词典和一个target word,问这个word是不是smashable. smashable的定义是这个词在字典里并且它不停地任意删除一个字母得到的单词也在词典里。用了DFS之后提示用hashtable优化时间复杂度，然后问如果要提前把这个词典存好之后反复调用怎么办，按照他的提示我想到的方法是按长度sort 词典里所有单词，按照长度group起来，给一个word之后就直接找比它长度-1的那个group看有没有哪个substring在这个word里
+4.一个白人老太太，一开始说是unsorted array找一个target number第一次出现在这个array的位置，我说扫一遍，然后她说那假设是sorted array呢，我说用binary search找到之后往前搜（跟第二面有点像其实，但是第二面的优化之后的代码我并没写完= =）写完之后被要求手跑了N多个test case……而且她还要求我一行一行都跟她讲…难道这一面是考你能不能给她讲清楚test case的吗……我给的应该不是最优解法，我还以为她会让我再像第二题那样优化…然后就半个多小时了就问问问题结束了
+
+    - link
+- 1. 给一些interval，给一个点，返回所有包含此点的interval.1point3acres缃�
+
+- 2. select kth element，behavior，merge 两份通讯录 删掉deleted flag ＝ true的entry 用hashmap就可以
+. visit 1point3acres.com for more.
+- 3. 数组里最长递增数列，然后数组改称tree，然后讨论一台机器数据如何有效的分布到很多机器上
+. more info on 1point3acres.com
+- 4. 有向图查有没有环，找两个node最近的common children，bidirectional BFS - Iterative DFS
+- 5. 数据结构表示sparse matrix，实现update（row，col）method
+- Q1. Given a sparse excel file, design a data structure to effectively store all the informations.
+        Sparse means most of the excel are empty.
+        Write 4 functions: void set(int row, int col, int val),  int get(int row, int col), vector<int> getRow(int row), vector<int> getCol(int col)
+        getRow and getCol returns the corresponding row or column that is indexed at the input number which neglect empty cells..1point3acres缃�
+-     Solution:
+        Using this one:    unordered_map<int, unordered_map<int,int>> myMap1, myMap2;
+          myMap1: (row -> (col -> val)) ;  myMap2: (col -> (row -> val))
+       Follow up: what if there is a function eraseRow or eraseCol like in excel you can erase a whole row or column.
+       Hash table solution becomes unefficient because row index and column index changes and this cause erase time complexity to be O(n)
+       Solution : using LinkedList, and I have no time for coding. W
+
+    - link
+- 第一轮：国人大哥和白人小哥（shadower）。因为没有人出来领我进去，这一轮晚了10分钟，后来国人大哥出来把我领进去的。Define tree class。 Binary tree 都有哪些operation，一一实现这些operation（delete没有写完。。。我傻叉的还定义了travesal并且浪费了两三分钟。。。不过确实只有35分钟，下一轮的面试官准时就来了）
+第二轮：1. Design Garbarge collector in C++ ——被狂虐，完完全全不会！我就知道garbage collection的概念，new， delete，smart pointer，that's all...
+2. Binary tree 两个node之间的距离。我就是用common ancestor的方法做的。问了复杂度。如果不用递归该怎么做？http://www.geeksforgeeks.org/find-distance-two-given-nodes/
+- 第三轮：leetcode flip game I, II 原题。问了复杂度。中间还问到了hash原理，举例一个string hash function。这个我自己完全没有用到hash，是面试官说可以把结果存起来，问能不能提高效率，然后就问了一些hash的问题。
+第四轮：设计一个CPU和内存占用是Deterministic Behavior的Event Class，支持:IncrementCount(), GetEventCountLastMin(), GetEventCountLastHour(), GetEventCountLastDay(), 每秒可以有多达million个call，也可能什么都没有。这一轮最差了，最终也没有找到合适的data structure。后来还问了很多multi-thread的问题：如果多个线程同时cal怎么办。说用mutex， lock， notify等。让在函数中实现这些。
+第五轮：Design a data structure for sparse matrix, 支持：Set(row, col), Get(row, col), vector<int> Get(row), vector<int> Get(col)。先说用linkedlist，描述了怎么实现。问时间复杂度，问能不能优化。转而用Hash - Hash of hash，面试官说可以。然后让完整的写了实现前三个函数的code。写完后继续问：现在要支持insert(row/col), delete(row/col)，hash的办法会有什么问题？如何改进，又用回了linkedlist。。。 然后如何优化等等
+
+    - link
+- 第一轮：亚裔（听名字不像中国人？）   一堆人参加比赛，最开始谁和谁先比是确定的，比赛是两两配对，一轮一轮进行，print出若有round和可能的组合。比如 有 ABCD四个人比赛， 那结果是：
+- 1  A - B. 1point 3acres 璁哄潧
+- 1  C - D
+2  A - C
+2  A - D
+2  B - C
+2  B - D
+但是要考虑一个情况，就是有五个人比赛，比如 ABCDE五个人， 那么E这个人可能是在C和D比完后和他俩的胜者比，或者E 和 AB的胜者比。或者E 和 ABCD的胜者比。
+问题：1.用什么数据结构存比赛者。 就说二叉树就行了，把比赛者存在叶子节点，怎么构成不需要你考虑。
+          2. print出结果（应该就是postorder traversal了）
+第二轮：1. largest substring with at most M distinct characters，但是输入的string是以stream的形式;    2: word abbreviation那题，给个字典，判断有没有和输入的词的abbreviation相同的词。
+第三轮： 这轮不想提起，，我也不是很明白题目是啥。。没听懂。。。
+第四轮：给了一个双链表，在给一个list，list里面装的是双链表里面的某些node，面试官说可以通过list里面的node直接访问双链表里面的node。  然后根据list，求双链表中有多少个components。
+
+- example：  A-B-C-D-E.  list：[A E D]  那么就有两个components: A 和 D - E
+第五轮： 给了N个城市，和N-1条road，且这些road可保证城市间均两两互通。 比如 SF--SD--LA ， 每个road都有长度，求所有两两之间的path的和，然后除以所有的path数得到平均值。。。（也就是: SF到SD + SF到LA+ SD到LA 再除以3）。  当时有点晕。。写了个brute force = =
+- 某一条路径被走的次数其实就是断开这条路径左边城市数*右边城市数吧
+这样每删除一条路径，就能在O（1）时间内知道其总共被走了多少次。最后取sum(路径走过的次数 x 路径长度）/ 路径总数即得答案。时间复杂度为O(N)
+
+    - link
+- 1. 华人大叔。题目：Given a large integer array, count the number of triplets whose sum is less than or equal to an integer T.
+- 大叔英文很地道, 全程态度比较认真，不冷不热。一开始猛然间以为是3-Sum的题，仔细想想不太一样，细节问题挺多。最后写了一个O(n2lgn)的算法，然后问大叔更简便的有木有，大叔迟疑了片刻说应该有数学相关的取巧办法。。
+- -google 1point3acres
+2. 华人小哥。题目：Given an array of Ad (profit, start_time, end_time) and a timespan [0, T], find the max profit of Ads that fit the timespan.
+小哥进来就说了句中文：怎么样啊？顿觉好温暖，中文寒暄了几句就用英文开始了。先说了穷举法O(2^n), 然后说了贪心法（不是最优解），最后用DP解决。小哥态度灰常好，给了很有用的提示, 就像自家人啊。
+3. 俄罗斯妹子。题目：M x N large board, with only white and black blocks, all black blocks are connected (vertically or horizontally), find the minimum rectangle boundary that contains all black blocks.
+妹子笑的好甜，全程一直在笑，还好心地给了提示和假定。感觉交流互动非常好，可惜最后差了一点，没能想出O(n^2)以内的算法。
+-google 1point3acres
+4. 美国小哥。题目：Design a algorithm to initialize the board of Candy Crush Saga. With M x N board, Q types of candies. (Rules: no 3 for run after initialization, must contain at least one valid move at the beginning)
+小哥说话很和气，先让我介绍了一个project，于是兴致勃勃地讲了做过的一个游戏。他于是拿出手机给我看了这个，说那就出一道游戏题吧。。游戏可以参考（.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+
+- http://candycrushsaga.com/how-to-play），这道题很开放，没有固定模式和答案，感觉答的还不错
+
+    - link
+- onsite1：两个等长度string S T, swap S里的一对字符让两个string的海明距离最少。
+- 找不匹配的pair，用hashset保存，比如ab，然后遍历hashset看有没有逆序对，有的话swap海明距离就能减2.没有的话看有没有哪个pair的第二个字母是a，有的话swap，海明距离减1.再没有就不用swap了，swap不能减小海明距离。
+- 四个点判断是否正方形（思路不用code）。a的b次方模p。
+2：3 sum smaller  这轮只面了30分钟因为第一轮进去时间晚了面的时间长了再加上我没刷这题中间脑抽卡了很久。
+午饭和黑哥们聊天根本没心思吃。他教育我如果发现别人干活都比自己快那么一定要放平心态。
+3：一个二维矩阵，有start，end，wall，ground。可以一次走一步，n次机会跳跃机会可以隔一个跳一个。不都走或者跳到墙。求最短步数。本来想用曼哈顿距离做heuristic function用A*结果好像不可以因为这题用曼哈顿距离不是consistent的。小哥挺好的说不确定可不可以然后是否有一种search肯定对我说bfs他说对写bfs吧。。。
+- 就是找到start然后bfs，每个位置有八个neighbor，四个走过去的四个跳过去的，然后如果是墙就continue。跳过去的要记录用了一次跳跃。所以在search tree里面每个node存的信息要有步数，还剩下的jump机会，位置
+4：公司有很多office，你可以每周末飞到别的office。只有在比某个数字小的hours内能飞到才可以飞。每个office有很多假期。怎样获得一年内最多的假期。（这轮印度小哥好像很不想让我读懂题似的不往板上写然后信息都是挤牙膏问出来。然后还迟到了十几分钟因为他迷路了最后没时间写剪枝。）
+
+    - link
+- 1. 烙印，开始聊天时以为是recruiter，结果聊着聊着忽然说我来出道题吧.....Number of Islands 2, 那天面完试leetcode上就有了这道题.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- 2. 白人，设计乌龟，一开始有两个方法，往前走一步，右转90度。然后说设计个方法可以执行一串命令：e.g., "FRRF"代表走、转、转、走。然后命令要支持括号和数字：e.g., "F97[RF[F]]"代表走一步，然后执行括号里的命令9*7次。
+中午和一位三哥吃的饭，三哥看起来似乎不是很开心，可能吃完饭回去有任务...
+3. 烙印，这位三哥全程笑呵呵，看起来心情很好。最简单的验证括号合法性："3r(2)(2(3))"就合法着。然后再说如果字符串很长怎么办，我说把字符串分段然后多线程啊，然后写。完了三哥说你写太快了没题了要不出去喝点什么。最后在等下一位面试官的时候问了我很多小问题，诸如服务器不关掉的情况下升级、java8新特性、python多线程，我都没意识到还在面试，很多都随便的说不清楚，然后他就给我讲.....最后说“咦，你这代码好像写的是单线程的（汗），没事不用改了我知道你会”。
+4. 国人面试官和一个好像是ABT的shadow，直接出题。一个无序非负(?)数组，找包含最少个数组元素的subset，使其和大于等于整个数组和的1%.
+
+    - link
+- Dynamic programming, maximize vacation days, want list of offices
+上来直接问题，一直做了52分钟，挺容易想到DP。但是在实现的时候有很多细节需要考虑。楼主这面面的不好，虽然状态转移方程写出来了，但是实现的时候被指出了很多bug。首先要注意初始化，其次是填二维表的顺序，最后是result存在哪里。面完面试官觉得还过得去，因为毕竟代码写完了。
+第二轮，烙印：
+上来问了简历，楼主简单地说了下most challenge project，然后开始做题
+.1point3acres缃�
+
+- timestamp, color, find first occurrence of color and reserve the original order
+由于上一轮多用了时间，这轮问的这题比较简单。就linear scan，期间用hashmap去重就可以了……不知道他出这题啥用意
+overlapping meeting intervals, return the first overlapping interval
+这题楼主先说了brute force的解法，O(n^2)。然后提出先sort的解法，O(nlogn)。然后楼主就开始沉思是否有O(n)的解，想着想着被烙印打断。他说nlogn的解法is acceptable，然后叫我实现下。我心里就想着这不是很简单吗……就乖乖地开始实现了。实现完了以后，他就问我你的code是不是有bug？我看了半天说没bug啊，他看没时间了，就给我指出来一个edge case。所以提醒大家遇到简单的题，还是得好好想仔细了再code。
+中午吃饭，一个白人小哥带去一个叫big table的地方吃了一顿免费自助。期间各种瞎逼聊天……
+第三轮，国男：
+music list, if shuffle is possible or not, test cases
+你有一个music的播放列表，里面的歌曲unique，但是播放列表的长度未知。. 1point3acres.com/bbs
+
+- 这个音乐播放器APP有两个模式：random模式和shuffle模式。
+random模式就是每次随机播放列表里的一首歌；
+shuffle模式就是shuffle列表里的歌，然后顺序播放，放完以后重新shuffle，再顺序播放；. From 1point 3acres bbs
+- 现在给你一个播放历史记录，要求你写一个函数来判断用户使用的是random模式，还是shuffle模式。
+测试所有歌曲长度内是否有歌曲重复播放
+这轮比较扯淡，国男带着自己的电脑过来的。问完题目就自己闷头开始debug，可能在赶deadline……题目不难，但是所有需求没有马上展开，是在我和面试官不停地交流过程中发现的一些隐藏需求。然后被要求code，我就开始写代码，没有一遍bug-free。面试官看了下说有bug，然后又干自己的事去了，我改好给他看，他又说还是有bug，来来回回几次，他才说好。然后他一看还有15分钟，说自己也没next problem了，叫我要不写下test case。写完时间也差不多了，叫我问他问题，问完结束。
+. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+第四轮，亚裔 + 白男shadow：
+上来先问了下简历，花了大概5-7分钟时间说了most challenge project
+wiggle sort
+这题我面试前就准备过，听完题目描述，我便成竹在胸。于是小演了一下，先给了sorting的解；然后若做沉思，再给的O(n)解答。面试官很满意，可劲喊good。
+longest path length from node to node
+这题和leetcode上的max path sum很接近，也算半个原题。我讲了思路，写了code，面试官表示赞同，并拍了照
+
+    - link
+- 第一轮： 面试官看上去是个中国人，问了两道题。感觉这一轮的题是最简单的但也是最跪的，头晕晕的很多地方没想到。。第一题给一个complete tree但不一定是full tree，求这个tree里的node个数。leetcode 原题，不过一下子没想出来。上来先拿brute force写，然后面试官说没有用到complete tree这个fact，问怎么improve，这里卡了很久，然后在一点提示下写了binary search的解法。问了time complexity。第二题是给一个number, 还有一个数组包含这个number所有prime factors, 问这个number的dividers的个数
+
+- 先求出对于n的每个质数最高能有几次幂，然后把求出来的数做combination。比如24 ＝ 2 ^ 3 * 3 ^ 1, 那最后24有 (3+1) * (1+1) - 2 个divider, 2,3,4,6,8,12 (不包括1和n本身)
+第二轮： 一个很欢快的三哥，介绍了下自己后做了两道lintcode原题，Subarray Sum 和 Subarray Sum II. 第一题给一个array, 找一个最长的 subarray使得和为0。第二题上来先问我brute force的时间复杂度是多少，LZ算了半天说是n^6 (假设是正方形matrix)，三哥说是对的。。每次LZ一说话三哥就会疯狂摇头然后说yeyeye, 阿三摇头点头跟我们真是反过来的。。。然后具体解释了怎么算sum matrix, 然后怎么算是不是0。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+
+- 中午和一个讲话很快的工作了9年的白人妹子吃饭，因为讲得太快了所以只理解了大概。。
+第三轮： 一个高冷的白人小哥，从头到尾都没有什么表情。第一题是写一个class simulate一个病人吃药。一个bottle里有half pills 或者 whole pills, 随机拿一个，如果拿出来的是half pill就吃掉，如果是whole pill 就弄成两个half pill吃一个放回去一个。初始给的pills不一定全是whole的。一开始用了array list，跟面试官的思路有点不同，交流了一下改用两个integer又写了一遍。第二题是假设一开始给的pills是start state，然后给一个end state. 求一个病人随机吃药，从start state吃到end state的概率。比如一开始2 whole, 1 half, 求吃成 1 whole, 1 half的概率。LZ一开始说build一个search tree这样直观点，他表示不需要把tree专门建起来，LZ就直接一边搜一边算没有用extra memory。
+
+- 从初始状态作为一个root，按一个search tree做dfs/bfs计算，每次有两个child, 把达到parent时候的概率带到child里去计算，遇到目标状态就停止，还要判断终止状态，就是到了一个不可能达到目标状态的情况。最后把所有到达目标状态时候的概率加起来。
+第四轮：一个白人大叔，一开始做compiler的然后最近跳去做machine learning了，跟我说会出个compiler相关的题。。听完吓尿，后来说了一下题感觉还好。给一个directed graph 的start node，这个graph里可能有cycle，如果remove一些edge可以使这个graph不含有cycle，并且从start node依然能访问到所有这个graph里的nodes，这些edge就是back edge。要求打印出所有的back edge。写完拍了照又follow up了一下，问存不存在这种graph，你可以remove 不同的 backedges 使得这个graph valid。LZ一开始觉得是不存在的，但是想不出来证明的方法。后来画了个图发现是存在的，但LZ自己没一下子看出来。。被提醒了下。然后第二题是给一些类和function：
+
+- class Point{int x, y;}
+class Rect{Point p1, Point p2}
+class Shape{
+     int inside(Rect r){}; //shape是不规则的图形，给了一个function判断这个shape和rect的重叠关系，
+                                 //如果rect完全在shape里 return 1. 如果rect和shape有overlap， return 0， 如果rect 完全在shape外面，return－1
+}
+draw(Rect r){};
+以上是已经有的function，
+给一个长方形的screen，再给一些shapes，要求写一个function在screen上画出这些shape。写完后又问了一题，如果有A和B两个shape，A和B有overlap，用给的inside function写一个新的inside function，判断一个rect和这个overlap area的关系，同样返回－1， 0， 1
+- 然后问这个关系是什么，LZ一开始没看出来，其实就是min(A.inside(rect), B.inside(rect));
+然后问如果把min换成max的话这个算的area是什么样的。应该是A和B的union.
+
+    - link
+- 第一轮，面的是白人大叔，一上来就做题，一个matrix，实现两个functions，第一个是设置某个位置的value的function，这个小学生都能做，O(1)，第二个是给两个位置坐标，这两个位置坐标形成的长方形的值的和，最暴力的方法O(n^2), 大叔说这个function可以怎么优化，答可以预处理，提前算好某个位置到（0，0）形成的长方形的和，然后这样第二个function就可以O(1)实现。大叔继续follow up，那这样的话每次设置了某个位置的value后都需要update每个包含了这个值的长方形的和，所以第一个function又是O(n^2)了，能不能balance一下，后来给他讲了一种两个functions都是O(n)的方法，大概就是只提前存好一维数组的和，大叔表示满意，然后coding实现
+第二轮，面的人是华裔小哥，人很喜感也挺nice，也是一上来做题。题目是给你一个positive的值K，然后按照fraction的值的小到大输出所有n/d, 其中1<=d<=k, 0<=n<=d，还有一个要求输出的fraction不能有duplicate，比如1/2和2/4是duplicate，这种情况只要输出1/2。我用了一个hashtable来处理duplicate的情况, fraction的实际小数的值对应其输出string，比如0.5对应1/2，因为输出要按从小到大顺序，所以还用了个arraylist存实际小数的值，最后对这个List排了下序，然后结合hashtable和list输出最后结果。然后问时间复杂度，follow up，如果规定只想要输出某个数值区间的fraction怎么办，数学的一些东西，算下值范围就好了，还问了这种情况的复杂度。
+- 分数的那个复杂度可以做到NlogN
+例如k=5，可以构造出k-1个sorted arry list
+1/2<2/3<3/4<4/5
+1/3<2/4<3/5
+1/4<2/5
+1/5
+然后直接把这几个sorted array list combine就好了
+这样不用可以hashmap记录duplicate和最后再sort
+第三轮，面的人是白人小哥，给一个matrix，里面只有0和1，将每一个由1组成的component的indices存入一个list，然后把所有component的list又加入一个list，用了DFS另加一个visited matrix。完成代码后，小哥问了复杂度等，由于用了stack，所以size很大的时候会overflow，有什么办法优化？答BFS，小哥表示满意，这个没有让写代码。之后见时间够加了一题，给一个数字range的array和另一个range，如{[1, 4], [7, 9], [11, 14]}和[10, 13], 求合并之后的结果，{[1, 4], [7, 14]}, 小哥说只需要讲思路，然后我讲了下大概思路。. visit 1point3acres.com for more.
+
+- . from: 1point3acres.com/bbs
+- 第四轮，悲剧的遇到了三哥，题目是surpass count，题目貌似是经典题 Inversions count
+
+    - link
+- 第一轮
+给一个matrix，一开始都是0。写一个method addRock(int i, int j)，实现在i，j位置加入一个rock使其可以变成一个island或者island的一部分，然后这个method要返回这个matrix里有多少个island
+. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+第二轮
+假设把人类的族谱形成一张图，每个人都是一个node，每个人会有父亲和母亲（也是node)，写一个method isBloodRelated(Node n1, Node n2)，实现假设n1和n2有共同的祖先，那么就意味着n1和n2是related的。限制是可能有很多代人，然后可以在node加额外的信息。
+第三轮
+问题1：
+给两个实现的method, Collection<String> getActors(String movie) 和 Collection<String> getMovies(String actor)
+写一个method int distance(String actor1, String actor2)，实现计算actor1到actor2的最短距离。距离的定义是假设两个演员在同一部电影里出演，那么他们之间的distance就是1。follow up是假设数据集很大，有什么方法可以优化。
+给的提示是说假如有的演员很popular，有没有帮助。最后的意思是，每个actor的节点可以存个参数类似于popular的程度，然后在bfs的时候先去add那些popular的，基本就把普通的queue换成priority queue问题2：. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+
+- 给一个expression只有+, *, 和数字。然后给一个实现好的method Iterator<Token> tokenize(String exp)，1问是如何model这个Token，方向是OOD。2问是写一个method int calculate(Iterator<Token> iter)，实现计算表达式的值。
+
+- 第四轮
+问题1：
+写一个method int longestStringWithAtMostTwoUniqueChars(String s)，实现返回最长的substring最多有两个unique的char-google 1point3acres
+- 问题2：
+设计google map的back end的api
+第五轮-google 1point3acres
+
+- 感觉问得有点偏。他先问如何实现shuffle elements in an array，但是关键不是在实现，而是证明为什么概率是正确的。我没答上来，他引导我用数有多少种可能的permutation来证明。然后follow up是他给了一种错误的shuffle的方法，然后问怎么证明这个算法是错误的。我也没答上来，他就继续引导，我没能很快理解，不过最后在他耐心的解释下，我还是理解了。
+- 由于没剩下很多时间，第2个问题就是问了下在网页上填了个什么东西，然后点击submit后会发生什么，越详细越好。
+
+    - link
+- 1. 给一个N*N grid， 上面有一些格子里面标了1. 问总共多少方块了有1. 所以方块包括只含1的那个， 还有任何含1的那个 所以2*2, 3*3。 当时，被问懵了，而且是那一轮的第二小题，所以没时间了。后来面试官一直说. visit 1point3acres.com for more.
+- don't forget you have a computer blah blah, 越给我hint我越panic不知道怎么做。
+所以主要的思考方法是， 我们看每一个点， 数一下以这个点为最右下的方块的个数
+然后看每个点， 如果是1，  以这个点为最右下角的正方形应该有 min(x+1, y＋1)个。  （x， y） 为index. from: 1point3acres.com/bbs
+- 比如
+0 0
+0 1
+（1，1）那个点 就有 两个方块， 它自己和包括它的那个2*2。 因为自己肯定是1， 所以每个方块里保证有1 了，. 鍥磋鎴戜滑@1point 3 acres
+- 如果是0， 那么就要看应该少数几块， 我们需要维护一个matrix 那个matrix里面记录 和这个点最近的1 的距离。 .鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+- int withzero =  Math.min(radius[i-1][j], Math.min(radius[i-1][j-1], radius[j][1])) + 1;. more info on 1point3acres.com
+- 比如 . From 1point 3acres bbs
+- 0 0 0
+0 1 0
+0 0 0
+那么我们发现（2，2）最短距离 为它左上的 0（每次我们读1， 往matrix里面放0， 表示1和1 的距离为0）
+然后我们＋1 因为自己是0
+然后count 就是min(x+1, y＋1) － withzero
+.1point3acres缃�
+一边数的时候一边加一加每个点的count 就得到答案了！
+2. 给你一堆灯泡。可以flip 一个范围开着变关， 关变开， 然后问这么干了k次以后， 随便问你一个灯泡是开着开始关着，怎么做。我还是很弱地没写完。 但是有很多idea。主要想就是interval， merge interval 之类
+
+- 假设询问有q个，灯泡有n个
+对于一次flip(l,r)，在l和r+1两点取反，即flag[l] = flag[l] xor 1, flag[r + 1] = flag[r + 1] xor 1，灯泡i 最后的状态就是把j<=i的flag[j]xor起来
+如果全部flip完后才询问，可以直接按上述方法做完后算好每个灯的状态直接保存下来，询问直接输出
+O(n+k+q)
+如果一边flip一边有询问，那么可用Binary Index Tree将flip和query都做成O(logn)，或者直接用Segment Tree或BST等数据结构维护区间修改
+O(n+(k+q)logn)
+
+    - link
+- 1. 印度女生，虽然是印度的，但女生还是比较友善的。题目大致是BACCBBAAA -> ABABACABC，就是输出相邻字母不能相同的string，这题要用到heap
+2. 用尽量短的string生成4位数密码的所有组合
+3. 生成palindrome number， 然后寻找最相近的palindrome number，最简单的了，不过要注意奇数个digits和偶数个digits, 本以为就这么水过，结果最后遇到阿三
+
+- 4. 黑白2D array表示的image。边长是2^n。设计一个class来存它，用尽量少的space。提示是可以不断把图形分割成四块，分完继续分。如果其中一块里面所有格都是黑，那一块就是黑。
+   然后连个相同大小的的image相交生产第三个image，遵循黑黑得黑，其他都白的规则。
+
+    - link
+- 2.给一个STR，删除最少的任何char,使它变成palindrome.听说是经典的DP，反正我不会，毛子也不给提示，埋头忙自己的。
+-google 1point3acres
+3.SYstem DESIGN, BLOOMFILTER； 2-D ARRAY， 上面放了不同的钱，找条路（0，0）走到（M, N)钱最多。O(1)SPACE记录路径如何做 往左边来的记负数
+- 往右边来的记正数
+4.WARM UP题目忘了。FOLLOWUP: 给2个STR A, B。 B比A多2个CHAR，可能是相同的CHAR， 如何找出？O(1) SPACE, <= O(N) TIME。
+
+    - link
+- 第一题类似于孤岛问题，follow up是如果在来个stream，每次输入一个点是岛点，问你怎么update已经有的数组并返回新的岛的个数。第二个处理读取文件长度的，给你个每次读4096个Byte的function, 让你implement一个可以读取任意长度N的function，要用他给的4096 function。从同一个文件中读取，由于每次读取的长度不一定是4096的倍数，所以多读的要存起来，下次再读的时候要把这存起来的先读入。就是要考虑各种情况。第三个是求曼哈顿长度的，给一个2D数组，里面有1,2,-1若干，问所有1到2的manhattan distance最短的是多少。用 DP第四个3 sum
+
+    - link
+- 一共四轮：1. 中国大叔，给一个sorted array，包含数字1-N，每个数字出现3次。现在删掉里面的一个数，让你return 删掉的那个数是什么，要求log N time.
+- 比如：1 1 1 2 2 2 3 3 4 4 4 那么return 3
+2. 一个白人，进来先跟我看了下简历，然后大谈c++ 和python的区别，从memeory, run time, compile/interpret, garbage collection等方面说了许多。楼主最后一次用python是很久之前了，并不清楚基本的底层，所以支支吾吾 大概都在他的提示下答出来了，尽管我多次和面试官说明了我对java 和c++更熟悉。这里建议大家要对自己简历上的内容熟悉，里面都是有可能被提问的。 然后就问了我一个binary search 的问题，说有一个class product, 一个method getCost(int quantity), 现在给你money, 问你能买最多多少个product
+- 3. 一个阿根廷的小哥，之前在加拿大后来调来了San Bruno，长的很帅很帅，人也很好。刚开始先问了我number of island II的问题，我想的比较快，直接说了思路，然后他说这太快了，再给我一道题，让我两道里面挑一道做。第二题是给一个的tree，让你找出里面所有的subtree pair A, B 使得 A = B 或者 A 和 B 是isomorphic 的。这题我大概和他讲了下思路，先把leaf->child标记为"#",用一个preorder去表示一个subtree，然后就变成关于string的对比了
+- 4. 一个大胡子美国人，有一个shadow 在旁边学习，我一直以为大胡子是练习的。上来先说我们准备design 一个cache system, 有两个method, slowGet(string key) 和fastGet(string key)，怎么样design这个cache system使得实现fastGet，楼主慢慢和他讨论 直到引出LRU Cache。. more info on 1point3acres.com
+
+- 实现了 LRU 之后，大胡子开始和我讨论，如果request很多，我的方法会不会有问题。我说会，可能multi-thread会出问题，得加mutex 或者SOPhomore。之后大胡子说那如果之后系统很慢怎么办，我和他说 可以design database, 用sharding，然后问我怎么shard,我说可以根据地区，因为亚洲区的人query同样的query可能比较多。然后又问我如果这样还是很慢呢？我说可以每个地区的database 再进行load balancer分配request, 用master-slave 或者master-master去管理database server。这题讨论很多，感觉还比较顺，很面试官的交流很重要。
+    - link
+- 1.就是一个interface，里面有increment, lastMinute,lastHour,lastDay这几个method。
+- 目标是call last那几个函数的时候回返回前一分钟，一小时，一天内的request的数量。
+具体的做法就是楼上大牛说的circular buffer，开一个86400的buffer然后转着圈儿update就好了
+
+    - link
+- 1. 类似于lc上Add Two Numbers（两个linkedlist的数字相加）那道题，但是lc那个是个位数在第一位，这道题的数字顺序是正常阅读顺序。
+2. Generate Maze 地里看有人也到过这道题哒
+3. 我有research project的经验，于是问了问我的research project。（我一直以为G家onsite一上来就纯做题，于是就抛弃了behavioral question没准备，一开始还愣了会...）
+    然后问了些的hashmap常识，包括hashmap在java中究竟是怎么实现的。接着coding question是写一个Union Iterator，parameter是两个Iterator<T>，output应该是这两个iterator中elements的union。
+-     i.e:  it1:{1,2,3,4} it2:{3,4,5} output should be:{1,2,3,4,5}
+   Follow up: 如果这两个iterator非常大，RAM存放不下怎么办
+那一轮面的挺奇怪的...反正大概意思是存在disk上，然后interviewer希望我解释一下具体怎么操作。我当时并不会呢傻楞楞的，他说没学过是不是，我说是，然后他就开始lecture了一番...
+4. 这一面一上来也问了我简历0.0，反正乱侃了一会。coding question: 给你一个数组，从这个数组中挑出最少的数字，它们的和要比整个数组的和的1%要大。要求Linear time解决
+
+    - link
+- 1111光棍节onsite的。。拖延症晚期所以拖到今天才发出来。。（其实是一朋友想要。。）. from: 1point3acres.com/bbs
+Google Phone:
+1.  boolean hasDuplicateCharacter(String word);-google 1point3acres
+给定一个string 判断是否有重复的char
+2. Lowest Common Parent of two nodes in a binary tree
+这里有点tricky的是LCP和LCA的区别，假如p,q 是BT中的两个node，p是q的ancestor，那么LCA是p， LCP是p的parent。
+Onsite：
+第一轮：
+Bomb Game，给一个m*n的二维数组，其中有： -1 墙， 1 怪兽， 0 空白。 你有一个炸弹，可以扔在除墙之外的任意位置，最多可以炸死几个怪兽。. 1point3acres.com/bbs
+一开始给出了Brute Force的方法O(m*n*(m+n)), 后来优化给出了O(mn)的方法。 聊了一下可能出现的问题，如何test。
+实现的时候面试官要求2 pass 最后取max的那次遍历实际上可以和更新纵向怪兽数量的遍历合并 纵向更新完 res矩阵也就是最终状态了http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=167556&pid=2183822&fromuid=206597
+
+- 第二轮：
+Longest [continuous increasing] subarray, 返回长度
+e.g. 1,2,3,5,8,9,12,13. more info on 1point3acres.com
+LCIS: 1,2,3   return
+Longest continuous increasing path in a tree (不一定是binary的)
+跟上题类似，算一个follow up，用了一个top-down的递归方法，后面又讨论了一下bottom-up的方法。面试官和shadow表示可以可以。。follow up是Tree -> DAG
+中午， 斯德哥尔摩小哥带吃饭逛校园聊人生
+第三轮：
+1. one edit distance
+2. 设计一个Meeting Room Reservation System，偏OOD，实现：
+
+- boolean reserve(double start_time, double end_time, double duration);
+void cancel(double start_time, double end_time);
+follow-up：如果遇到PDT-PST PST-PDT那一天该怎么handle。 答案是不用handle， 因为用Unix standard time的，根本没有PST/PDT这一说。。
+第四轮：
+Merge Intervals。。不多说了
+link
+
+- 第一题.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- 完全二叉树 parent是孩子中的最小值，请找出整棵树第二小的值-google 1point3acres
+- example:
+*     2
+*    / \
+*   2   3
+*  / \  | \. more info on 1point3acres.com
+- * 4   2 5  3
+* In this given tree the answer is 3.
+解法 一开始装傻提出O(n),两分钟后给出了O(logn)的解法
+解法是follow up的 多叉树
+第二题
+给一系列的机票 请问能到的城市 直接BFS或者DFS都能做 拓扑排序
+follow up是DP找最大假期 很常见的题目
+DP， 有几座城市，每个月在每个城市都有不同的假期，然后每个城市有飞往不同城市的航班，求最大能获取的假期和Path. dp(i)(j) 代表第i个月在第j个城市所能获得的最大假期。
+DP 方程大概是 dp(i)(j) = Math.max(dp(i-1)(fromCity)+map(i)(j), dp(i)(j))
+big integer 的加法 这里我一开始没有问清楚 没有考虑负数的问题
+加一个符号的node在最前面就好了。。。然后如果是负数的话就先遍历一遍list把值变成负的。。。然后做加法，carry正负取决于当前相加值的正负
+第四题
+一个简单的检测是否有环 一个是permutation
+link
+
+- 1.一个系统，记录任务进入时间和完成时间。
+1） 一个任务完成就马上打印，并从系统中移除. from: 1point3acres.com/bbs
+- 2）扩展：按照任务开始时间排序。一个任务完成以后，如果系统中开始时间在前面的任务没有完成，你必须等前面所有完成了再打印并删除。
+然后问这个系统设计有什么问题
+2. 1） 格子里，给一个入口点。找和他颜色相同的所以格子组成区域的边长。和boarder连接的那条边不算。
+
+-     2） 然后是那道以前出现过的3[abc2[x]]解码变成abcxxabcxxabcxx。说明了原字符串不会有数字出现
+3. 什么都不给。告诉你站在一个森林里。你有个任意形状的地图（他也没给任何定义），树木的输入也没有任何定义，全部自己设计。
+    地图里面有所有树木的位置。你有个照相机，找到你能照进照片的树的最多数量。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+
+-     我就假设照相机有个最大角度。这个可以自己design。这个哥们感觉蛮严肃加任性，你问他啥他都反问你说你觉得呢？。。。汗滴滴。。
+中午和以前组里的小哥一起吃饭。开心~~~谷歌的饭不怎么好吃哇。要么就是我没什么心情吃。。。
+4. 系统设计，什么语音识别搜索系统。。。妈呀，不怎么会，扯吧。。。. 1point 3acres 璁哄潧
+
+- 5. 安卓解锁
+link
+- 第一轮： 面试官迟到了。。给一个string，只含有a和b,a可以变成b,b可以变成a,也可以不操作，返回操作次数最少就可以得到的sort的string， 用了word ladder的方法。。也不知道对不对了。心理素质太差了。。。
+- 第一题其实就1种情况：把一个字符串转换成若干个a之后若干个b，所以用一个数组B维护从0到i中b的个数，一个数组A维护从i到N－1中a的个数，然后循环一遍取min(B[i] + A[i + 1])
+第二轮 ： Number of Islands 1 和 2， 只用写2的code
+第三轮： 给一个API， 叫getchar1024(), 总能返回1024个char， 里面有个：（，这个sad face 前面都是valid, 后面都不要， 实现getchar(int n)
+- 第四轮 ： 炸弹人， 一个matrix， 里面有敌人， 有墙， 炸弹可以放在空的格子里，每次一炸所在行列的敌人就被扎死了，问最多可以炸死的敌人个数，感觉和看花的题一样。。。
+link
