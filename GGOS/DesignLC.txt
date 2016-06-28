@@ -1,0 +1,248 @@
+Design
+
+- [x] Design a mid-scale photo sharing system.
+- http://systemdesigns.blogspot.com/2015/12/image-sharinghosting-system-flickr.html?view=classic
+
+- [x] Producer-Consumer blocking queue
+
+    - 第一轮是写一个bounded blocking queue，主要写add（long timeout）和poll（long timeout），就是说如果一个thread想加个entry到queue里，它可以设置一个timeout，如果这个timeout时间内没有加进去，就返回或者throw exception
+- 楼主把能记住的部分要求写一下：
+做一个cinema的卖票web application。有很多users，在client side。server只有一个。要求：. visit 1point3acres.com for more.
+- 1. 每一个user一次可以看到10个空位。不同的user在同一时间不能看到相同的空位。2. 如果这个user不满意这10个座位，可以refresh出另外10个，把当前的10个覆盖。.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�3. 每个user只能buy一个座，这个座必须是她看过的（包括之前覆盖过的和当前的10个）。买座位是通过输入座位号。4. 买了一个座之后，其余user的当前看到的10个位置如果饱含这个座，要去掉，给个新的。5. 如果有user要买没看过的座，视为malicious behavior，要制止。6. user决定refresh或者buy的时间只有2s。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴其余还有2个policy楼主记不清了。大姐问得很细，笑里藏刀地，包括用什么data structure，放在client还是server side，performance怎么办等等。哎，我估计architect才能答出来这题。
+-  http://blog.codingnow.com/2012/01/ticket_queue.html
+
+    - http://www.jiuzhang.com/qa/630/
+- 如何generate unique id - database auto-increment?
+- 如何SCALE KEY-VALUE STORAGE. - Distributed Hash Table, consistent hashing
+- Once these components are in place, a typical use of the DHT for storage and retrieval might proceed as follows. Suppose the keyspace is the set of 160-bit strings. To store a file with given filename and data in the DHT, the SHA-1 hash of filename is generated, producing a 160-bit key k, and a message put(k, data) is sent to any node participating in the DHT. The message is forwarded from node to node through the overlay network until it reaches the single node responsible for key k as specified by the keyspace partitioning. That node then stores the key and the data. Any other client can then retrieve the contents of the file by again hashing filename to produce k and asking any DHT node to find the data associated with k with a message get(k). The message will again be routed through the overlay to the node responsible for k, which will reply with the stored data.
+- Design Twitter
+- 一颗二叉树太大了，一台机器装不下，怎么办
+
+    - 我就说用DFS拆吧，反正你做的是inorder traversal。 然后开一个Service，知道哪个Node在哪个Machine上面。 接着优化，每次你去调用远程Node时候，可以用Cache存下一部分Node，这么计算的时候就方便许多。 然后跪掉的部分来了，面试官一直试图提醒我有啥办法可以减少Network Transmission 我死活想不出来，最后答案是，你在找Remote Node时候，你直接把这个交给另外一个Machine去算，这样Node就不用传来传去了。。。
+- 写一个生日提示系统，每次查询时显示下一个谁过生日。这个有点偏system design, 比如他想看到你注意时区啊啥的很多细节
+
+    - 我直接说算法了，二分搜索
+    - Use a circular buffer?
+- Design Google Calendar
+
+    - http://www.cnblogs.com/jcli/p/calendar_recur_rule.html
+    - http://massivetechinterview.blogspot.com/2015/10/google-calendar-architecture.html
+    - create event
+invite user
+notify users at specific time or periodically
+Follow up:
+if you have a lot of users with the same calendar, how to implment create event, invite user and notify users
+可以把所有用户对同一个calendar的操作序列化，之后给大家push同步。
+当然，为了用户友好，可以现在本地先update用户的操作，同时和服务器同步，如果数据一致，则ok；如果期间有人修改了calendar造成不同步，则update为最新的
+
+- Web Crawler
+- 设计一个java的Object的serialization, 关键部分是如果object的attribute之间有reference loop怎么办? 比如object H里面有两个子object, H1和H2, H1里又有H2, H2里又有H1, 问应该如何设计. 讨论了一下, 思路大概是给子object一个reference id, 然后H1里存H2的reference, 用reference:["一个id"]表示, 同样的在H2里存H1的reference.
+- unit test重复跑20次，有的时候出现bug，问可能的情况
+
+    - lock/race condition
+    - network
+    - 我说第一可能这个程序和time stamp有关，他说还有呢？我说第二可能有random number。他说还有呢？我说第三可能是hashMap iterator每次返回值不同
+- design一个family tree的data base，然后要不停的insert delete find LCA
+
+    - http://stackoverflow.com/questions/9124175/how-to-store-family-tree-data-in-a-mysql-database
+- OOP design： 设计一个Google Car 的Sensor SynchronizationSystem。从多个有着不同的CPU时钟的sensor读取message，并找到不同sensor的同步关系
+- 设计CallLater库，用户call registerCallback来注册一个callback，和一个delay值（精确到ms），这个库需要在delay ms之后call用户的callback
+要求：1. 不能假设用户的callback的执行时间，可能很长也可能很短. Waral 鍗氬鏈夋洿澶氭枃绔�,
+-           2. 要求吞吐量20million /day
+          3. (隐形要求）显然了，多线程
+class CallLater {. From 1point 3acres bbs
+- public void registerCallback(FUNC_POINTER callback, int delay) {}. more info on 1point3acres.com
+- }
+韩国面试官，人很好，我一边写一边解释，这位就很安静，从不打断，我用的每个callback产生一个新线程，也跟面试官讨论过线程池，但是不熟悉boost的线程池，自己写又没把握，所以跟面试官说我先用generate新线程写，因为很多c++实现新开线程也是很light weight的，最后看看有时间再改成线程池，他说好。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- 写完代码后没时间了，就在google doc上说了下怎么建testbench，怎么改进
+
+    - Use a priority queue and order by absolute time of task
+    - timer thread keeps comparing with top of heap
+- 假设你是一个大楼水管工，负责给一栋新大楼的底盘排水管，大楼底盘是一个二维矩阵，每个格子可以排水管也可以空着，水管入口在左上角，出口在右下角，有三种水管可以选，直管、直角弯管和T管，水管排的时候可以在平面上任意旋转。
+设计数据结构表示水管、水管走线， 设计算法计算某给定走线是否从入口通到出口，是否漏水。
+我的解法是用adjacent list表示图，水管类型决定adjacent list的size，DFS找出口并mark水路，检测漏水就看管子是否在水路上并且是否有未接开口（adjacent list里有NULL）
+- class Pipe {
+    int type;
+    int row, col;
+    List<Pipe> neighbors; // straight and right-angled have 2 neighbors, T-pipe has 3 neighbors
+}
+- Design and Implement 2048
+assume the board is 4 * 4 and implement the architecture and write a bug-free version for key functions
+- 进程间通信怎么实现， 我答了通过文件或者socket
+
+    - File: each write to a file and read
+    - Socket: write and read from socket. Can be local machine
+    - Shared memory: agree on a part of memory to communicate
+    - Memory mapped file: map virtual memory to a file and communicate
+    - Pipe: readonly and write only file provided by OS
+- Rate Limiter - Token Bucket
+- Google Big Table
+- swap space - OS related
+- youtube的系统如何设计cache
+- 实现SQL里面的group by的functionality，用最直接的方法实现后，更改一下文件的存储方式从而实现更快速的方法。最后拓展到distributed storage上面去，有多个machine在运行你的database，问怎么设计文件存储的方式，从而使你的query尽可能快的完成 - shard by group by key?
+- 给定一个闹钟的class，到一定的时间会执行dosth().鏈枃鍘熷垱鑷�1point3acres璁哄潧
+- class alarm{
+    const timer t;
+    void dosth();
+}
+让你设计一个 manager的class，能够实现 add一个alarm，并且当时间到alarm设定到的时间的时候trigger它. 问怎么设计。请问大家有啥好的想法？
+我想到的是
+class manager{. From 1point 3acres bbs
+-    list<alarm> curlist; //sorted.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+-    timer global_timer;
+  void check_set();
+   void addalarm();
+}
+addalarm保证按sorted的添加到curlist里面，然后check_set可以是个loop一直checktimer，从头开始找所有的到达时间的alarm trigger它，但是如果多线程就会遇到需要lock的情况
+用一个priority queue存闹钟时间，再用一个map<Time, ArrayList>存每个时间的闹钟
+- 设计google map后端存储 - graph? adjacency list https://www.quora.com/What-data-structures-does-Google-use-for-Google-Maps
+- Design Elevator
+- youtube 如果产生向用户推荐的视频列表。 我说了当前播放视频的{标题，内容，介绍}，该用户的观看记录，观看了该视频的其他用户的观看记录，已及该用户的 IP 地址类型（家庭用户或企业用户）。又问如果是一个新用户怎么办，我就说可以随机推荐当前最热门的视频。似乎这不是他满意的答案，他提示说如果用户是从 facebook 中点击视频连接进来的呢？我就说那就可以获得该用户的社交网络信息，根据他的爱好来推荐视频。
+- 一台机器数据如何有效的分布到很多机器上 - consistent hashing
+- Design Garbarge collector in C++
+- 设计一个CPU和内存占用是Deterministic Behavior的Event Class，支持:IncrementCount(), GetEventCountLastMin(), GetEventCountLastHour(), GetEventCountLastDay(), 每秒可以有多达million个call，也可能什么都没有。这一轮最差了，最终也没有找到合适的data structure。后来还问了很多multi-thread的问题：如果多个线程同时cal怎么办。说用mutex， lock， notify等。让在函数中实现这些
+
+    - 86400 size circular buffer
+- black box testing/white box testing
+- BLOOMFILTER
+- 设计一个Meeting Room Reservation System，偏OOD，实现：
+- boolean reserve(double start_time, double end_time, double duration);
+void cancel(double start_time, double end_time);
+follow-up：如果遇到PDT-PST PST-PDT那一天该怎么handle。 答案是不用handle， 因为用Unix standard time的，根本没有PST/PDT这一说。。
+
+    - merge intervals and return first available meeting room as in Snapchat
+- 系统设计，什么语音识别搜索系统
+- Design Tilt Maze
+- 设计一个类似于消方块的游戏，通过滑动交换items, 每行每列都是凑够三个相同的item就消掉，然后让你初始化一个board,初始化后的board要能使用户能够做出firstmove 意思就是你不能一开始通过移动消掉任何方块。而且也不能产生三个连在一起能直接消掉的方块。楼主用的方法比较二逼，反正最后就是说你可以用dfs来产生这个方块，如果遇到违例的backtrack换另外一个item来产生。
+
+    - start with a valid 3 items and then start dfs
+- Gmail的存储设计
+主要是API和如何存放检索等等
+
+    - http://stackoverflow.com/questions/3370647/database-design-for-email-messaging-system
+    - design is very similar to chat system message design
+
+Leetcode
+
+- Strobogramatic Number https://leetcode.com/problems/strobogrammatic-number-iii/ : use array and two pointers lo and hi
+
+- [x] Walls and Gates
+- Shortest Distance to All Buildings
+
+- [ ] Binary Tree to Doubly Linked List http://www.lintcode.com/en/problem/convert-binary-search-tree-to-doubly-linked-list/#
+
+- [ ] Zigzag Iterator https://leetcode.com/problems/zigzag-iterator/
+
+- [ ] One Edit Distance https://leetcode.com/problems/one-edit-distance/
+
+- [ ] Longest substring with at most k distinct characters - iterator version
+
+- [ ] datastream median http://www.jiuzhang.com/solutions/median-in-data-stream/
+
+- [ ] Trie (with regex) http://www.lintcode.com/en/problem/add-and-search-word/#
+
+- [ ] Binary Search Tree Range http://www.lintcode.com/en/problem/search-range-in-binary-search-tree/#
+
+- [ ] https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/  : REMEMBER TO PUT (0, -1) INTO MAP FIRST!
+- LRU Cache http://www.lintcode.com/en/problem/lru-cache/# : HEAD IS DUMMY!
+
+- [ ] https://leetcode.com/problems/generalized-abbreviation/ : Check if previous is already a number, if so, skip
+
+- [ ] Divide Two Integers https://leetcode.com/problems/divide-two-integers/
+
+- [ ] Intersection of Two Arrays II
+- Word Ladder
+
+- [ ] Building Outline http://www.lintcode.com/en/problem/building-outline/#
+- Excel Column Title https://leetcode.com/problems/excel-sheet-column-title/ : NEED TO MINUS 1 - column 1 matches column A
+- Two Sum Smaller https://leetcode.com/problems/3sum-smaller/
+
+- [ ] Coin Change https://leetcode.com/problems/coin-change/
+
+- [ ] longest consecutive sequence in a tree https://leetcode.com/submissions/detail/60800727/
+
+- [ ] Coins in a line III http://www.lintcode.com/submission/3841786/
+- Sliding Window Median
+
+- [ ] Move Zeros https://segmentfault.com/a/1190000003768716 :  Two pointers overwrite
+
+- [x] https://leetcode.com/problems/design-snake-game/
+- Closest value in BST I and II https://leetcode.com/problems/closest-binary-search-tree-value-ii/
+- Construct Itinerary https://leetcode.com/problems/reconstruct-itinerary/
+- Minimum Window Substring https://leetcode.com/problems/minimum-window-substring/
+- Recurring Decimal https://leetcode.com/problems/fraction-to-recurring-decimal/
+
+- [ ] 2D Matrix Sum - Mutable http://blog.csdn.net/u012175043/article/details/50093933
+
+- [ ] READ1024-CALL MULTIPLE TIMES https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/
+
+- [ ] CELEBRITY FINDING https://leetcode.com/problems/find-the-celebrity/
+
+- [ ] POW https://leetcode.com/problems/powx-n/
+
+- [ ] H-INDEX https://leetcode.com/problems/h-index/  https://leetcode.com/problems/h-index-ii/
+- Contains Duplicate
+- Find the duplicate number
+- https://leetcode.com/problems/palindrome-permutation/
+- Trapping Rain Water http://www.lintcode.com/submission/3808764/
+- Array Product Except self
+- Android Unlock Phone https://leetcode.com/problems/android-unlock-patterns/
+- Serialize and Deserialize Binary Tree http://www.geeksforgeeks.org/serialize-deserialize-n-ary-tree/  http://www.geeksforgeeks.org/serialize-deserialize-binary-tree/
+- Reverse Polish Notation http://www.lintcode.com/submission/3819896/
+- Couse Schedule
+- Word Search II http://www.lintcode.com/submission/3440116/
+- Plus One
+- Peeking Iterator https://leetcode.com/problems/peeking-iterator/
+- Kth Largest in BST https://leetcode.com/submissions/detail/60268807/
+- Segment Tree Max http://www.lintcode.com/en/problem/segment-tree-query/#
+- Search in a big array (not knowing boundary) http://www.lintcode.com/submission/3572661/
+- Delete Node in Binary Tree http://www.lintcode.com/submission/3758462/
+- Sparse Matrix Multiplication https://leetcode.com/problems/sparse-matrix-multiplication/
+- Decode Ways
+- Median of Two Sorted Arrays http://www.lintcode.com/submission/3371466/
+- Next Permutation https://leetcode.com/submissions/detail/61882134/
+- Insert Interval http://www.jiuzhang.com/solutions/insert-interval/
+- Wildcard Match https://leetcode.com/problems/wildcard-matching/
+- https://leetcode.com/problems/longest-increasing-path-in-a-matrix/: http://www.lintcode.com/submission/3854110/
+- Palindrome Partition
+- count of smaller number before itself http://www.lintcode.com/submission/3806894/
+- Triangle Count
+- Word Break II
+- Number of Islands II http://www.lintcode.com/submission/3785948/
+- Encode and Decode String https://leetcode.com/problems/encode-and-decode-strings/
+- Merge Interval
+- Super Ugly Number http://www.jiuzhang.com/solutions/super-ugly-number/ use a times array
+- http://www.geeksforgeeks.org/serialize-deserialize-n-ary-tree/
+- Paint Fence http://www.lintcode.com/submission/3818651/
+- Generate All Unique BST https://leetcode.com/problems/unique-binary-search-trees-ii/
+- Flip Game https://leetcode.com/problems/flip-game-ii/
+- https://hellosmallworld123.wordpress.com/2014/08/06/find-median-from-a-stream-of-data/
+- Copy List with Random Pointer
+- Intersection of 2 Linked Lists
+- Largest Rectangle in Histogram
+- Maximal rectangle
+- Max Tree
+- Clone Graph
+- Stone Game http://www.lintcode.com/submission/3517323/
+- Longest Increasing Sequence - O(nlogn)
+- Find Missing Range
+- Find Kth Largest Element http://www.lintcode.com/submission/3814622/
+- Binary tree next right pointer https://siddontang.gitbooks.io/leetcode-solution/content/tree/populating_next_right_pointers_in_each_node.html
+- Number of 0s at n!
+- https://leetcode.com/problems/maximum-product-of-word-lengths/
+- https://leetcode.com/problems/max-points-on-a-line/
+- maximum subarray sum http://www.lintcode.com/en/problem/maximum-subarray/
+- Best time to buy and sell stock I-Iv and cooldown
+- lintcode longest Increasing Continuous subsequence II
+- Maximum Triangle Path Sum
+- Wiggle Sort
+- Maximum path sum in binary tree http://www.lintcode.com/en/problem/binary-tree-maximum-path-sum/#
+- Subarray Sum and II - brute force的时间复杂度是多少，LZ算了半天说是n^6 (假设是正方形matrix)
+- Count complete tree node https://segmentfault.com/a/1190000003818177
+- Manhattan Distance
+- Add Two Numbers
+- Tic-Tac-Toe
+- Integer Break
+- Text Justification https://leetcode.com/problems/text-justification/
+- Topological sorting - both ways and time complexity
+- Graph detect cycle
