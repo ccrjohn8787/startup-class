@@ -1,0 +1,532 @@
+- 第一轮：。大概是个东欧小哥，先是聊聊自己对各种语言的看法，然后做题。发音有点不太清楚，题目交流花了一点时间。
+给一堆positive integer 如【10，15，20，25】之类，然后可以对integer用上cut的方法(如果大于10，则一次cut产生一个10)，看在有限的cut的次数下，做多能cut多少个10出来.
+可能描述的有点绕，举个例子：10 不需要cut，20， cut 一次就产生2个10， 30 ，cut1一次，产生一个10和一个20， cut2次产生3个10； 15 最多能被cut1次，会产生一个10.
+我说greedy就行。然后coding。然后一题之后就让问问题了 - pick 整十number and sort from small to large
+
+- 第二轮：一个俄罗斯大叔1. 平面上一堆点，判断是否关于某个垂直于x轴的线对称，面经里有， 所以很快做完
+- 2. 一个含有interger 的matrix， 找出一个点使得到左上角的submatrix 和 到右下角的matrix的和相等 - range sum query 2D immutable
+
+- 第三轮：一个mm，刚来google三个月。
+1. 面经上的flower题，但没细看，matrix中有flower， statue，还有empty的地方。statue能挡住视野，问站在哪个空的地方，能看到最多的花（只可以看上下左右，四个方向)
+- 直接说了dp的解法，为了coding方便，我有了两个dp矩阵，后来follow up 是一个dp矩阵怎么做，我说可以dp里面存vector，再问只存一个数怎么做，我表示可以存count，面试官就说可以了。
+2. 给一堆硬币，可能有重复， 问可以组成多少种不同的面额，没要求coding，我说了brute force和dp两种方法，也向面试官确认有没better solution，她表示没有，自己也没多想，接着就问问题了
+- dp[i] = true if can form value i - if (dp[i] == true) dp[i+k] = true for k in coin values (runtime should still be exponential like subset)
+第四轮：国人小哥，加一个shadow，shadow先进来，以为是面试官，所以对国人小哥表示下抱歉
+先问了简历
+1. 简单bfs问题，但是因为最后一轮有点晕，就把visited和边界写落了，写完之后，再加上去了，所以产生了bug，被小哥指出visited在边界前判断会crash和 visit忘了初始化的问题，不过他表示小问题，就说下一题了，我就没改= =
+2. merge intervals
+
+    - link
+- 第一轮: 最简单contains duplicates，注意在没有dup的时候返回值的处理，如果返回类型是int，就不能返回null。要把返回值改成Integer
+           加了限制条件：1.所有数字>=1,<=n-1 2.sorted 3.只有一组duplicates
+           binary search：分隔条件是，1，2，3，4，5，5
+                                     index：     0，1，2，3，4，5 可以看到一个数字如果前面没有dup num=i+1，否则 num=i,以此为比较条件
+- 第二轮：一个string，如何插入数目最少的字符使得它变成panlindrome.
+dp[i][j] = if (char[i] == char[j]) dp[i+1][j-1] else min(dp[i+1][j], dp[i][j-1]) +１
+
+
+第三轮: 判断两个binary tree 是不是similar：similar的要求是经过一定数目的交换左右子树，两个树是identical的
+       public Boolean isSimilar(root1, root2){
+            if(root1 == null && root2 == null) return true;
+            if(root1!=null && root2==null) return false;
+            if(root1==null && root2!=null) return false
+            if(root1.val!=root2.val) return false;
+            Boolean ll = isSimilar(root1.left, root2.left);
+            if(ll)
+               return isSimilar(root1.right, root2.right);
+           else{
+                  Boolean lr =  isSimilar(root1.left, root2.right);
+                  if(!lr)
+                     return false;
+                  else
+                    return isSimilar((root1.right, root2.left);
+)
+           }
+时间复杂度 O（n^log3）——据说这个特别复杂，面试官告诉我了答案，他说是homwork。。正在google中
+优化：没答上来，给的提示有点忘了，方向是去看如何switch，然后看两个树是不是identical
+-google 1point3acres
+第四轮： input: 数组
+
+-               output是input右边一个比它大的数字的坐标
+-               例如     10 8 6 8 11 9
+              index    0  1 2 3 4   5
+              output  4  4 3 4 -1  -1 没有是-1
+用栈里维护所有递减的数字，每来一个新的数字就与栈顶元素比较，并且赋值
+找popular element in sorted array，频率n/4  这种数只可能出现在四分之一，二分之一，四分之三的位置
+第五轮： double sqrt(double x) 要求误差小于epslon
+
+-              1：注意binary search的范围 end=（num>1） num: 1
+-              2:  while(end-start>epslon)
+时间复杂度： num/(2^n)<epslon           O(n)是log(num/epslon)
+
+    - link
+- 第一场，烙印
+说有N个File，N很大，每个File有很多int。你有很多Machine。
+现在给你一个API int sum(int fileId, int machineId)。这个的意思是你令machineId这台机器，去计算fileId的Sum。
+现在让你Implement int sumAll(int[] fileIds)。- Multithreaded/MapReduce
+- 1. int的返回值都用BigInteger
+2.万一这串文件里有些文件特别小，有些特别大，那么整个进程受到大文件拖累 - 把一个文件，拆成几份，放到多台机器之行
+- 3.设置一个阀值，最多开K个Thread，然后用Queue来存储，来开Thread - ThreadPool
+- 4. 在Worker Thread里设置阀值，重试K次，就退出
+- 第二场，Geek美国人
+ZigZag Iterator
+输入是List<Iterator> itrs;
+第三场，美国人. from: 1point3acres.com/bbs
+- class Node {. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+-         Node left, right, parent;
+}
+然后给定一个Node，给出他的inorder predecessor - threaded binary tree
+
+- Node findInorderPredecrssor(Node root);
+这题目卡了五分钟，各位同学可以想一下，比inorder successor难写。
+接着又是经典问题，一个树太大了，一台机器放不下怎么办(你妹的，老子11/23就遇到过了。。。)。我就说用DFS拆吧，反正你做的是inorder traversal。
+- 然后开一个Service，知道哪个Node在哪个Machine上面。
+接着优化，每次你去调用远程Node时候，可以用Cache存下一部分Node，这么计算的时候就方便许多。
+然后跪掉的部分来了，面试官一直试图提醒我有啥办法可以减少Network Transmission
+我死活想不出来，最后答案是，你在找Remote Node时候，你直接把这个交给另外一个Machine去算，这样Node就不用传来传去了。。。
+
+    - link
+- 第一轮:
+年轻三哥。
+1. 给一堆votes(candidate, timestamp)，问当前时刻T得票最高的人是谁。Follow up问得票最高的前K个人。
+- 2. 问一个字符串的任意permutation是不是回文，leetcode 266。
+第二轮：
+年长三哥。
+1. 数学题，不写代码。给5个在网格上的点（x，y坐标都是整数），求证5个点两两连线的中点必有一个在网格上（x，y坐标都是整数）。odd odd, odd even, even even, even odd - pigeonhole
+
+- 2. 给一个整数N，将集合S={1,2,3,...,N}分两个子集S1和S2，问使sum(S1) == sum(S2)的划分方法有多少个。类似subset，leetcode 90。
+dp[i][j] = number of ways of picking from first i to sum j
+dp[i][j] = take i: dp[i-1][j-A[i]] + not take i: dp[i-1][j]
+午饭. From 1point 3acres bbs
+
+- 第三轮：
+发型诡异的日本大叔。
+Trapping Rain Water， leetcode 42。这轮代码写得有点儿懵逼。
+第四轮：
+貌似是中国小哥，带白人小哥shadow。
+1. 给一个整数数组a，函数f(i)返回除a外所有整数的乘积，求所有的f(i)。Follow up问不许用除法怎么做。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+
+- 2. 平面上一堆点，找两个点使由这两个点确定的直线平分剩余所有点。只说了下思路，并没有写代码。
+- 我的思路是先找到最下面的点P，然后根据其余点与P的连线和P所在水平线的夹角找中位点。又说了可能有共线的情况，小哥说不用考虑共线。不知道思路对不对
+每两个点确定的直线可以表示成ax+by+c = 0，对于其他不在直线上的点(x1,y1)一定会有ax1+by1+c < 0或者 ax1+by1+c > 0。平分所有点意味着大于0的点和小于0的点数量一样多。时间复杂度O(n^3)
+
+    - link
+- 1.第一题：给两个长度相等的string，如果两个string对应位置的字母不相同记为一个distance，如果现在能够交换一次其中一个string中任意位置的两个char，返回能够将distance缩到最小的两个char的index（如果有多个最优解只返回一个）；
+- 我用了一个hashtable中套hashtable的方式，外层用需要的char作为key，里层hashtable作为value；里层hashtable用待换的char作为key，待换的char所在的index作为value。O(n)的时间复杂度，O(n)空间复杂度
+第二题：有3n个数围成一个环，取走其中一个的话会顺带去掉这个数相邻的两个数（这两个不计入总和），剩下的继续围成环，问取走n个数构成总和的最大值。
+- Take n meaning taking all
+dp[i][j] = max value of taking from i to j
+dp[i][j] = max(dp[i][k-1] + A[k] + dp[k+1][j]) for i <= k <= j
+2.Android手机手势解锁的所有可能性（至少连接4个点，至多全部9个），需要考虑三点一线invalid的情况，如果考虑成1-9九宫格的话就是从1连到3这样的路径是不允许的。
+3.Leetcode的serialize and deserialize binary tree的变形，不需要存每个node的value，只需要结构。
+4.第一题：超大文件按行去重，如果有多行内容是一样的，去除其中重复行只保留一行；
+- 另外这是一个经典的面试题，面试题里要求只用一个普通的PC来做。那么可以这样子：
+随便找一个字符串hash函数，值域在1-n之间。（n的设定稍后再说）
+然后根据hash的值创建n个文件，扫描原文件，每一行都算出对应的hash值，输出到对应的文件中去。
+这样子如果原来的的文件不是非常bias，那么就会比较均匀的分到n个文件中去。然后对于每个文件，期望它的大小可以读入到内存中去，在内存中去重。这一步就有很多算法了，都放到一个hashset里可能是最省力的。
+关于n的大小可以自己调整，目标是要让小文件能读入到内存。比如处理1T的文件，就可以取n＝1000，使得每个小文件期望只有1G。
+正确性：如果两个字符串的hash值不相等，那么字符串也一定不相等。也就是说相同的字符串必然会在一个文件中。那么对于每个小文件单独去重是没有问题的，没有遗漏。
+效率：空间上需要多一倍的磁盘，时间是就是磁盘读写两次，内存里的操作也是O(n)。总的来说，时空复杂度都是O(n)
+更多的考虑：
+如果不幸某一个小文件还是很大，不能读入到内存，那么可以考虑对这个小文件重复上述算法，他就会变的更小。
+如果原来的文件非常bias，极限情况比如就是几个字符串一直在重复，那么就会导致小文件还是很大，并且重复这个算法永远也不可能使他变小了。那么可以先把文件分成n份，每份去重，然后再进入到原来的算法环节。这样子就可以保证一个字符串最多出现n次了。
+第二题：实现一个size很小的hashtable（情景是：实际使用中用到的entry很少，如果正常hashtable会导致很大的overhead，所以需要设计一个这种情景下overhead很小的hashtable - use array and iterate to find element
+
+    - link
+- R1:
+构造一个迷宫。这种题没做过，没想出好的方法。。
+R2:
+有一个方法update(t,v)，t是时间，v是值。大部分的t是新值，偶尔会有已经出现的t，这样的话就更新相应v。设计数据结构存储这个update的值使得获取最新值和最大值花的时间最少。最新值很容易想到O(1) O(1)的方法，最大值除了heap没想到更好的
+R3:
+二叉树最长路径，这个貌似以前看过，不过写的时候很乱，不是bug free。。
+. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+R4:
+类似逆波兰式求值，很快用栈搞定。然后又加了个if，也很简单，最后有时间，又加了个参数，讲了方法，代码没写完。面试官一直给正面反馈，说很少人做到最后一步，不知是不是真的。。
+
+    - link
+- 第一面：阿三姐姐，先是FLYING TICKET leetcode原题
+然后给一个unsorted slots with numbers，比如：【3,1,0,2,x，4】，x表示位置为空。每次只能移动数字到空的位置，不能直接两数字互换。让排序这个slots，并且唯一的空在最后，比如【0,1,2,3,4，x】。数字只包含 0到n-2
+我一开始的算法就是写一个swap，然后用一个指针从0开始，去让每个数字跟他本身属于的位置做swap。每当i位置上的数字本身就是i，或者是空，我们就i+1.复杂度是O(n)因为每个数字最多只用swap一次。
+之后发觉做swap会额外多操作一次，比如swap（i,j），我们实际上是先把i移到空，j移到i，i再从空移到j。但实际上我们只需要把相应位置原本占有者移到空位，再把目标数字移到他应在的位置，同时记录现在的空位变化到哪里了。这样就可以节省操作。实际上也是O(n)的复杂度，但肯定操作的数量是更少的。
+空位排序那题很有意思。最直接的想法是先把空格移到最后，然后正常排序，但是交换的时候用空格作为临时存储。这样的缺点是没有利用只有0 - (n-2)的条件。可以这样做。看样例:
+0 1 2 3 4 5 <-index
+3 1 0 2 x 4 <-value
+第一步：如果a[i] == i || a[i] == x, continue；如果不是的话，不断递归直到a[a[a[..a[i]]]] == i || x：
+a[0] != 0, 所以查看：a[a[i]] = a[3] = 2 != 0, 所以继续：a[a[a[i]]] = a[a[3]] = a[2] = 0 == 0，递归停止。
+第二步：如果该位为x，立一个flag。回溯，并且每一步将a[cur] = cur。如果flag为真，a[i] = x：
+a[2] ＝ 2，回溯，a[3] = 3，回溯，a[0] = 0，flag为假，结束。
+这一步可以看作在找环，然后先把环末尾放到空格，然后把环依次前移入位，最后还原空档。
+第三步：i++接着走，重复第一步，直到结束。
+这样做的复杂度是每个数字最多路过两遍，所以是个线性做法。
+第二面：东欧大叔，leetcode sum query 2d mutable变形。设计一个class，给定2d matrix 的大小M*N，实现update，sum（r1,c1,r2,c2）。 follow up是怎么取舍复杂度，优化算法。再Follow up 是M和N是无穷大怎么办。
+第三面：research
+第四面：国人大叔，一直友好和蔼的交谈，整体感觉最放松的一轮。先是一个warm up问了一个guess number的游戏，用最简单的binary search。
+然后follow up：如果给的是一列单词，A心目中有一个目标单词，让B来猜。每次B猜一个单词，A只会告诉他猜中了几个字母。举个栗子，如果A心中的是APPLE，B猜ANGEL，A告诉B猜中了3个字母 （A,L,E，位置无关）。问B如何猜最聪明。
+
+- 再follow up：如果A会作弊故意刁难B，B知道A会刁难自己，应该如何猜。
+开放性题目，首先要clarify单词的定义。这里先假定AB手上有同一个dictionary，单词只限于dict上的字符串。二分查找给我们的启发是，尽可能多的排除掉可能性。所以我们可以先预处理出几个单词，这些单词尽可能没有重复的字母并且尽量短（如26个字母表就是一个极端的例子）。然后遍历这个表，记录下每个单词对应的正确字母个数。淘汰掉所有miss的单词所包含的字母，剩下的字母就是potential的了。这时候可以开始dfs可能的字母组合，剪枝条件就是满足所有当前的单词匹配字母信息。
+It is something related to making the guess that will keep decreasing the size of the result set( the set that contains all the possible string). You can think of a graph that contains strings as nodes. The edges are weighted. The weights are the common characters for two strings. Make the guess that wil result the smallest expected size of the result set after each guess.
+第五面：美国小哥带一个小女生shadow。先是一个word search in matrix，leetcode有类似题，题号忘了。然后 course schedule 也是leetcode原题。
+
+    - link
+- 1
+lc 66, 原题 Plus One. 鍥磋鎴戜滑@1point 3 acres
+
+- 2
+1）
+Unique Paths 变体
+m * n的矩阵， 每一格有一个数字-google 1point3acres
+- 求从左上角到右下角，和最大的路径.1point3acres缃�
+- followup： 如果两个人一起从左上角走， 每个人到了一个格子之后会把该格子的数清零。 求两个人走的路径和的最大值
+- dp[x1][y1][x2][y2] = max{dp[x1’][y1’][x2’][y2’]} + a[x1][y1] + a[x2][y2]
+其中(x1’,y1’)是(x1,y1)的邻居，(x2’,y2’)是(x2,y2)的邻居。
+如果x1 = x2，dp[step + 1][x1][x2] = max{dp[step][x1’][x2’]} + a[x1][y1]。
+2）
+给一个5*5的矩阵， 把数字1到25填进不同的格子， 要求相同行相同列的数字递增
+求有多少种放法
+3. 鍥磋鎴戜滑@1point 3 acres
+
+- 给一个字符串s和整数k
+求包含k个不同字符的滑动窗的最大长度
+. visit
+4
+lc 212. Word Search II （print）
+
+    - link
+- 1. search in row sorted column sorted matrix
+2. peeking iterator
+3. kth largest in bst
+4. give a list of intervals, find min number of points which will intersect all intervals
+- 5. given an array, determine if it can be divided into size-5 groups(in each group, numbers are next to each other, such as 2,3,4, 5, 6) - sort and split? better way might be using hash map like in Longed Consecutive Sequence?
+- 6.given a tree, find the min sum subtree
+- 7. hindex.1point3acres缃�
+- 8. given an array, write a class to support:  given an index range, return the max.
+
+    - link
+- onsite 五轮：1. research 讨论， 然后游戏设计，在一个矩阵里放各种形状的水管，然后要求从走下角流入的水最后能流出右上角，如果水流入任何空的小方块（该方块没有水管，相当于漏了），或者不能流出右上角，则失败，返回boolean， 是否能成功。想法是用一个水管就用一个map<流入口位置，流出口位置>， 每一个小方块都是一个map，然后就开始模拟水流，如果到了右上角就成功。
+- 2. 一个array，先存有even的number， 然后存有odd 的number， 如何找到第一个odd 的number：binary search； 然后如果不知道这个array 的长度，但是如果访问boundary 外的位置，会给一个提醒（就是表明以及出界了），如何找到第一个odd number， 还是binary search， 只是一开始随便设一个Integer.MAX_VALUE, 然后两倍两倍的扩展到第一个界外元素，在开始binary search
+3. 吃饭，同校的美国人
+4. zigzag iterator， 然后是一个关网上买东西推荐，pair<商品1， 商品2>， 当用户购买新的组合，update， 然后给找出前k个最火的组合：minheap；然后如果数据太大怎么办：把mapreduce 讲一下
+5. longest increasing path in tree, follow up: 如何返回那个最长的path：global max 和 globa path，找到长的就更新
+6. moving window average 和 mixing window median：minheap和maxheap
+
+    - link
+- 刚面了Google Oniste分享一下面经， 一共五轮1. 一个貌似俄罗斯小哥，第一次面试别人，囧。
+题目是: 给两个string，知道其中某一个比另一个多了一个char。 问怎么找出。- binary search-google 1point3acres
+- 2. 开放题，给一个二叉树和一个function shouldRemove(TreeNode)。 这个function会在有些点返回true有些节点返回false。要求把二叉树中shouldremove的节点删除后把剩余的二叉树输出出来。- not BST, can use either left or right child as replacement
+- 3. popular integer
+- 4. LC 原题（忘记题号了）。找出一个array中比k大的数多于或等于k，k的最大值。第二题怎么sort n列sorted array。
+5. encoding/decoding binary tree. followup 如果是n-ary tree怎么办？
+
+    - link
+- 第一轮一个白人。开始给一共book 的class。里面有一些variable 比如string author；string title；等 叫我实现function，findbookbyauthor() and findbookbytitle(); 开始犹豫用两个hashmap会不会太占空间，跟面试官交流了一下，说没问题。那就开始写了。这个函数问题是同一个author肯能会有好多book，所以在map里面存的是一共linkedlist不是直接book。follow up一是怎么加一共排队序列，就是可能有一些人要预约这本书，再follow这个排队序列可能是有一些用户有高priority怎么处理，再follow up现在有一个rating，每本书都有评分，怎么找到所有books在给定的rating范围内。就好了。
+后来你说是我总是要提醒，但是我感觉我是一写这有问题，自己还没开始检查自己的代码他就提醒我了，他不提醒我我也是会发现的嘛。。。
+第二轮是个阿三， 这个我是真感觉坑。介绍一下一个项目，他自己根本没听我讲的样子，眼神游离。叫我写个function返回给定序列的所有子集。element就是integer。我开始写一个for循环n从1到n代表子集element个数，空的循环完加上，里面在调用helper返回对应个数的sub set combination。他竟然看不懂，看不懂！！！然后叫我走一遍{1,2,3}这个例子，我给他解释了好久，再加上他叫我求复杂度。。这里就浪费了十几分钟。最后他才说想用2^n的方法，就是所有子集应该是从n=0到n-1，对应的element可能加也可能不加进去，就这样迭代下去，复杂度是2^n。还说这个简单，当时还愣住了，难道真是这个简单，然后时间就到了，实际上现在想想不太对。
+第三轮还是一个白人，开始warmup问我，如果现在开会有一个人急着走，但是他电脑里有100gb的数据怎么快速practical得拷到另一个电脑上。一顿扯淡。然后就到了一题最绕的了。plus 1，但是给的数可能很长，也行有千万位，怎么处理？这题开始被自己绕住了，吧自己和面试官都整糊涂了，不过最后还是做出思路吧helper写出来了。就是没有最优化到底，你们自己想会吧，我先不说我的方法。.1point3acres缃�
+
+- 第四轮是最好的一轮最后给feedback也是positive。不过感觉也不是很难。先说两个文件每行里面都是一个数字，很多很多行内存可能存不下了，要求做点乘，得到结果。就是两个文件每一行相乘之后，所有这样的乘积相加。而且两个文件里面数据很parse就是很多数字是0. 开始一下子忘了parse这个条件，就说先读个一定行数，比如100行，乘了相加，完了继续读一百行，如此反复到结束。后来她提醒说很多零，我想了想，还是说没区别，因为你数据不应该一行一行读然后判断，因为从disk读很慢，读了一行，看是不是零是零就跳过，处理再读一行再处理这样太慢。如果直接读一百行然后相乘的时候判断对应行是不是零和直接不判断相乘加入结果差不多，因为乘以零和加零速度都很快。没必要ifelse。最后她说好像是的。然后说我的解决方法没有问题但是她不是这个意思。她说想让我做一个structure压缩一下数据，压缩后想还原回去也是可以的。然后我觉得这样用array，arraylist或者nodelist都可以，最后我用了nodelist，然后写代码，一阵写，followup如果两个文件不同行数，怎么处理，就结尾的时候处理一下，改代码。第二题是positive sequence 找是不是存着连续数列使得相加和等于给定target。开始直接two pointer window得到结果，属于greedy algorithm，写完了，她看感觉不对，太快了。于是followup 说如果有negative number呢，我开始说negative也行吧，后来发现不行，然后我就用dp，blabla写完code。终于结束。最后一轮面了一个多小时。不过值了
+
+    - link
+- 1。decode way。leetcode问的是number of decode way。要求返回所有可能的decoding, as a list of string。
+2。 string compress. aaa -> 3Xa。不能用escape character。decoder不能改。 老题目。.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+
+- 第二问是算法思路题。
+集群各机器上有无序int stream，要找这些其median。 用quick selection的思想（pivot与其rank）。本来是在一个int[]中找median，现在是要在[int[], int[], int[]....]中找出median。从第一台机器找出local median后让其report pivot和rank，再把这信息发给所有其他机器让他们算出给定pivot 和小于pivot的value count，即为[pivot, count of values smaller than pivot]。这样一来回就知道下一步该怎么做，具体有三种情况。
+3。general树（子节点数量不定）中找出最长的连续整数链条长度，每个节点都是int值。问：怎么表示树节点（要写class定义）？写代码找maxConsecutivePathLength（）。
+
+- 递归遍历即可。
+follow up： 如果不是树而是DAG图怎么做？怎么表示图的节点？考虑哪些问题？怎么优化？
+- 就当做一般的有向无环图遍历即可，节点中可加visited标记。注意图不连通的情况，这点面试官故意没说清楚。
+.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+4。判断字符串s是否是按照顺序规则字符串t排好序的。t规定哪个字符该出现在哪个前面。t是有效的顺序字符串。即每个字符不会出现多次，但也不确保26个字母都有。s中某些字符可能不在t中，那么这些字符必须得跟自己相同的字符成群出现（不能有脱离群体单独出现的）。
+
+- e.g.: 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- s= "ccbbfffffaaaa"  t="cba" => true 因为t规定c在b前，b在a前出现，s确实如此。f不在t中出现，但f是成群出现的。因此符合。
+s= "ccbbfffffaaaaffff"  t="cba" => false， f没有成群出现。
+一种做法：判断s中两种类型的字符是否按规矩来的。 一种是出现在t中的，按t给定的顺序出现。另一种是不在t中的，要成群出现。两种条件都得满足。
+
+    - link
+- 第一轮 拉美裔小哥 做computer vision的，聊了聊他的工作，开始做题~题目是moving average，用户动态输入新数据，返回最新window size内数的平均数。秒了，分析时间空间复杂度，然后说挺好的 没让改进。然后是一道easy题。。string找第一个不重复的character。。秒了 然后第三题是给string找majority character，就是个数过半的character，先两分钟写个了用hashmap的，然后边写边想起来先排序的方法，就给他说了一下，他就说OK问问题吧~
+第二轮 美国白人女生 做广告分类的，问她他们都用什么算法分类，她说是secret sauce。。：） 题是string find next permutation，之前没做过，一步步给她推 最后也做出来了
+第三轮 亚裔小哥 做backend的 题是merge interval的变形，结合他的工作情景，是有一个date range的类，要实现insert a range, delete a range, sort, check if a date is in some range。写完然后问时间空间复杂度，然后他说他实际工作中是用Arraylist存，没想到我用treeset存好像也不错~ 然后就是问问题了. 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+
+- 第四轮 白人大叔 做statistical model的，上来就做题，给一个数n，找出最少个数的完全平方数（就是某个数的平方）使之加起来等于n，返回最小的个数。想了下是个memorization的DP，就写出来了。然后他好像没准备啥别的题，就翻了好久他的小本子 出了道翻硬币的概率题。。恍然以为在面data scientist。。任务是通过flip若干次硬币，用flip的结果来以同等概率randomly从给定个数的一组数值中选随机数。具体解法就不说了 因为到后来比较细节，也没必要准备那么多 他会一步步guide你找答案的~
+
+    - link
+- 1.        给两个html解析成的树，比较其中的字符串是否相等。
+比如<div>Hello World!</div>和<div>Hello <span>World</span>!</div>都包含完整的”Hello World!”, 所以返回True.
+假设parser会返回一棵树，先是设计返回的树节点类。然后实现如何比较。
+2.        第二轮，亚裔面试官题目是给一个单淘汰赛的初始对阵，一个每个队对每个队的胜率矩阵，写一个函数，能返回一个特定队伍拿冠军的几率。完全不会，面试官提示了我45分钟也没写出什么代码http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=167726&pid=2189013&fromuid=206597
+- 3.        吃饭环节，一个工作了两年半的白人小哥。Google的食堂确实不错。
+4.        这一轮是个亚洲小哥，我怀疑是中国人，考的比较简单。第一题，给一个函数String calc(String left, String operator, String right)，left和right是类是“1”，“123”这样的字符串，operator是四则运算符，返回结果也被转换成字符串形式。让设计写测试输入。开脑洞想了各种case，比如一个数溢出，两个数加起来溢出，除零，以及类似“3e10”，“8.5”这样的非整数。还有“00003”这样的等等。
+第二题是给两个数组，返回两个数组，第一个是只在数组一里面出现的数组，第二个是只在数组二里面出现的的数组。我说可以用frequency table，也可以排好序，然后指针比较。让我写了排好序指针比较的版本。
+第三题是输出一个数组里面最长的连续增子串的长度比如[4, 1, 2, 3, 4, 6]，返回就是4，因为1，2，3，4是连续的四个数字。
+然后就完事儿了。
+5.        最后一轮，给一个甲字形的手机数字键盘，给一个初始格子，给一个步数，然后返回最终可能在的格子有哪些。写了个DFS的版本，因为甲字形键盘然后问我复杂度。脑残，明明是3^n，我非说是n^3。最后在提示下才说对。之后问我如何优化，比如路径重复什么的。我说超过一定步数以后就没有新的路径或者终点了，所以最终是constant复杂度。
+
+    - link
+- 第一轮，设计一个类似于消方块的游戏，通过滑动交换items, 每行每列都是凑够三个相同的item就消掉，然后让你初始化一个board,初始化后的board要能使用户能够做出firstmove 意思就是你不能一开始通过移动消掉任何方块。而且也不能产生三个连在一起能直接消掉的方块。楼主用的方法比较二逼，反正最后就是说你可以用dfs来产生这个方块，如果遇到违例的backtrack换另外一个item来产生。
+
+- 第二轮，这是楼主感觉挂定的一轮。。 说你有三台接啤酒的机器，分别是small，medium, large. 这三种size的机器按一次button一次分别能distribute, say 100 - 150ml, 200 - 250ml, 300 - 350ml的啤酒，每台机器出来的啤酒量是区间里的任意一个数不确定。说现在一个顾客自带一个“杯子“，这个杯子任意大小但是有两个限制 就是min和max volume意思就是 你最少要接到min(ml)在杯子里，最大能只能接max(ml)，然后你要想让顾客满意必须接在这个区间里面的那么多啤酒。比如说我有一个下限min是300ml 上限max是400ml, 那么我按一下small是接不够的， 我需要在按一下midium才能接够。但是有的时候我按midium可能也不行，比如说我midium的区间换成200 - 300ml, 那么我按一下small再按一下medium就可能接出（100 + 200）- （150 + 300）ml的酒，which is not valid cause (150 + 300 = 450) might exceed the max volume(400ml) of the cup。这种个情况或许你需要连续摁记下small或者摁一下或者记下small再摁下large解决。Anyway,楼主觉得这道题肯定是要递归回溯的，当时有点紧张，加上case实在有点多，关键是leetcode真心从来没做过类似，瞬间智商不够用了。总之这轮基本上只写出了basecase然后最后说了下我想大概怎么解决。。。. visit 1point3acres.com for more.
+- dp(i, j) = dp(i-smallmin, j - smallmax) || dp(i-mediumMin, j - mediumMax) || dp(i-largeMin, j - largeMax)
+第三轮算简单，类似于LRU的感觉，说不断地给你push data stream你需要打印出这些data,但是呢如果当前data在过去十秒内出现呢就wait and skip to next，但是跳过不代表不管你仍然需要somehow记录他在这个时间点出现过，因为接下来十秒内可能又出现这个data, 而你要是用旧的最开始的那个data的话可能此时他已经在十秒外所以你就没管就把他打印出来了， 但其实你第一个十秒内遇到duplicate的时候应该记录一下那个时间点，所以说有可能不需要打印最新的这个repeated data。时间点的话假设你可以直接用一个什么Time.getTime()之类的方法get这不是重点。楼主基本上就是用一个queue来维护时间和data,然后没新来一个加到队尾同时把队首超过十秒的都通通poll, 同时用一个hashmap来不断更新data以及其出现的时间，如果超过十秒的就要随着queue一起也将超时的data从hashmap里删掉（必须删因为可能每秒的数据量非常大，你不删光保存并更新时间到最后内存会不够，这儿更新是个小trick我就懒得具体说了，我提到了更新大家应该都能知道什么意思）, 没超时直接更新。基本就是这样其实不难。
+第四轮也比较蛋疼我长话短说吧。你有一个sidewalk（你可以想成一段距离或者一个range 比如说一米），然后有一个raindrop随机生成器，没滴raindrop都有一个宽度比如说1cm 然后开始随机下雨，雨滴之间可能会compeletely or partially overlop,  or totally seperate，三种case, 然后问你下多少滴雨才能让这个sidewalk完全淋湿，就是雨滴完全覆盖那1m。。 我一开始的思路是leetcode上longest consecutive numbers in a array那道具体名字我忘了，反正就是个hashmap维护一个边界和长度。我随意写了点基本上就是写了一个data structure维护一个雨滴edge x坐标，以及长度，通过最新产生的雨滴overlap情况选择新创建一个雨滴加入list（其实本来应该用某种排序的list按edge x排序的方便后来两两raindrop range之间合并) 还是与之前的某raindrops range合并（这个合并其实情况也蛮多 楼主当时都没时间说完了）。最后的话一直到这个list里所有raindrop range的总length >= length of sidewalk(1m) 那么就算完全覆盖了。- Insert Interval
+
+    - link
+- 1. 一个array表示的integer，plus one . visit 1point3acres.com for more.
+- 2. 推荐一个有最多个公共好友的好友 （BFS）
+3. BST里找一个最接近K的Node
+4. Moving Average
+5. Zigzag iterator
+
+    - link
+- 第一题, 找出一个二叉树的最深节点。
+- 这个题目实际是送分给我的。结果我太紧张，用递归函数完成算法，但是把返回最深节点程序写成了返回最深深度。后来考官提醒我不对，我方寸有点乱，推翻全部递归算法，重新用DFS写了一个非递归算法。结果虽然正确，但是过于复杂。后来想了想，其实这个问题稍微修改一下原有递归算法就好了。面试官是个老白，人还算NICE。. from: 1point3acres.com/bbs
+
+- 第二题，一个LIST里面放了很多句子，找出每个句子共同的PREFIX。这个问题不是很难，我写了个比较函数，然后依次比较每个句子。考官问我算法效率，我说是LIST长度乘最长的LIST单词长度。 他问我有没有更好的算法，我说可以先扫描LIST,找出最短的句子，以它为初始比较，可以减少比较次数。面试官感觉是个东欧白人，比较NICE.
+第三题，设计一个 KEY-VALUE机制，必须在O(1)做下列操作: 插入，删除，get(),random_get（）,可以使用hashmap.
+
+- 这个题目非常tricky. 貌似可以直接使用一个HASHMAP就能完成，但是实际上random_get必须把每个K-V对与一个0到N的整数关联，这个如果直接
+把MAP放到一个LIST里面去，算法效率就变成了O(N). 我最终使用了两个HASHMAP来实现这个功能，一个HASH表记录0-N的整数下标与KEY的关系，
+另外一个HASH表记录K-V，还有这个下标。这个算法其实在删除时也有问题，因为删除后会有下标GAP.我实际上是使用了一个机制，让删除操作，
+每次只删除HASH表最后那个K-V值（之前让最后值与删除值换个位置）。面试官是个亚裔小年轻，非常NICE..鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+
+- 第四题，找出一个GRAPH里面全部的三角形
+我的算法： 先做一个访问队列，从一个节点开始BFS遍历，每次把一个节点的所有未访问过的邻居点放入一个LIST,判断这个邻居LIST里面有多少. From 1point 3acres bbs
+- 点互相连接。这个就是与这个节点有关的三角形，对它们计数并把结果记入累加器。之后把这个LIST加入队列，继续遍历。累加器最后返回三角形总数。
+这个面试官是个三哥，态度很糟糕。似乎看不懂我写的算法，问了很多莫名其妙的问题。估计他给我的REVIEW很差。请各位大神看看，我的算法确实有问题，还是三哥有问题。
+第五题 字符串PATTERN MATCH。 一个P字符串 ，一个S字符串。P中下划线 "_"字符通配S的单个字符，"%" 通配S中任意长度字符。
+
+    - link
+- 第一轮：高频题 window average，不能用STL，所以要自己实现queue，follow up是多线程怎么办，加锁就可以
+第二轮：一个tree是否包含另外一个tree，用recursive解的，然后就问问题了…… lz当时以为跪在这一轮了.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+
+- . 鍥磋鎴戜滑@1point 3 acres
+第三轮：类似https://leetcode.com/problems/minimum-window-substring/ 只不过是两个vector<string>, 用sliding window
+
+- 第四轮：第一题是https://leetcode.com/problems/lo ... g-path-in-a-matrix/ 的变形
+-   lz也是没经验，一看这题做过啊，刷刷刷就背完了……然后面试官看还是有时间，就又出来一道题：
+有两个set的points， set A和set B，又给了一个double类型的参数delta，求set A里面每一个point最近的且距离小于delta的set B的point，有点绕，就是给一个point A，就返回一个最近的point B，并且这个距离要小于delta。
+- lz开始用的暴力解法，复杂度是O(n^2)，后来想出来一个先排序再搜索，复杂度降为O(nlogn)，三姐一直说interesting，我也不知道是好是坏
+不知道可以用treemap来做么？ 就是先A和B的point都按横坐标排序，然后把B的点都放到treemap里。。然后对于每个A就只要考虑|xb-xa| < delta的点，treemap选这些点的复杂度应该lgn....然后随着x越来越大，还可以将之前的一些点移除。。。
+
+    - link
+- 第一轮是个中国人，问题是leetcode上的3Sum变形题，比较容易。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+- 第二轮是个有点儿像墨西哥的人，题目是leetcode上的palindrome partition的变形题，当时脑子短路了，DP忘了是从后往前做，这个哥们准备的也不充分，根本没看出我的问题在哪里，而且口音挺重，经常需要重复一遍才能听懂，所以交流也不是很流畅。题目算是做出了一半。
+第三轮是一个比较容易的题目，数据流，找出每个数后面第一个比它大的数，用stack，每次都比较新数跟top，新数大，就找到了，然后pop, 一直比到新数不比top大。然后就是复杂度分析之类的。
+- 第四轮是system design, 是个售票系统的设计。当时大部分面过的人都说不面system design，所以没有好好准备，在interviewer的提醒下一步一步算是做完了。
+- 第五轮本来也是system design， 因为几个面试官没沟通过，所以导致两个人准备了系统设计，但是好像有规定，只能一个面设计，所以最后一个面试官临时编的题目，解释得很messy，题目一开始很简单，慢慢的增加难度，最终还是磕磕绊绊都做出来了。
+
+    - link
+- 一道常出现的面经题，拿出来讨论下自己设计接口，使得支持两个funciton：onUpdate(timestamp, price) 和 onCorrect(temistamp, price). 可以理解为有一个时间流，每一个timestamp都对应一个股票的时间，每次调用一次onUpdate的时候，就对我们设计的那个类更新对应的timestamp和price， onCorrect就是修改之前的一个timestamp的price。最后，我们的类要能返回latest price， max price 和 min price。一开始题目描述的太模糊了我都不知道到底要干啥，墨迹半天才知道是想设计一个类，然后中途也写的乱七八糟的，用了两个Deque来存储一个递增和一个递减的序列，类似窗口题的方法。当onCorrect的时候就去看队列里面有没有对应的timestamp，有的话移除然后重新入队。感觉这面面的也不是太好。”
+感觉应该是定义一个node class {timestamp, price}, 然后放入maxheap和min heap中吧，但是如果是用java的话，必须要用hash heap才可以吧，这样的话太麻烦了啊
+
+    - link
+- 1. 寻找最长递增数列，init是找长度，follow up是打印出序列，follow follow up是打印出所有可能序列，follow follow follow up 是变成字符串找最长递增。
+- 2. K最常用url链接，出现无数次。
+3. 两个可循环buffer相互拷贝，key point大约是解决index收尾相接。follow up是怎么地高效率，减少拷贝次数
+- 两个循环buffer都长为10。从buffer1的第8位置开始拷贝到buffer2第9位，拷贝5个字节。怎么handle index，就是超出的部分要overwirte前面的。怎么减少拷贝次数，就是到达buffer的尽头再整体拷贝一串，而不是one by one.
+- 4. 设计一个迷宫游戏，怎么走出迷宫，BFS解决。
+5. tree版本的2sum，找出一个定值，数据结构变成tree，follow up是 3sum, n sum
+
+    - link
+- 1. 第一轮是写一个bounded blocking queue，主要写add（long timeout）和poll（long timeout），就是说如果一个thread想加个entry到queue里，它可以设置一个timeout，如果这个timeout时间内没有加进去，就返回或者throw exception。
+- 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+2. 第二轮是System Design，讨论Gmail的存储设计，主要是API和如何存放检索等等。
+- .鏈枃鍘熷垱鑷�1point3acres璁哄潧
+3. 第三轮是个中国大哥，直接说中文，感觉特别亲切。问题是给一个文件，里面每行是一个类似树的父子节点，比如说：
+- 7，6
+7，5
+7， 4.
+- 6， 3
+6，2
+希望是打印出树状结构。
+7 - 6
+   - - 3
+   - - 2
+  +5
+  +4.
+- 这个output的格式我也记得不太清楚了。我这题做的很不好，基本上没太能写出来，主要就是这个indentation没有弄好。
+. 1point 3acres 璁哄潧
+4. 第四轮是给两个list，求出在一个list中而不在另外一个list的entry，其实就是A-B和B-A。
+5. 第五轮是找硬币题，不过是打印出最少硬币的序列，不是最小数值。这个题目我也答得不好，面试官希望我one pass，我的最初解是two pass，所以two pass写到一半他就说让写one pass的。写one pass的时候有bug，被指出来后，想到一个方法，面试官说是对的，不过不是面试官希望的。最后也没能写完，感到特别无力。。。
+
+    - link
+- 比较难想的题目：
+给一个dictionary，里面包含很多字符串。 ex: dict{"aabc", "bcd", "aew","wxyz"} 找出里面customsize最大的一对字符串，string s, string t,
+如果满足没有任何char同时出现在s 和t里面, customsize = s.size() * t.size()。 反之customsize = 0;
+举例：上述字典中 customsize("aabc", "bcd") = 0, customsize("aew","wxyz") = 3*4 = 12，customsize("aabc","wxyz") = 4*4 = 16
+所以最后return "aabc", "wxyz"。如果有多个 return 一对即可
+请说明你的算法的time complexity。字典长度为M, 字符串平均长度为 N
+如果单词只包含小写字母的话，你可以用一个32位int表示出这个单词中有那些字母；这样两个单词是否有相同字母就可以在O(1)时间内用“与”操作解出。两两比较单词，最后只用O(M^2)时间。
+
+    - link
+- 1面：给任意一个矩阵，0表示可以走，1表示是墙。给个起点和终点，找到最短路径，返回路径和长度。你可以走上下左右，你有一个特殊技能，可以跳墙，但是只能跳限定次数，因为会累啊（他就是这么说的）...每次只能跳一堵墙，连续的墙不能跳。跳一次墙算走了一步。- BFS without visited, but remember how many jumps already had
+
+- 2: 很大的文本文件，比如Linux运行产生的日志文件。要在常数时间找到第N个日志，怎么存，怎么找。如果用到了hash map, 假如文件最小1b, 最大 40000b ,平均1000b, 总大小20T, hash map 要多大？有点蒙逼...讨论了一堆...后来讨论了存 offset 地址，问寻址方式balabala...具体记不清了反正就是很操作系统的东西
+
+- 3: 给N个文本文档，找最大相同子句，以单词为单位，连续空格看作一个空格 - suffix tree? dp of LCS with more dimensions
+
+- 4: 给N个点，判断能组成几个三角形。在一给定误差范围内，斜率的差小于误差范围看作一条直线不能算三角形。如果把点换成边，判断能组成几个三角形。时间复杂度是多少，怎么优化。（印度大哥还不让用python build-in 函数，要用啥你得自己写）
+
+    - link
+- 1.解释就好: 如何用最少的bit来记录一副扑克牌的顺序（假设encoder和decoder都由你来设计）
+- permutation，答案是log2(54!)向上取整
+2 安卓手机密码有多少种组合
+- 3 拿硬币问题。Follow up:每步拿哪个？ 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- 4.在一个排序的不重复的环形的链表里插入一个数。-O(n) linear, think about edge cases
+- 5.Sliding Window Average
+6.LeetCode 253，求重叠最多的一个区间
+7.给Node[] nodeList，每个node有int p_index表示它parent node在数组中的位置，parent node必在child node左边，root在第0个，其p_index为-1。问，remove第k个node和它的子树，并把剩下所有node按顺序尽量向左摆，剩下set null。TimeO(n)SpaceO(n) Follow up:Space O(1)?
+- 我的做法是先遍历一遍标记所有要删掉的node，再遍历一遍把node往左挪。
+第一步是把第k个node的p_index设成-2，再往后遍历时，如果一个node的parent的p_index是-2，把它的p_index也设成-2，则所有p_index=-2的node都待删除。
+第二步可以用你说的hashmap+two pointer的做法，一个pointer遍历list，另一个pointer用来记录下一个点所应该摆放的位置（好像remove duplication in a list那样），用hashmap来存旧index->新index的map，用来更新p_index（我直接用int[]来存，和hashmap道理一样）。
+补充内容 (2016-1-21 16:37):
+好像当时是一次遍历，两步合起来做的，不太记得了，大体思路是这样没错。
+Space O(1)只要Time O(n^2)就行了，每次update一个node的index，把它的所有child node的p_index都update一遍
+
+    - link
+- 1. 给了一个array，该array满足heap quality，比如[20, 15, 19, 10, 11, 18, 16, 3, 5, 8, 9, 13, 14, 12, 11]就是相当于把一个heap按照level order trasveral排成数组。要求写一个函数找出里面的top K，不修改原数组，数组很大而K基本很小。
+- 2. 给了n个筛子，每个筛子有f个面，点数从1,2,3...到f。所有筛子视为identical/unique，求问两种假设下，投出n个筛子最后点数和加起来等于s的情况分别有多少种 - dfs + backtrack
+- 3.要求写一个函数能够完成网页上按ctrl+F可以搜索的功能。具体的输入输出给你定义好了，输入是一个用树表示的网页，树的leaf都是具体的word，其他node都是一些格式字符，比如/bold, /red, /italic。为什么要定义成这样LZ已经忘了... 要求输出网页中包含搜索关键词的文本所对应的leaf node中的第一个，比如一句话是''/bold This /red is /italic fun'' (表示在网页上就是Thisisfun）如果搜索is就返回This这个leaf node，如果搜索sf则要返回is这个节点，因为sf首先出现在is和fun之间，而is是第一个
+- 4.要求写一个关于stock prize的类，要满足几个函数 1）可以add这一时刻该stock的prize 2）可以update之前时刻添加的stock prize 3）可以delete之前某一时刻的stock prize 4）可以query目前为止stock prize的max与min，要求是针对不同情况进行优化，比如add频繁，update频繁，query频繁等等。LZ当时maintain的一个hashtable（dictionary）以及current max与min，注意到update以及delete时的细节就行
+- 5.warm-up说现在有一堆代表时间的字符，比如2015-11-12, 2015-12, 2014-2-21, 2014-2-5，2015-12-5，要求写一个comparator比较两个字符按时间排谁在谁前面，如果string a在string b前面，输出True，无法比较或者在后面输出False，很简单5分钟写完。第二题是给一个unsorted array，判断它是否是由一组consecutive increasing numbers rearrange组成的。比如 [-1 2 3 1 0] 返回True，[-1 2 3 1]返回False - FOLLOWUP: no extra space。
+
+    - link
+- 第一轮 three sum的变种，给一个array，找出所有 three tuple 组合的数量， 使得三个数加起来小于等于某个target。我用了two pointer. n^2复杂度做完。由于我们并不用返回所有的tuple，只要数量，所以又用了binary Search优化。
+第二轮自己implement 一个stack类，实现pop，push ， isEmpty这三个函数。这题之前见过所以直接上手就写出了O(1)时间的实现。之后面试官又问我，如果你有同样的testcase，但是每次跑出来的结果都不一样，可能是什么原因？我说第一可能这个程序和time stamp有关，他说还有呢？我说第二可能有random number。他说还有呢？我说第三可能是hashMap iterator每次返回值不同，他说还有呢？这时我快要崩溃了，想了半天想起上个学期Distributed System每次跑实验总是跑出不同的结果，所以我说可能和network也有关吧。他终于满意了，不再问“还有呢”了。。。
+- 第三轮是一个简单的字符串加密。比如有Key={A,B,C} 先把他们转化为数字，对应0，1，2，然后对于一个字符串“BLUE”，每个字母移动相应的位数，B移动0位还是B，L移动1位变成M这样。但是注意要考虑很多coner case，面试官一开始并没有把所有规则说完，就等着你问他。比如大小写，比如字母超过Z以后怎么办，有标点符号怎么办，字符串比Key的长度长等等。把这些情况都处理清楚，这题还是很简单的。之后又问了一个更简单的two pointer问题，我只说了思路他就表示可以了。
+- 第四轮是实现有权重的随机数，比如A的权重是5，B的权重是3，C的权重是2，那我们要有0.5的概率产生随机数A，0.3的概率产生随机数B，0.2的概率产生随机数C。权重不一定是整数可以是小数。这个题关键是首先判断随机数所处的区间，再看如何把区间映射到一个值。我用了hashMap+array才把时间降到O(n),然后又用了Binary Search优化。一天写两个Binary Search，写得晕晕乎乎。。。。不知道对不对
+
+    - link
+- 第一轮：
+白人老太太，9年码工，题目是给一堆系统路径，类似“/abc/xyz/hij/f1”，找最长公共路径。
+我说了longest common prefix的，她说怎么优化，于是说字典树，又问是不是要建完整的一颗树，于是说不用，发现要分叉了就标记一下跳出，然后从根节点找到高度最低的分叉点就是公共路径，代码没写完，最后一段写了伪代码。
+第二轮：
+中国大哥，感觉非常亲切。题目是给一个function叫next()，返回的是多叉树的一条边，类似(m,n)，m是父节点n是子节点，让建立这棵树。. 1point 3acres 璁哄潧
+- 开始说先遍历一遍存成一个图，然后用拓扑排序的思路。然后在大量边的情况下优化，于是说用一个哈希表存节点指针，对于一条边，先拿到父节点（不存在就建一个插进去），然后拿子节点（不存在就插进去），把这两个点连起来，并保存父节点关系。最后遍历哈希表找到根节点。代码写完有个小bug不过小哥说可以了。snapchat build tree from edges
+- 午饭：.1point3acres缃�
+- 台湾小哥，各种聊
+第三轮：
+白人小哥，穿着紫色女巫的紧身镂空连衣裙带着法师帽就进来了。。。
+题目是给一堆people，每人有skills，再给一堆tasks，每个有需要的skills，返回bool值是否所有任务都可完成。然后一通讨论corner case。follow up问people之间不能合作怎么做。这个代码没写完，中午有点懵，反应也慢了。时间一到被小哥打断拍照走人。http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=146139&pid=2181523&fromuid=206597
+- 第四轮：
+白人程序媛，leetcode原题，判断一个数旋转180度还是不是本身，数是string形式的。follow up就是给个N，然后返回所有长度小于等于N的满足旋转条件的字符串。写完代码后聊了两分钟结束。
+
+    - link
+- 1. 一个1米的sidewalk, 一个水滴宽1cm, 每次水滴的位置是随机的.写一个模拟器来算出来需要多少次能把整个地面打湿
+跑一个循环, 不断的merge interval, 直到interval只有一个并且大于sidewalk就行.
+2. code debug
+3. 算出一个数是否是能被unique的fibonacci数给组成. 比如说9 能被set: 8,1组成. 8和1都是fibonacci数列. set里面数得是unqiue的, 比如说不能出现两个1什么的. - if must be unique, can’t use dp?
+- 4. 括号配对, follow up: 对这个题目进行多线程优化
+
+    - link
+- 第一轮
+白人大叔
+input:
+G . . G
+X . . .
+. G . . 鏉ユ簮涓€浜�.涓夊垎鍦拌鍧�.
+- G是终点，.是可走的点，X是不可走的点
+output:
+求出每个可走的点到终点的最短距离（每一步可上／下／左／右一步）
+我的做法是经典的BFS。先构造一个距离矩阵，所有G的点对应的是距离为0，其他点为MAX_INT。然后将G的点放入Queue中进行BFS，修改距离矩阵。
+follow up:
+如果每一步可走两步／三步怎么办？
+如一步可走：左左，左上，右下，。。。
+我说应该画出解空间树，然后DFS遍历解空间树，DFS的返回值是从该点出发最少需要几步到达一个G点。大叔说make sense。
+. 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+第二轮
+白人Geek小哥
+input:.1point3acres缃�
+
+- string stream
+如 abckdeghs.... Waral 鍗氬鏈夋洿澶氭枃绔�,
+
+- 有一个search list［google, ok, doit］
+output:
+每当stream里的有字符串是在search list里的，就alarm clock
+我想的是先用search list构造一个Tre
+然后alarm clock的方法我参考了actor model里的actor send message。所以这个函数是没有返回值的，发现有匹配之后send message
+函数的输入是一个叫StringStream的class，用next()函数得到它下一个char。并且string stream是不能回头的，不能通过坐标得到某个char
+我给出的做法是每碰到一个合理的开头，就把之后的char都记下来。
+比如，对于输入流为abcd..., search list: [abcb, bcd]
+那么到d的时候会发现以a开头的不对，于是从存好的a后面的一个char即b开始重新遍历Tre，看是否可以满足。
+第三轮
+国人哥哥
+lc: serialization and deserialization of binary tree
+lc: sort colors
+第四轮
+国人哥哥. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+
+- 第一题：
+input:
+source string: abcde
+target string: ebcda
+要求：-google 1point3acres
+
+- 对于target string，只能进行交换两个char的操作。如例子中，交换a和e，那么source string和target string之间差异距离就由2减到了0.
+要求输出将差异距离减小到最小的一次交换的坐标，如例子，是输出[0,4]-google 1point3acres
+- source string和target string长度相等
+我先开始是想的是用一个hashmap记录source string里每个char的位置，然后遍历target string时，看是否有对应的。
+比如上面的例子，a是0，e是4。那么遍历target string时看e在map的坐标是多少，发现是4，然后看target下标为4的char是否是a，如果是，就说明这个交换可以将差异值减小2，输出。如果不是，那说明这个交换可以将差异值减小1。
+但面试官提示说如果输入字符串里有大量重复数字，那么时间复杂度就不是线性的了。
+于是想到可以用两个map，第二个map是记录(s, t)这一对tuple的位置的。于是由第二个map可以找到将差异值减小2的解，由第一个map可以找到将差异值减小1的解。. From 1point 3acres bbs
+
+- 第二题：
+给出四个点的坐标，判断这四个点能否构成一个正方形。
+关键在于四条边的关系。
+
+    - link
+- 第一轮，linkedlist,找出最大的两个, 然后swap，不是swap value，swap reference。
+
+- 第二轮，刚开始主要谈论了一下现在项目，然后写了一个topological sort。. 1point3acres.com/bbs
+- 第三轮，RGB颜色转换比如现有#2f3d13，有16进制的00,33,66,99，cc, ff.要把现有的数字转成最close to这几个数字。比如#2f3d13 -> #333300；.1point3acres缃�
+-               第二题是findNthsmallest element in BST
+第四轮，三道题啊。。。。1. one edit distance 2. wall, flower, matrix找到能看见最多flower的点，地里高频题 3. count of smaller number before itself
+第五轮， 给一个API，O(1)时间计算 slidingwindow avg, global avg, update(insert) value;
+              第二题，DP， 有几座城市，每个月在每个城市都有不同的假期，然后每个城市有飞往不同城市的航班，求最大能获取的假期和Path. dp(i)(j) 代表第i个月在第j个城市所能获得的最大假期。
+-              DP 方程大概是 dp(i)(j) = Math.max(dp(i-1)(fromCity)+map(i)(j), dp(i)(j))
+
+    - link
+- 1. 键盘机器人，从键盘中心字母G开始， 给定一个单词，写代码算敲完这个单词机器人所需走的路程，机器人只能直走不能斜着走， 键盘简化为一个matrix。我是用hashtable存下每个键盘的坐标，然后依次边走边算，坐标用int存，follow up是怎么省空间
+- 2. 给定一个binary tree，判断他是否既是valid BST又是balanced。follow up是如果要hack这个function让它出错，应该怎么输入，还有如果输入是极端情况会有什么影响如何优化，比如全是右子数或者million ofnodes
+- 3. 这轮面的感觉最不好，国人，给定一个车牌号包括字母和数字，然后给定一个dictionary，找出至少包含所有车牌里字母的最短单词。讨论了很久算法，一直没提示，后来就说干脆你就写暴力算法吧，用hashtable做的，感觉效率很差不过是可以work的
+- 那个楼主说先进行预处理，求出所有的permutation，然后放在hashmap中
+4. 键盘题， 给定一个键盘矩阵，一个固定长度和一个装不能使用的字母的set，问输出有多少种固定长度的排列组合。同一个字母可以重用，set里面的字母不能使用。用DFS写的，想用memorization优化卡住了没写完。follow up是算复杂度
+- 5. 有向图给定其中某一个点，copy graph， follow up很多，能不能从某一点copy整个graph，做unit test如何判断copy后的graph就是完全deep copy的 （要求写代码）等等。
+
+    - link
+- 1. 白女人。老题。在一个矩阵上选一个基地，such that这个基地到若干目的地的距离和最短。有障碍物。做bfs就行。. from:
+- 2. 小白。 大概也是dfs之类的。模型就是source-destination with weighted links的网络，找出所有path. 在算一些概率啊啥的。
+3. 烙印。估计跪在这里了。写一个生日提示系统，每次查询时显示下一个谁过生日。这个有点偏system design, 比如他想看到你注意时区啊啥的很多细节（并不知道他是不是在黑我）。我直接说算法了，二分搜索。但是他似乎不理解我的版本的二分搜索。我用的二分搜索的版本是只改变一遍的那种
+- 4. japan man. 判断一个数字是不是质数。要用到两个trie。同时遍历两个trie是最优解。真的记得不太清楚了。 当时我觉得这题还挺有意思的
+
+    - link
+- 第一轮：压缩字符串, decode function已经给好，让写encode。需要注意的是字符串包含数字和字母，所以类似3ddd不能改写成33xd, 跟面试官交流，被告知不能更改decode function。 所以不能引入特殊字符。
+第二轮：先是一道应用题，本质就是考trie，需要写add, search, startWith等function。 然后是一道类似word break II的题目，略微简化了一下。. 1point 3acres 璁哄潧
+- 第三轮：经典题，二维matrix, 给坐标写getSum和update function。 follow up: (1) getSum怎么O(1), update O(n2) (2) 怎么两个都是O(n)
+第四轮： 游戏，猜字， 给你一个字典, player 1脑子里想一个5位单词，这个单词一定来源于字典， 然后告诉你字典中每两个单词间相同单词的数量，你需要做出最好的猜测， 能最有利于接下来的猜测。。举个简单的例子， 三个单词a, b, c. 如果告诉你a和b， a和c都差3，然后b和c差2， 你最不应该猜a， 因为接下来这属于无效猜测。。。。这道题楼主答得不好，所以也描述不清楚， 大家凑活着看吧。。先让写个类似StrStr的function，然后写如何做最优猜测
+
+    - link
+- 第一题, 给一个array比如[4,2,1,3,5],根据这个array现在我们能有了一个新的array => 每个数是在原array里, 在它左边的所有比它大的number的个数,就是[0,1,2,1,0]. 题目是现在给了这个[0,1,2,1,0]要求原array, 原来array的range是1~n
+- 第二题, 知不知道binary search? 但是现在array是unsorted的可是依然看做sorted array来做binary search, 返回在array里面所有可以在这种情况下binary search出来的数.
+第二轮: 韩国哥哥.
+经典的地里出现过的String压缩编码解码类似题, 后悔当时看到没有好好写过一遍.给一个String比如"abcdfffffffxyz", 写两个methods, encode和decode. encode就是比如"fffffff"变成"7xf",decode就是要变为原字符串.我说"ff"怎么办,他说变成"2xf"你不觉得更长了吗? 我才明白了,应该是encoded后的String要比原来的短,不然为啥要encode,的亏我问了这个问题...然后又问他,如果原String本来就是"5xt"这种结构, decode不就无法辨认了吗?他说很高兴你提出了这个问题,但是不用管它,一会再讨论,先写吧.
+写完以后他就问我如果原String本来就是"5xt"这种结构,我encode应该怎么处理? 我就傻了... 因为一直觉得encode后的字符串长度一定要比原来的短,所以根本想不出来他要的解法. 说了四五种方法他都不满意, 最后给我hint说,要是有个"1xt"这样的你怎么处理? 当时脑洞大开想出来了... 其实是要变成三个"1xt"这种结构, 比如原String就是"5xq", 就encode成为"1x51xx1xq"就好了. 但是这种方法违背了encode后要变短的rule,所以我是真没想出来.....
+还讨论了好多种情况, 最后一种是"1aaaaa"这种情况怎么变, 我说"1x15xa". 他说这是6个字符,能不能只用5个? 实在想不出来,这时候第三个小哥进来了,韩国哥哥就过来告诉我说,其实看做1a和aaaa两部分encode就好...
+面完我就觉得跪了....
+第三轮: 中国小哥.
+第一个问题是测试的,比较简单. 测试Calculator,input就是比如俩数一个operator, 都有什么case, 怎么测,应该有什么预期结果或错误.
+第二题, 一个array,rearrange成为另一个array, 现在给了这两个array, 求是怎么变化成第二个array的. 挺简单的就用了Hashmap秒了...
+
+- 然后问我,那现在给你原array,也知道了是怎么变化的了,所以我们现在可以用原array求出变化后的array对吗? 但是我要run这个method好多次比如k次, 怎么最快能求出array被rearrange了k次以后的结果? 最后我就推倒出求LCM..面完他亲切的用中文跟我说,我是他见过面的最好的,时间复杂度最低trade off也说的好. 谢谢小哥给了我信心~么么哒~
+
+- 第四轮: 印度姐姐.
+假装没有准备的样子现场想题目... 谢谢姐姐没有对我下死手T T
+海上有一片岛, 每个岛就是一个node, 岛和岛之间有的连着有的没连着. 所有连着的岛是一个Group. 求在这片海上, 包含岛屿个数最小的group的岛的个数,和最大的group的岛的个数. 就是返回两个个数值, 肯定就是int[2]嘛. 先讨论了用什么数据结构存储, 跟她说了trade off. 然后开始写.
+全程想给我挑错, 不断质疑我的代码... 还好我这一轮在高压下还是写的极其顺畅, 一个bug没有出现, 对她也是笑脸相迎, 躲过一劫...
+第五轮: 中国大哥. 竟然中文给我面试, 也是感动哭.... 1point 3acres 璁哄潧
+- 第一题, 一个二维数组代表了一个岛. 周围都是海, 岛的左侧和上侧通向Pacific, 右侧和下侧通向Atlantic. 每个数字都代表了那个位置的海拔高度. 现在下雨了, 雨只有从海拔高的地儿能流向海拔低或者一样的地儿. 返回岛上的分水岭的点, 就是在某个/某些点上, 雨水既能流进Pacific, 又能流向Atlantic. 大哥可能也知道白板写不下,让我写纸上. 足足写了4页A4纸,当然字也写的大...手都写疼了...
+
+    - link
