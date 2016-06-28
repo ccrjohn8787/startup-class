@@ -1,0 +1,111 @@
+- 给个Tree 不一定是平衡的， 要求 把所有路径排序后  按字符串那样的比较大小方法 找出最小的路径  时间要求线性的。 比如
+          5
+       /     \
+    10      3. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+   /   \   /. From 1point 3acres bbs
+1    7  8. 1point3acres.com/bbs
+路径有  5 10 1 ； 5 10 7 ； 5 3 8-google 1point3acres
+排序后  1 5 10 ； 5 7 10 ； 3 5 8；
+所以按字符串类型排序 为  1 5 10 < 3 5 8 < 5 7 10；
+
+- 就一题类似lc的68（现在才看到竟然是hard。。）。给个text文档，然后限定屏幕宽度，将文档打印到屏幕上，要做到
+
+    - a. 不能切断单词
+    - b. 标点符号要处理好。华人大哥给了, 和. 的例子.鐣欏璁哄潧-涓€浜�-涓夊垎鍦�
+    - c. 会有单词超出长度 自行处理
+  //lz看了一下题目。 说有多种做法。。比如用split 把所有的都给切断成string[] 然后while一下
+  //或者用两个pointer 用substring输出
+  //最后华人大哥要求我用第二种做法
+  //这是lz第一次在白板上写代码。。刷刷刷写完都是bug。。。
+  //华人大哥说你写一写testcase吧。。我刷刷刷列完了 然而并没有检查代码。。。
+  //华人大哥说 testcase你都对了 但是你代码有bug。。。吃枣药丸。。于是我说啊对不起我没有检查。。。看了一遍好多bug。。。华人大哥说你还有bug。。于是lz又检查了一遍发现一个超级大的bug
+  //那个超级大的bug华人大哥还要我用不同颜色的笔修改。。所以lz一度以为一定是挂了。。。 最后他还拍照存正。。.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+    - c.follow up: 之前写代码的时候 lz问了华人大哥关于多种标点符号要怎么处理 比如:''这个情况 :和" 是可以分开的 于是华人大哥就问我该怎么处理。。
+  //我说在判断条件那里加进去。因为写多很丑。。所以可以新建个check函数
+  //感觉华人大哥不是很满意 因为他说有多种语言 grammer规则复杂。。我说check函数挺好的啊 不同语言只要换个check函数内容就可以了 像api一样。。
+d.follow up：如果颜文字怎么办。。。颜。文。字。
+  //lz听到这就疯了。。。。回答了一个on效率的答案。。感觉药丸。。最后华人大哥就放过我了。。
+  //回家后发现用regular expression挺好的。。。但是我当时没想到。。。
+  //华人大哥还安慰我说这是他当年面试的题目。。我表现得比他好。。excuse me？？？？ 大哥你是微软15年了跳槽。。我是实习生。。说好的同胞爱呢。。。
+  
+
+- ninja: paint house大变种. n houses, k colors. neighboring houses cannot be painted with the same color.
+NOTICE: neighboring relationship is given by adjacent list which means a house may have multiple neighbors.
+
+- 找小偷问题，有n个房间，其中一个房间有小偷。早上我们可以打开一个房间的门看小偷在不在里面，晚.1point3acres缃�
+上小偷会向左边或者右边的房间走。现在给你一个开门的sequence，你输出这个sequence能不能保证找到小偷。. Waral 鍗氬鏈夋洿澶氭枃绔�,
+比如：如果只有三个房间那么如果打开房间的sequence是{1，1}那么一定会找到小偷。因为如果小偷在中间那么第一天就会被找到，
+如果小偷在两边那么第二天一定回来到中间也会被找到。房间数为n，sequence长度为k
+跟着我开始brute force假设小偷在某个房间然后dfs所有路径，大概是O（n*n^k）。 考官说好，如果考虑cut branch呢？跟着我就说可以
+拿一个n*k的matrix跟着根据sequence来cut branch，reduce到O（n*n*k）。他说有没有可能同时从所有房间开始呢？我说可以跟着直接
+在那个n*kmatrix上做一个类似dp的东西。跟着reduce 到 O（n*k）。他说有没有可能把space reduce呢？我说可以我只要O（n）的space
+跟着他就让我再写一个叫nextRow的function来实现O（n）space。 我觉得这题我基本是答得非常漂亮的而且思路很清晰，考官也很开心。
+
+- word ladder变型，叫我随便找一个可以的path出来，基本我写的每一步她都要我说这样写的理由，跟着做笔记。我用dfs+hashset写完之后，
+被她发现了一个bug，就是在找到path之后我没有完全return导致答案没有了最后一个word，跟着我马上改了。之后她问我能不能cut branch
+我看不出来。。。。她提示其实放进hashset的可以不再remove，因为如果走过一个word发现这个word不行那么以后就没有必要再走这个word了。
+跟着问我如果word可以从abc变道abcd 就是变一个或者加一个letter我应该怎么改。我就说加点东西就好，跟着就写出来了。跟着这轮就大概没了。
+
+- Find all words [A-Z] in a dictionary (about 1M words) that are made of a subset (in any order) of the chars in the input parameter [A-Z].
+ex: input "ACRAT" (10 to 20 chars, up to 30 worst case)
+matching words: "A", "CAR", "ACA", "ART", "RAC".
+- non-matching words: "BAR", "AAA"
+
+    - 一上来就做题，function会被call multiple times, 问怎么优化。回答用trie，然后没想起来怎么做，在他提示下才想到思路，感觉答得不好。
+    
+    - point coverd by most intervals
+
+    - [ ] Follow up: 2D （covered by the most rectangles）
+
+- 类似手机按键，比如手机按键上2对应‘abc’, 然后根据‘abc’的顺序，打出a要按一下键，b要按两下键，c要按三下键。给你两个数组: keySize[] 每个element代表能存放的最多character，frequency[]每个element代表每个character出现的频率。要算出最少的按键次数。
+
+    - Follow up 1: 怎么能提高效率。
+    - Follup up 2: 如果要求character放在按键上的顺序是order的，类似于手机shang的字母按键，这样最少按键次数是多少。
+    - 可能是我表达不好，第一题不画个图真不大好说。
+    - 例子就是我们的手机，几乎每个键都对应字母： key2 -> 'abc', key3 -> 'def', key4 -> 'ghi'....老式的手机打字的原理是，如果你要打出a，你需要按1下key2....
+
+Production engineer:
+   coding第一题实现shell command: tail -n k。
+   第二题是find battleship， 一个N*N的grid, 里面battleship是一个横着或者竖着的一条线（三个格子）， 要找到battleship的坐标。
+
+- 就 phone number letter combination 原题，但 follow up 就很实务面了
+
+    - [ ] 第一个 follow up：如果今天给你一本字典，裡面有几千万个单字，你可以用任何数据结构储存这个字典，请问你怎麽从你的 letter combination 中找出 meaningfule word? 举个例子，三个数字可能可以组成 “aaa”, “abc”, “dog"，那我们就只留下 “dog” ，因为只有 “dog” 是一个单词，楼主一开始提议用 set 储存，但是他说太 expensive ，后来改成用 trie ，然后找 prefix ，如果确定没有这个 prefix 就可以直接 pruning 了，面试官感觉很满意
+
+    - [ ] 第二个 follow up：如果今天不只要你找出一个单词的组成，连两个单词的组合都要找出来呢？比方说七个字的组成可以有 “element”(一个单词)，但也会有 “eatrice”(eat rice，两个单词) 这样的组成，能不能把这个也找出来呢？但问到这裡的时候时间已经剩很少，没什麽太多时间讨论，我一开始先提出可以用 word break 的想法判断是不是两个字典中的单词，但面试官说其实方法很简单，就是把 trie 的 tail 跟 root 相连，这样找完一个字之后就会接着回头找其他的字，结果也就会包含多个字的组合了，然后我提出了一些这个方法的好跟不好的地方，面试官也觉得不错，皆大欢喜之下结束．
+
+- n th Fibonacci number mod 10: 楼主没见过，不过直觉就说肯定有规律。然后大哥说那你手列一下能不能找到。我就开始写。结果写了20个没什么规律。大哥说*这个没规律*。我说那好吧，那就直接DP O(n). 大哥没让写，说更快的。楼主一下当时绞尽脑汁疯狂想，最后过了5分钟吧，想到那个矩阵运算的，O(logN)。大哥说不用写代码，要更快的。卧槽楼主SB了。实在想不起来了。大哥给提示说a+b有几种可能，我说100 （10*10）种，后来大哥说(a,b)这个pair肯定会重复，所有那个数列是有规律。我特么怒吼10000次啊，你不说没规律嘛！！！！我根本没往有规律上想啊！！！你就和我说有规律我证明就完了呗！！！！不过楼主很淡定，最后气氛也还可以，目测挂在这轮上了。
+
+- Given a binary tree and two nodes, return the path between these two nodes
+
+    - [ ] 比较常规的树的题目，由于时间不太多了，先说了思路，简单写了写主要步骤，不是完整代码，面试官表示OK
+
+- 面试官说是道新题  finding ali baba
+就是ali baba是个怪兽，他可能在[0，1, ..., numCaves-1]出现，他每隔一天就要换. 鐗涗汉浜戦泦,涓€浜╀笁鍒嗗湴
+一个地方，但他每次只能移左右一格。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+然后给你一个strategy[]数组，数组里面是猜测每天ali baba的位置。如果里面有一个
+猜中了，这个strategy就是正确的。
+问题就是让你写一个判断函数 alibaba(int numCaves, int[] strategy)来判别这个
+strategy数组是不是稳赢的策略。写完后问时间复杂度，然后问了下大概怎么样可以优
+化～～～
+
+- 给两个file，分别存有key和value，目标就是把相同的key合并在一起输出，比如file1里面有 ben 2， file2里有 ben SB，那就合并成ben 2 SB, 两个file很大，不许用Map
+
+- Log<fun_name,timestap,isStart>   给一串fun_name调用的log,返回一个Map,key是fun_name, value是fun实际调用时间。
+   如: f1, t1, true;  f2, t2, true; f2, t3, false; f1, t4, false;    返回 f2, t3-t2;  f1, t4-t1-(t3-t2)
+ 
+- 设计json的data structure实现json encoding 要求one line version先不考虑indent，
+follow up考虑indent和括号
+----我觉得是不是可以用hashmap记录每一个pair, 当然value可以是另一个jsonobject-google 1point3acres
+----encode的时候，是不是可以dfs traverse所有层，是不是可以需要一个iterator class？
+
+- print a circle. Followup: how to optimize.
+
+
+- implement write to a socket from a file. void write2socket(Socket sk, String file_name), gieven APIs such like int sk.write(char[] buff, int offset, int size). sk.write cannot gurranteen how many bytes it can write each time and will return a int telling how many bytes have been written. offset is the starting pos of data and size is the num of bytes you want to write.
+
+- 在一堆list中找给定的str是否存在，给定的str中有特殊字符.匹配任何字符。我给出的时建trie tree然后遇到 . 用DFS深搜。完事了问下如果有特殊字符 * 改怎样，说是像compiler一样建立状态机
+
+- Given a m * n grid and the coordination of left bottom cell is (1, 1) and the one of right top cell is (m, n). At each cell say (x, y), you have to choice to move, going up or right. If you go up, the destination is (x, x+ y). Otherwise your destination is (x + y, y). Find the minimum number of steps to reach the cell (m, n) from (1, 1).
+
+- 换了一个convex hull，直接傻了，说好的FB的面试题都很简单呢！！！到最后也没写出完整的代码。这一面活生生的跪的太狠，应该说这么多面试，还没有做过这么难的题。。。。
