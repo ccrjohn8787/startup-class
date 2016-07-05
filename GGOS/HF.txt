@@ -1,0 +1,267 @@
+- Valid TicTacToe
+- - RearrangeOnPattern
+    - 设计一个class来re-arrange array。一开始会给两个array，这两个array存在一个pattern，然后给你一个input array，让你根据pattern给output，例如：A:1,2,3,4 -->B: 4,3,2,1这样的pattern， 如果在给你一组数是5678，那你就返回8765。相当于对应index。
+        - 一开始有点懵，就说，对每个A中的元素，在B中scan来找他对应的index，这样建立一个index mapping，时间复杂度是O(N^2)，想了两分钟，脑袋简直停滞了。。他说我们先写个code，然后就把这个code写了。写完了以后follow up，他说你的code如果有duplicate就不work了呀，我说那我加一个flag array，每次选了一个位置之后把对应位置置为1. 再follow up他举了个例子，其实就是A和B中的元素不完全对应，意思就是check validation，然后我给写了。这时候如果一个client他需要用多个pattern你的code会是怎样的，就是声明一个新obj然后初始化，再调用就行了。这时候开始要优化了，毕竟O(N^2)太慢了，突然才发现自己傻逼，其实就是一个double mapping，先用一个map记录A中每个数字的索引，然后第二个map建立A的索引指向B的索引就行了，对于duplicate element，我们只需要把第二个map的value设成一个list，每次取其中一个就行了，他假设相同元素无所谓先后顺序。顺利写完code，基本上没什么bug，不过刚问两个问题还意犹未尽呢，第四轮又来了。。。
+    - Solution:
+        - Eclipse: RearrangeArray
+        - Establish map on original array: value -> list of positions. Then build a pos array where pos[i] records position after transform. Iterate through pattern array and update pos array and map. For duplicate number, take the number in the list and remove position in list. At the end, the map should be empty
+        
+- SubsetSumBiggerThanTarget
+    - Input是一个 integer数组, 求smallest  subset sum bigger than target，target是全部数字求和的1%。- recursion: sort of like quick select
+
+        - Link: http://www.1point3acres.com/bbs/thread-189215-1-1.html
+        - Sample code in link
+        - 拿到题目之后，我当时首先想到的是难道可以用two sum或者什么的，结果发现不对付。那我首先思路是先排序，然后从大的开始找，当sum大于target的时候，这一定就是最短的subset。我用手写的方式展示了，时间复杂度是o(nlogn)
+        - 面试官提到这个OK，但是可以优化到o(n)，当时确实一时没什么思路，思考了一会之后，还是向面试官求思路。给的思路是，从数组中随机取一个数字，然后将取出比这个数字大的subset，然后对这个subset求和与target比较，如果大的话就迭代操作。如果小的话，从小的数组里再取一部分。
+    - 给你一个数组，从这个数组中挑出最少的数字，它们的和要比整个数组的和的1%要大。要求Linear time解决
+
+        - link of above
+    - 一个无序非负(?)数组，找包含最少个数组元素的subset，使其和大于等于整个数组和的1%.
+    - Solution:
+
+        - Eclipse: SubsetSumBiggerThanTarget
+    - Notice the problem asks for SUBSET, not SUBARRAY, and thus don’t need to be consecutive
+
+- - RectangleSum
+    - 给一堆长方形，求它们的面积和。长方形自定义
+长方形那题，就是让处理overlap的。两两处理，如果有重叠，那么，保持其中一个长方形不变，然后把另一个拆开，使原本重叠的两个长方形变成不重叠的多个长方形。http://codercareer.blogspot.com/2011/12/no-27-area-of-rectangles.html
+    - Solution:
+        - Eclipse: RectangleArea
+       
+- LargerElementOnRight:
+    - 第四轮： input: 数组
+              output是input右边第一个比它大的数字的坐标
+    -               例如     10 8 6 8 11 9
+              index    0  1 2 3 4   5
+              output  4  4 3 4 -1  -1 没有是-1
+     用栈里维护所有递减的数字，每来一个新的数字就与栈顶元素比较，并且赋值
+    - 数据流，找出每个数后面第一个比它大的数，用stack，每次都比较新数跟top，新数大，就找到了，然后pop, 一直比到新数不比top大。然后就是复杂度分析之类的。
+    - Solution:
+
+        - Eclipse: LargerElementRightSide
+    - Asked in baby’s and YuRan’s phone interview
+
+- UTF-8 Validation
+    - search Google for solution
+
+- - Interleaving Iterator
+- 实现iterator，给一个函数a返回boolean, iterator的next函数返回下一个满足函数a的元素
+    - Need a ‘used’ flag. Find next qualified in hasNext()
+
+- - ShortestJumpDistance
+    - 一个二维矩阵，有start，end，wall，ground。可以一次走一步，n次机会跳跃机会可以隔一个跳一个。不都走或者跳到墙。求最短步数。本来想用曼哈顿距离做heuristic function用A*结果好像不可以因为这题用曼哈顿距离不是consistent的。小哥挺好的说不确定可不可以然后是否有一种search肯定对我说bfs他说对写bfs吧。。。
+就是找到start然后bfs，每个位置有八个neighbor，四个走过去的四个跳过去的，然后如果是墙就continue。跳过去的要记录用了一次跳跃。所以在search tree里面每个node存的信息要有步数，还剩下的jump机会，位置
+    - Solution:
+        - Eclipse: ShortestDistanceWithJump
+
+- - Flower:
+    - 面经上的flower题，但没细看，matrix中有flower， statue，还有empty的地方。statue能挡住视野，问站在哪个空的地方，能看到最多的花（只可以看上下左右，四个方向)
+    - 直接说了dp的解法，为了coding方便，我有了两个dp矩阵，
+        - [ ] 后来follow up 是一个dp矩阵怎么做，我说可以dp里面存vector，再问只存一个数怎么做，我表示可以存count，面试官就说可以了。
+        - link
+
+- - SplitArray
+
+    - 给一个整数N，将集合S={1,2,3,...,N}分两个子集S1和S2，问使sum(S1) == sum(S2)的划分方法有多少个。类似subset，leetcode 90。
+dp[i][j] = number of ways of picking from first i to sum j
+dp[i][j] = take i: dp[i-1][j-A[i]] + not take i: dp[i-1][j]
+    - 读一段程序，大概是在一个array中找一个index，使得index左边的summation和右边的summation最接近。如何用O(1) 的复杂度实现。
+        - link
+
+- -PointIntersectMostIntervals
+    - give a list of intervals, find min number of points which will intersect all intervals
+
+- - SubarraySumToTarget
+    - 第二题是positive sequence 找是不是存着连续数列使得相加和等于给定target。开始直接two pointer window得到结果，属于greedy algorithm，写完了，她看感觉不对，太快了。
+    - 于是followup 说如果有negative number呢，我开始说negative也行吧，后来发现不行，然后我就用dp，blabla写完code。终于结束。最后一轮面了一个多小时。不过值了
+        - link
+
+- - TriangleInGraph
+    - 找出一个GRAPH里面全部的三角形
+我的算法： 先做一个访问队列，从一个节点开始BFS遍历，每次把一个节点的所有未访问过的邻居点放入一个LIST,判断这个邻居LIST里面有多少. From 1point 3acres bbs
+    - 点互相连接。这个就是与这个节点有关的三角形，对它们计数并把结果记入累加器。之后把这个LIST加入队列，继续遍历。累加器最后返回三角形总数。
+这个面试官是个三哥，态度很糟糕。似乎看不懂我写的算法，问了很多莫名其妙的问题。估计他给我的REVIEW很差。请各位大神看看，我的算法确实有问题，还是三哥有问题。
+        - link of the above
+
+-- SerializeN-AryTree
+    - 给一个n-ary tree，serialize it，output有点像html的格式。用recursion秒掉后，follow up问recursion的坏处，然后写iteration；follow up 2是特殊字符（我自己提的= =）；follow up 3是这个程序写完后还有什么漏洞可能被hacker攻击。然后是提问时间，我问了两个问题后面试官还站在那里看着我，我只好继续问，大概问了五六个问题才放我走，肯定超时了。。。可以适当多准备几个问题问
+        - 在stack里面除了存parent node，还用一个int来存parent node的第几个child node还没被访问 - mini parser?
+        - link
+    - 多叉树序列化反序列化，写的磕磕绊绊。。这道刷题刷漏了，结果偏偏考到，真是验证墨菲定律
+        - link of above
+
+- - CoinsProblems
+    - 第五轮是找硬币题，不过是打印出最少硬币的序列，不是最小数值。这个题目我也答得不好，面试官希望我one pass，我的最初解是two pass，所以two pass写到一半他就说让写one pass的。写one pass的时候有bug，被指出来后，想到一个方法，面试官说是对的，不过不是面试官希望的。最后也没能写完，感到特别无力。。。
+        - link of above
+    - 拿硬币问题。Follow up:每步拿哪个？
+        - link
+
+- - Tournament problems
+    - Wordings:
+        - 就是有一堆player，每个人beat 其他人的概率已知。然后已知初始的对阵表，问给定一个player，问他最后夺冠的概率是多少。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+        -                ----
+    ---                  ----
+a--b   c---d    e---f  g---h
+输入的format你自己决定。楼主当时真心也不知道啥好做法，很想用tree，但觉得用tree吧，从leaf node开始遍历到root 又很奇怪，而且很难找到一个node 的siblings。所以给了一个暴力解法，最后被证明是exponential memory usage。code也不是很好写，而且有些case也没处理。基本idea就是列出所有的对阵可能性，然后每一个可能性都有一个probability，最后结果相加。有点类似bfs。
+            - link
+        - 亚裔面试官题目是给一个单淘汰赛的初始对阵，一个每个队对每个队的胜率矩阵，写一个函数，能返回一个特定队伍拿冠军的几率。完全不会，面试官提示了我45分钟也没写出什么代码。
+    - Sample solution
+    - See Tournament.py
+
+- - Guess number problems:
+    - Passcode:
+        - 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code.
+            - link of above
+        - 一堆密码箱，每个密码都是四位0-9之间，算一个暴力破解序列，包含所有可能的四位序列，让这个序列尽量短 没有找出最佳解法http://www.1point3acres.com/bbs/thread-133413-1-1.html
+        - http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=133413&pid=1947712&fromuid=206597
+            - link of above
+        - 用尽量短的string生成4位数密码的所有组合
+            - link of above
+
+- - FamilyTree
+    - 给你两个人A和B，自己设计数据结构，判断他们是否有血缘关系。我的答案：一开始看不懂这题，紧张的要死，后来终于想到了，这不是二叉树嘛。设计两个TreeNode(int id, TreeNode left, TreeNode right)，left和right是root节点的parents，判断A和B是否包含有id相同的节点。我给了俩个答案，第一个是递归，第二个用HashSet。都问了时间复杂度和空间复杂度。由于HashSet方法要遍历二叉树，我还介绍了下遍历二叉树的三种方法（Recursive, Iterative, Morris Traversal），面试官好像对Morris遍历比较感兴趣，让我简单讲了下。
+    - 题目是怎么design一个family tree的data base，然后要不停的insert delete find LCA，楼主用了Nary tree做，三姐要optimize，结果楼主歧途到prefix tree上最后发现每个node的prefix不unique（T……T），
+    - http://databaseanswers.org/data_models/genealogy/index.htm
+http://stackoverflow.com/questions/9124175/how-to-store-family-tree-data-in-a-mysql-database
+        - link
+    - 第一轮：让你自己设计数据结构和算法来解决一个具体问题，题目是如何判断两个人有血缘关系。我用图和BFS做的。这一轮前面讨论储存的数据结构和算法时候花了很多时间，导致最后他有follow up来不及问，原本以为这轮会因此挂了，没想到还是过了，说明应该还是蛮看重思考过程的，值得一提的是虽然慢但是我没bug一遍过的。
+        - link
+    - 让你自己设计数据结构和算法来解决一个具体问题，题目是如何判断两个人有血缘关系。我用图和BFS做的。这一轮前面讨论储存的数据结构和算法时候花了很多时间，导致最后他有follow up来不及问，原本以为这轮会因此挂了，没想到还是过了，说明应该还是蛮看重思考过程的，值得一提的是虽然慢但是我没bug一遍过的。
+    - 找两个node最近的common children，
+        - Idea: BFS with one node mark distance and do another BFS and find min distance sum
+        - bidirectional BFS - Iterative DFS
+        - link of above
+    - Binary tree 两个node之间的距离。我就是用common ancestor的方法做的。问了复杂度。如果不用递归该怎么做？
+        - http://www.geeksforgeeks.org/find-distance-two-given-nodes/
+        - link of above
+    - 假设把人类的族谱形成一张图，每个人都是一个node，每个人会有父亲和母亲（也是node)，写一个method isBloodRelated(Node n1, Node n2)，实现假设n1和n2有共同的祖先，那么就意味着n1和n2是related的。限制是可能有很多代人，然后可以在node加额外的信息。
+    - Bulls and cows:
+        - 小哥说猜单词，两个人玩游戏，一个人心里想一个词，另一个人要猜，每一次猜一个词会去判断里面有几个字母是符合的，符合的话就有一分，每次会告诉你猜的这个单词得多少分，但是不告诉你哪些字母是对的，也不告诉你顺序，最后要求实现一个function猜出原本的那个词。这一轮我是没写完的，也不太知道要怎么做，最后写了一些伪码，估计这一轮是跪了。。。
+            - link of above
+
+- Probability Questions
+    - GenerateWeightedRandom
+        - given keywords and frequency, generate random number based on weight distribution
+            - Review: Google prep, random weight
+            - link of above
+        - 写有weight的随机数生成器，请参见以前的面经。写完之后问了如何测试。
+        -  given a probability = [.5 .1 .2 .2], label = [A B C D], write a data structure that generates the label based on the prob. 我说先找cumulative probability［.5, .6, .8 1]， 然后弄个0～1之间的random数字比较过去找它的位置就好。他就说有没有更快的方法。 其实他想叫我用binary search，但是我一直以为是不是有什么O（1）的解法，浪费了一些时间后才发现原来他想要binary search， 最后弄出来了。
+    - GenerateWordOnProbability
+        - given a dict of words [aba, cbc], find the letter to letter probability. b->a 50%, b->c 50%. 这个做的还可以，有一个小bug
+        - letter of probability的题目是这样， 做一个27x27的matrix， 26 个代表字母，最后一个代表开始或者结束，然后你每个字母走过去找它出现的次数，最后除一下row sum求概率就好
+            - link
+        - give a dictionary with many words,
+ape
+apple. From 1point 3acres bbs
+        - ...
+randomly generate a word from the dictionary.
+calculate the probability from one letter to another and one letter to the end.
+and the start probability of each letter
+            - link
+    - 一个list, 含有k个数，然后给N， 让等概率的从1-N里选出不在list里的数。 这题一下子问懵了，纠结半天怎么算那个等概率。.鏈枃鍘熷垱鑷
+        - 随机从N里选一个数直到不在那个list里
+    - Have a rand(N) to return an integer from 0 to N-1 with 1/N probability evenly, design a rand to return a number from 0 to N-1 but not any from a given sorted list such as {2, 4, 9}. require uniform distribution
+        - Similar to previous problem
+        - Link
+    - 给一个infinite array 只有0 - 9 设计一个
+def getprobability(n):得到某个数出现的概率。
+我用的reservoie sampling 做的，然后我补充如果直接hashing 会overflow. 然后考虑到一multi thread情况，需要写两个函数，一个专门产生 sampling list
+一个专门计算概率。 这里要有做个checker看看产生的list是不是有效，也就是 0-9数的概率和要为1
+        - follow up:
+现在你得到概率，你怎么按照概率产生刚刚的数。
+两个方法，第一个直接用刚刚的array random index取数，但是问题是如果是multithread 调用这样做有问题。 第二个方法：定时产生所有数的accumulate probablilty 根据这个probabolity array generate number即可。
+答完烙印还挺满意，拍了照片。
+        - Solution:
+            - Probably don’t need reservoir sampling for original question. Just maintain the count. But sampling is better
+            - Follow up is GenerateWeightedRandom
+    - 这道题说起来比较复杂。假设你有一张表，这个表是每个字母在其他字母后面出现的概率。然后这个概率是根据一些东西算出来的，比如说一本字典。. 鐣欏鐢宠璁哄潧-涓€浜╀笁鍒嗗湴
+    - 举个例子吧
+假设字典是 ["cat", "cap"]
+那表格就会是
+        a     c       p     t
+a     0     0.5    0    0
+c     0      0      0    0
+p    0.25  0      0    0
+t    0.25   0     0     0
+ok，不知道格式会不会坏><，总之就是你有这样一个表格，然后他们的概率加起来是1嘛，但你不用担心这个表格是怎么来的。. 
+    - 然后如果你有这本字典，让你返回长度是4的最可能出现的单词（保证只有一个）
+        - [ ] follow up是如果没有这本字典，你如何算长度是4的最可能出现的单词（保证只有一个）https://en.wikipedia.org/wiki/Viterbi_algorithm
+        - [ ] 再follow up是，假设你现在根据比如说google search query有一个，2014年最经常搜索的单词list，然后根据这个list算出一个概率表格以及最可能出现的单词，然后现在你知道2015年添加了一些单词，如何更efficient的算出新的概率表格以及最可能出现的单词。- convert percentage back to absolute value and calculate?
+        - link
+    - music list, if shuffle is possible or not, test cases
+你有一个music的播放列表，里面的歌曲unique，但是播放列表的长度未知。. 1point3acres.com/bbs
+    - 这个音乐播放器APP有两个模式：random模式和shuffle模式。
+random模式就是每次随机播放列表里的一首歌；
+shuffle模式就是shuffle列表里的歌，然后顺序播放，放完以后重新shuffle，再顺序播放；. From 1point 3acres bbs
+    - 现在给你一个播放历史记录，要求你写一个函数来判断用户使用的是random模式，还是shuffle模式。
+        - link
+
+- - BinarySearch Problems
+    - OneExtraCharacter
+        - A="abcde" B="abcxde" 除了x其他字符都一样 找出那个x - tricky binary search?
+            - TODO
+            - BinarySearch: if (A[mid] == B[mid]) {start = mid;} else{end=mid;}
+                - Need to handle duplicate digit case
+        - one string has only one extra character than the other string, find it out.
+            - [ ] follow up: better performance (binary, what if s[i-1] == s[i])
+            - Link
+    - 来了一道看起来很简单的数组查询题，就是一个sorted array,若干位置是空的，给一个target求第一个比target小的position. LZ直接开写 binary search, 结果发现坑挺多，遇到空位置移动指针的时候怎么都有bug, 最终还是没能写出能work的代码，这题看着简单写起来不容易，也许上来应该先写个O(N)的理一下思路。这一轮一定被给了低分。
+        - 第三题 array是空 需要跳过去， 如果mid 的value的空， 那么该往左移动index， 直到找到第一个不是空的， 与target比较大小， 如果小于target， left = mid+1, 大于target， right = index-1, 当然也有特殊情况， 如果index == left 了 并且是空，应该直接设为left ＝ mid ＋ 1， 但是 这样的running time 在最差情况下 是O(n)吧
+        - TODO
+    - 给2个STR A, B。 B比A多2个CHAR，可能是相同的CHAR， 如何找出？O(1) SPACE, <= O(N) TIME。
+    - 给一个sorted array，包含数字1-N，每个数字出现3次。现在删掉里面的一个数，让你return 删掉的那个数是什么，要求log N time.
+       比如：1 1 1 2 2 2 3 3 4 4 4 那么return 3
+
+- Geometry problems
+    - Convex Hull:
+        - convex hull algorithm，只需要讲想法不用写代码
+            - Link: http://www.1point3acres.com/bbs/thread-159899-1-1.html
+        - 给一堆点，问怎么画凸包，说思路就好。这个面经上没见过，lz当时是完全不知道凸包的概念。
+            - link
+        - Solution: just read wiki convex hull algorithm
+    - 临时换了一个亚洲大哥。哥们出了一个画图题，给一个class {draw(boolean), move(x,y) // absolute coordinate}. draw 为true的时候是画线，draw为false的时候是抬起笔，move就是把笔移到某个位置。然后让画一个m*n 的矩形，每个格子长度为L。要求中心对称。（有俩bug，一是算float的时候两个整数相除， 2是for loop 时<= 写成<）
+    -     follow up： 如何一次性画完这个矩形，运行overlap某些edge。
+    follow up： 如何一次性画矩形，不允许overlap。
+    follow up： miniMize overlap 的edge，如果证明为啥你的方法是minimize的。（只能达brute force所有的可能性，然后算出最小的一个。 然后问brute force有何优化（答：memorization， 貌似不对。））
+    - 四个点判断是否正方形（思路不用code）。
+    - 然后第二题是给一些类和function：
+  class Point{int x, y;}
+  class Rect{Point p1, Point p2}
+  class Shape{
+       int inside(Rect r){}; //shape是不规则的图形，给了一个function判断这个shape和rect的重叠关系，
+                                   //如果rect完全在shape里 return 1. 如果rect和shape有overlap， return 0， 如果rect 完全在shape外面，return－1
+  }
+  draw(Rect r){};
+  以上是已经有的function，
+  给一个长方形的screen，再给一些shapes，要求写一个function在screen上画出这些shape。写完后又问了一题，如果有A和B两个shape，A和B有overlap，用给的inside function写一个新的inside function，判断一个rect和这个overlap area的关系，同样返回－1， 0， 1
+      - 然后问这个关系是什么，LZ一开始没看出来，其实就是min(A.inside(rect), B.inside(rect));
+  然后问如果把min换成max的话这个算的area是什么样的。应该是A和B的union.
+
+- - LightOverlap:
+
+    - 给一串灯，要求返回所有光照重合区域的两个灯的组合。
+    List<Pair> getOverlap(List<Light> lights) {
+    }
+    class Light {
+            int x; // x 坐标å
+            int y; // y 坐标
+            int r; // 发光半径
+    }
+    .
+    class Pair {
+            Light l1;
+            Light l2;
+    }
+        - [ ] 后面有follow up问如果r都一样的话有什么优化，那么可以大概nlogn。
+        - 方法是把所有lights先排序一遍（比如先根据x再根据y），然后过一遍排好序的lights，用个queue存所有还有可能组成pair的灯，然后如果当前灯的x＋queue首灯的x > 2 * r 的话就可以把queue首的灯扔出queue。
+但其实这个算法跟r有关系，如果r特别大的话也没用。。。事实上是nlogn和nr之间比较大的那个吧
+        - link of above
+      
+- HTMLTree
+    - html 建树对比
+        - link
+
+- [ ] DataDog
+    - 就是一个interface，里面有increment, lastMinute,lastHour,lastDay这几个method。目标是call last那几个函数的时候回返回前一分钟，一小时，一天内的request的数量。具体的做法就是楼上大牛说的circular buffer，开一个86400的buffer然后转着圈儿update就好了
+    - 设计一个CPU和内存占用是Deterministic Behavior的Event Class，支持:IncrementCount(), GetEventCountLastMin(), GetEventCountLastHour(), GetEventCountLastDay(), 每秒可以有多达million个call，也可能什么都没有。这一轮最差了，最终也没有找到合适的data structure。后来还问了很多multi-thread的问题：如果多个线程同时cal怎么办。说用mutex， lock， notify等。让在函数中实现这些。
+        - link of above
