@@ -1,0 +1,113 @@
+- 海岛问题1，follow up是找湖的数量
+    - https://segmentfault.com/a/1190000003753307
+    - link
+    - Lake is ocean that is surrounded by same island
+    - Can do dfs on land and give id to each island. Then do dfs on each ocean and fail if reach boundary or touched different island
+    - Solution:
+        - Eclipse: FindLake
+        - TODO
+
+- 一个数组里找某个index, 使sum[:i] == sum[i+1:], 也是经典题。我一开始用了O(n) space, follow up就是优化成了O(1).
+这里代码写的有点慢，但都在没给提示的前提下bug free了。
+    - [ ] 上道题的变种，此时要求数组和带有权重，每个nums[i]需要乘以一个weight, 这个weight等于和某个index的距离。
+    - eg:.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+    - nums = [1, 3, 5, 7, 8]
+假如当前处理到nums[2], 则leftsum = 1 * 2 + 3 * 1 = 5, rightsum = 7 * 1 + 8 * 2 = 23
+这道题其实也不难，我找到思路后跟面试官说了，他表示赞同还举了举大拇指（人真是太好了），但时间不够我写代码了，只写了几行。. 
+- Solution:
+        - TODO
+
+- 给一堆有序的单词和一个prefix, 叫你从单词里找出range是以这个prefix开头的, 我第一感觉是binary search。回头想了一下这题要是多次查询的话应该是用Trie, 但我写完代码之后已经时间不多，他也没问到。
+两道题他都叫我写了好几个testcase验证，都没发现问题，但感觉他有拖时间的嫌疑.
+    - Solution:
+        - TODO
+
+- 第一题，给定一个string，比如abc，设计add/replace/delete，三个function都会传入一个index，并且同一个index不会被用两次。index还有个特殊的地方，就是它只会是原始数据的index，比如abc，那就只有012。 如果调用 "add(1, a), add(2,c)"会变成aabcc，也就是操作会发生在原始的index上。给的解决方案就是用一个map存<index, iterator>然后对iterator进行操作，写了一些伪代码，他说ok这是warm up。
+    - Solution:
+        - TODO
+        - Use map index->List should be enough, not sure why need iterator
+
+- interweaved iterator
+然后问如何优化，一共写了两个版本. From 1point 3acres bbs
+- 一个stack和queue的合体，有时候从前面pop，有时候从后面pop，问如何复原原来的序列（原来是排好序的）这个好像之前面经里就有，可惜当时没细想，还是面试当场想的。。
+- 这个题的下一问，如果pop出来的数字有时候放最前面，有时候放最后面，如何复原
+后面俩题都是只讲了思路，没时间写代码了
+    - Solution:
+        - Eclipse: InterweavedIterator
+        - TODO
+
+- 单词的缩写 apple --> a3e 这一轮应该是lc原题吧
+第二问 每个单词可以有多少种缩写，返回所有缩写
+- （这里楼猪sb的写了一个bug，小哥让run一个sample，run时发现有个bug简直想要抽自己。。）
+第三问 给一堆单词 如何使得缩写不重复  - use results from q2, use hashset to remember used abbr
+- 第三问没来的及写代码了，只讲了思路。。。只能怪那个bug了。。
+    - Solution:
+        - TODO
+
+- 给一组有向图的边的array，找A->B同时B->A，这样两个点之间直接有两条边相连，符合这样条件的边的条数。比如A->B,B->A,A->C那么边的条数就是2
+LZ说用hashset解决，把to Node value + "#" + from Node value, 存进set里面，下次如果from node value + "#" + to node value已经在set中存在了，说明找到了一对，则边数+2
+follow up是如果图很大，边很多，可以用多台machine，该怎么办。LZ说把边array分成几段，每段交给一个machine处理，得到的hashset和num数再merge。姐姐又问怎么才能更好的切分这个数组，如果直接分的话，每个machine返回的hashset会很大，并起来的时候还是很大。姐姐提示了好多LZ还是没想出来，最后姐姐说可以对每组边算个hashcode,然后像bucket sort那样分给一个相应的machine处理 - this ensures that the same edge is being calculated on the same machine
+
+- 题目是给一个string,找出符合条件的substring pair个数，条件是两个substring只有一个字母不同
+LZ用dp做的，A[i] 表示用index为0到i的字符能找到的pair个数，A[i] = A[i-1] + 第二个字符串以i结尾以j开头，第一个字符串以k结尾（0 < j < i,  i-j <=k < i）可能的匹配个数
+算法时间复杂度是O(N^4)，复杂度还是很高，哥哥想follow up的，结果没有时间了，sigh
+国人哥哥人很好，一直在帮LZ整理思路，一直在给hint,走的时候还用中文跟我说“加油“和”好运啦“，可惜LZ反应太慢，才做了一题还没有时间follow up
+一个O(n^3)的解法是这样：
+1. 找到s[i] != s[j]的pair (i < j)
+2. 我们将s[i]和s[j]视作A和B中那个不同字母，从i和j分别向左右扩展，例如s[i-1]==s[j-1]就可以向左扩展
+3. 最后我们可以找到以i,j为不同的长pair，[i-x, i+y] 和[j-x, j+y]，将总数增加ans += (y + 1) * (x + 1);
+4. return ans
+这个方法可以进一步优化为O(n^2)
+
+- 题目就是给你一个matrix，里面的数字代表bar的高度，现在说降雨量如果高于bar的高度水可以漫过去，降雨量0开始每天+1这样，问最早第几天水可以有一条路径从src漫到dst。这轮也是讨论optimization很久，最后用bfs写一个subproblem。
+
+- input: int n
+function: 将n用2的指数表示，使得指数表达式的个数最少. 1point 3acres 璁哄潧
+output : int num（指数的最少个数）
+e.g: input = 28. Waral 鍗氬鏈夋洿澶氭枃绔�,
+28 = 2^4 + 2^3 + 2^2  => num = 3
+28 = 2^5 - 2^2             => num = 2
+所以 output = 2
+Recursion base on last bit:
+if (num&1 == 1) return 1+Math.min(getNum(num+1), getNum(num-1))
+else return getNum(num>>1)
+
+- 问一二叉棵树通过swap操作能不能变为二分查找树，这个代码比较长，也是递归解。
+swap操作是交换左右子树的，然后子树也可以进行swap。这跟leetcode有道题，verify BST有点像，可是每步verify的时候，你还要考虑swap的可能性。
+
+- string 缩写， abcd -> 4, a3, a2d .... 让返回所以可能。 用recurive秒了……
+   follow up, 给一个string[]，给每个string一个不同的缩写，求缩写的character长度之和最小是多少。  没想到好解法，用了brute force的方法。写完还有15分钟本来以为会跟面试官讨论改进，没想到面试官说我已经没有问题了……囧
+
+-- Graph题，给的是一个有方向的Graph，每个node都有颜色，有黑绿红三种颜色，制定的patten是以任意颜色的node开始，接着是大于等于一个绿色的node，以红色的node结尾，找出所有符合这种pattern的path的head node。
+
+    - 第一题有环的情况吗？如果没有的话直接把有向图反一下，然后从红色点开始dfs就行了（用一个数组标记状态：没有遍历过，遍历过但不是答案节点，是答案节点），dfs函数参数里记录是不是已经访问过绿色的节点
+
+- there are m piles of coins, each pile is consisted of coins with different values. you are allowed to take n coins home. However, you can only take coins from the top of each pile. What's the maximum value you can obtain.
+dp[i][j] = max value taking j coins from first i piles.
+dp[i][j] = max ( dp[i-1][j-k] + sum(values[i][k] to values[i][0]) ) for all k from 0 to #coins in pile i
+
+- - 给一个正整数n，求能被n整除的且只由数字1组成的正整数的最小值，如果找不到返回0，否则返回这个数的长度 -
+- Reference: http://stackoverflow.com/questions/16458026/how-to-find-the-smallest-number-with-just-0-and-1-which-is-divided-by-a-given-nu
+
+- 首先，一个二叉树，每条edge有weight（想象成graph），matching代表了一组两两没有公共节点的edges。现在让找一个matching，满足两个条件，一是cover所有节点，二是edge之和最小。没做出来，提示下讨论了一种recursion的做法（因为是二叉树，所以可以左右找，总共要返回四种情况，实在水平有限，只能讲到这了）。。
+  - 1. All trees are bi-partite graph (bi-partitie graph: no edges inside a vertices set) : can seperate all odd levels to one set and even levels to another
+  - 2. https://en.wikipedia.org/wiki/Matching_(graph_theory)#Matching_in_bipartite_graphs
+        https://en.wikipedia.org/wiki/Hungarian_algorithm
+
+- 计算二叉树两个节点的最短距离。先找LCA，再分别求高度。
+
+- 自定义一个无向的图,然后，求这个图里有多少个三角形。三角形的定义是，三角形abc中,(a,b), (b,c),(c,a)都相连。 半小时后拿到onsite...
+  - build adjacency matrix. 3 for-loops for 3 vertices, check if there is an edge between each of them
+  
+- 给一个list 的时间start, end, profits, 让求出来不冲突的最大profit，follow up, 求出最大的组合list。中间聊聊设计什么的。
+ - Same as maximum weighted meeting room in Snapchat: sort by end time and dp
+
+- 就是给一个无重复的排序数组，给一个rand（），这个function返回随机数在[0, 1)之间，然后让你写一个getRandom，返回一个在数组上下界range里，但是又不在数组里的数，每个这样的数必须被返回的几率相同。
+
+- 给你一个string是由一个bit表示的char组成的，每8位或者4位表示一个char。如果一个char第一位是1，则这个char是8位的，如果是0则是四位的。但8位char的第5位也有可能是0或者1。问如果给定你第n个char的开头在第k位，第n-1个char的开头在哪里。最简单的方法是从头到尾扫一遍记录下每一个char开头的位置直到第k-1个，但要求是不能从头扫，只能从后面一点一点往前推。这题目我跟他一点一点往前推理了4位，还是看不到能确定的情况，总是要看之前一位是什么才行。最后没办法，他问我有没有什么确定的方法能从后面推出前面，我说我不知道。他只好让我实现了一下最简单的方法。谁要是知道方法一定要分享一下，不然我死不瞑目。
+我们无非就是想确定k-4, k-8位置 是不是前一个char。 如果k-4 位置 是 1， ok， 那么就确定了， 前一个char 在k－8 。 如果k－4 的bit是 0， 那么暂时无法确定。  那么就去k-8 check, 如果是0， 前一个char的起始位置必然在－4. 如果是1， 那么我们就得继续往回探索。
+所以就是 0***1***1***0*** 这样的pattern， 我们的目的无非就是找到1之前的0出现的位置， 这样就能确定前一个char的位置了
+
+- - 给你一个unsorted array，里面的元素都是从1到n的数且没有重复，也就是说长度是n。这时将里面其中一个数换成其中的另外一个数，比如：原数组是[2,3,4,1,5]，这时把3换成2，变成[2,2,4,1,5]。问在告诉你n和改过的array之后你怎样才能知道这时里面哪个数是重复的。我感觉这有什么可做的，就是用hashmap count每个出现的次数看哪个出现了2次。他说可以但还有什么方法，因为已经知道了n，我想了各种方法可他还是不满意。最后就只好算了，不知道他到底希望是用什么特殊的方法
+    - 这题需要in-place操作，就是不停的num[i]换到num[num[i]-1]，保证换完之后的数组是[1, 2, 3, ...n]这样。换的途中发现loop了或者超过一定次数了还没换完，loop开始的那个数就是duplicate
+
