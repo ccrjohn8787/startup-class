@@ -1,0 +1,47 @@
+- 给一个dictionary, 再给一个set of coding string （g5, goo3,goog2, go2le.........). return all string from dictionary that can be matched with the coding string. 要求尽量减少dictionary look up 次数。给了个方法，但一直不满意复杂度
+    - [ ] 如何用Trie,   把问题(a)解决,要求写code 建一个Trie包括所有字典词和coding string.不是很明白。。。凭感觉写了个。
+    - Idea: Put all dictionary words in Trie and do trie wildcard match
+    - TODO: implement trie solution
+
+- 第三轮：给一个二维的棋盘，棋盘上每一格上可能有镜子，方向可能是/或\，从棋盘外射进来一束光线，问射出的方向和射出的格子。
+    - [ ] Follow up: 问随机生成棋盘的方法 大概是根据镜子的数量来选择不同的随机生成方式
+    - TODO
+
+- - 实现多项式乘法，自定义data class。第二题升级了一点。主要用dictionary
+    - http://www.geeksforgeeks.org/multiply-two-polynomials-2/
+    - TODO
+
+- - 设计一个fraction number 的class，要求实现equals和String toDecimal()。
+toDecimal是leetcode原题，equals的话注意先得到gcd，然后除了之后再比较。还有分子分母是否为0，符号不一样等等都需要考虑。细节挺多的。
+    - TODO
+    - HighFreq
+
+- - 第四轮：白人大叔。这一轮比之前都难，虽然是面经题，不过之前的面经很简略，没有实现。
+给一个二维boolean array， true代表greyed， 要找出所有可能的正方形。比如：
+- 0 1 0
+0 0 0
+1 0 0
+一共有8个正方形（边长为1的7个，为2的1个，为3的0个）。注意matrix的边长可能不等。
+这道题一开始出来有点蒙，心想完蛋了。面试官也面无表情，坐在那一句话不说， 没有任何提示。好在最后经过思索还是搞出来了。用DP对matrix先预处理，方法有点类似之前地里面经出现的计算matrix中rectangle面积的题，dp[j]代表从(0, 0) 到 （i, j) 里面所有可用的grid的数量。具体方法大家可以自己思索一下。
+- dp[i][j] = maximal edge length as in Maximal Square. Result is all sum of dp[i][j]
+    - Hard
+    - TODO
+    - Important
+
+- - Given a preOrder and postOrder of a binary tree, reconstruct a VALID binary tree ( doesn't have to be the same with the original tree)
+    - TODO
+    - Important
+
+- - if "i18n" represents "internationalization", "a12y" represents "accessiblity" or "automatibility",
+write a function : boolean isUnique(String word, Set<String> dictionary),  return if the word's abbreviation is unique in the dictionary, the dictionary is for example an English dictionary
+that is : if the input is internationalization return true because there is only one word can be abbreviated as i18n and it is internationalization, but accessibility will return false because more than one word could be abbreviated as a12y.
+    - [ ] Follow Up:
+    - if two words share the same abbreviation , then differentiate the abbr by adding new chars to the existing abbr, that is accessibility to ac11y, automatibility to au11y, write a function to find the shortest unique abbr for a word in the dictionary.
+    - TODO
+    - Important
+
+- - 第三轮：这一轮应该算是最简单的，说给一个stream，这个stream有一个value和一个时间，然后给一个time window，在这个time window里，如果有重复的value就不print，如果不重复出现的就要print，对于已经出现过的value，如果超过了这个time window也要输出。这个我是用了一个hashmap去记了每个value的最后一次出现的时间，然后对于每个新来的stream，去判断有没有在map里和有没有超时来输出，这个是最初的解法。
+    - [ ] follow up是如果一个单词出现过之后就再也没有出现了会怎么样，然后我说浪费内存一直存在map里，然后他就说你要怎么办，然后就是用了一个heap，去从map不断删除超过一定阈值没有出现的单词。这一轮是唯一一轮比较顺畅的 -
+    - TODO
+    - Important
+    - hashmap + doubly linked list?
