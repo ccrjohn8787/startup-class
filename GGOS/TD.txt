@@ -1,0 +1,85 @@
+- Zigzag iterator: Previous
+    - Wording:
+        - 开始的题目是LeetCode的Zigzag Iterator
+比如我们有一个 Iterator<Iterator<Integer>>, 这个里边是iterator
+i1 1, 2, 3. Waral 鍗氬鏈夋洿澶氭枃绔�,
+        - i2 4
+i3 5, 6
+然后结果返回 1,4,5,2,6,3
+Follow up是，如果这些iterator都有hasPrevious(), previous()方法，意思就是后退一步，你的class也应该有这两个方法，来后退一步
+比如我们现在结果返回了 1,4
+这时候原来的iterator变成
+i1 2, 3
+i2
+i3 5, 6
+如果调用previous()，变成. more info on 1point3acres.com
+        - i1 2, 3
+i2 4
+i3 5, 6
+有一个情况是如果现在结果返回了 1,4,5,2
+这时候原来的iterator变成
+i1 2, 3
+i2
+i3 5, 6
+那么调用previous的时候怎么知道调用 i1.previous() 还是 i2.previous()
+最后姐姐跟我大概讨论了下concurrent怎么办
+
+        - 用个lock，或者用sigleton pattern，对这个synconize 这个 instance
+最后要走的时候，我问了下姐姐对previous的最优解是什么，当时可能面完太放松了。。。小姐姐说的没记住，可能的意思是对于每个iterator，我们keep track什么时候调用了这个的next，然后后撤一步。   好像不太对。。。sorry我忘了原话是什么。。。
+
+            - link
+            - TODO: Handle the follow up of ‘previous'
+- Split array with weights
+    - maintain left sum and right sum. Left sum = 0, right sum = weighted on 0 index. 
+    Move pointer and update left and right sum
+  - 一个数组里找某个index, 使sum[:i] == sum[i+1:], 也是经典题。我一开始用了O(n) space, follow up就是优化成了O(1).
+这里代码写的有点慢，但都在没给提示的前提下bug free了。
+
+    - [ ] 上道题的变种，此时要求数组和带有权重，每个nums[i]需要乘以一个weight, 这个weight等于和某个index的距离。
+    - eg:.鏈枃鍘熷垱鑷�1point3acres璁哄潧
+    - nums = [1, 3, 5, 7, 8]
+假如当前处理到nums[2], 则leftsum = 1 * 2 + 3 * 1 = 5, rightsum = 7 * 1 + 8 * 2 = 23
+这道题其实也不难，我找到思路后跟面试官说了，他表示赞同还举了举大拇指（人真是太好了），但时间不够我写代码了，只写了几行
+
+- Guess number
+  (See GuessNumber.java)
+  - Passcode:
+    - 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code.
+    - 我一开始就是想到tries 假g5a(assuming input is only alphabet), 会转成g#####a. # 可以match any character. 用所有的strings 建tries 然后dictionary 扫一遍不知道有没有理解错
+    - 感觉第二题应该是建一个带数字的trie，这样比按所有情况建trie要更有效率
+    - 可以在a-z后加入数字节点，表示要匹配多少个字母。然后到时候直接从target string里减掉这么多字母
+
+        - link of above
+    - TODO
+- [ ] Shortest Passcode:
+    - 一堆密码箱，每个密码都是四位0-9之间，算一个暴力破解序列，包含所有可能的四位序列，让这个序列尽量短 没有找出最佳解法http://www.1point3acres.com/bbs/thread-133413-1-1.html
+    - http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=133413&pid=1947712&fromuid=206597
+        - link of above
+    - 用尽量短的string生成4位数密码的所有组合
+        - link of above
+    - Sample solution:
+        - Link1 Link2
+    - Github: Passcode.java
+    - 那个密码的题自己用了hashset把所有访问过的数字全部存下来，贴一下自己的代码 最后string的长度是10003， 说明没有重复
+    - 因为遍历下一个数字是从0开始。一个state有10条出路，在邻居到达之前不能把所有出路都走完。所以从9999开始是贪心，从0开始就是bt。如果你从0开始就把那个循环从9到0即可。
+    - 除了从9到0，还要在序列前端加上000，不然一开始不是0000，是0了
+-0-
+    - TODO
+- Quad tree count ratio (HighFreq)
+   - See QuadTree.java
+   - 比较两个quad tree。然后return 一个新的，这题虽然简单，但是很容易出bug。最后面试官引到了一下帮助发现bug。
+- quadtree。大概就是说一个黑白image，用的是quadtree表示的。黑的就是0，白的就是1。问求这个quadtree表示的image里黑像素的比例。
+然后follow up就是求combine两个quad tree后产生一个新的image的quadtree，rule是就是只有两个images都是黑merge后才是黑，其他都是白
+    - Sample solution: http://www.1point3acres.com/bbs/thread-156466-1-1.html
+- 黑白2D array表示的image。边长是2^n。设计一个class来存它，用尽量少的space。提示是可以不断把图形分割成四块，分完继续分。如果其中一块里面所有格都是黑，那一块就是黑。
+   然后连个相同大小的的image相交生产第三个image，遵循黑黑得黑，其他都白的规则。
+   
+- Generalized abbreviation (P1, 52)
+  - unique abbreviation. shortest
+- Valid tictactoe
+   - Reference: http://www.geeksforgeeks.org/validity-of-a-given-tic-tac-toe-board-configuration/
+- datadog
+  - 就是一个interface，里面有increment, lastMinute,lastHour,lastDay这几个method。目标是call last那几个函数的时候回返回前一分钟，一小时，一天内的request的数量。具体的做法就是楼上大牛说的circular buffer，开一个86400的buffer然后转着圈儿update就好了
+- 设计一个CPU和内存占用是Deterministic Behavior的Event Class，支持:IncrementCount(), GetEventCountLastMin(), GetEventCountLastHour(), GetEventCountLastDay(), 每秒可以有多达million个call，也可能什么都没有。这一轮最差了，最终也没有找到合适的data structure。后来还问了很多multi-thread的问题：如果多个线程同时cal怎么办。说用mutex， lock， notify等。让在函数中实现这些。
+    - link of above
+- P1 problems
