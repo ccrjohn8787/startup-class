@@ -45,3 +45,39 @@ that is : if the input is internationalization return true because there is only
     - TODO
     - Important
     - hashmap + doubly linked list?
+
+P4: 
+- - 给了N个城市，和N-1条road，且这些road可保证城市间均两两互通。 比如 SF--SD--LA ， 每个road都有长度，求所有两两之间的path的和，然后除以所有的path数得到平均值。。。（也就是: SF到SD + SF到LA+ SD到LA 再除以3）。  当时有点晕。。写了个brute force = =
+- 某一条路径被走的次数其实就是断开这条路径左边城市数*右边城市数吧
+这样每删除一条路径，就能在O（1）时间内知道其总共被走了多少次。最后取sum(路径走过的次数 x 路径长度）/ 路径总数即得答案。时间复杂度为O(N)
+    - TODO
+    - Hard
+    - Important
+- - 题目：Given an array of Ad (profit, start_time, end_time) and a timespan [0, T], find the max profit of Ads that fit the timespan.
+小哥进来就说了句中文：怎么样啊？顿觉好温暖，中文寒暄了几句就用英文开始了。先说了穷举法O(2^n), 然后说了贪心法（不是最优解），最后用DP解决。小哥态度灰常好，给了很有用的提示, 就像自家人啊。
+    - TODO
+    - Important
+    - DP
+
+- 给一个number, 还有一个数组包含这个number所有prime factors, 问这个number的dividers的个数
+先求出对于n的每个质数最高能有几次幂，然后把求出来的数做combination。比如24 ＝ 2 ^ 3 * 3 ^ 1, 那最后24有 (3+1) * (1+1) - 2 个divider, 2,3,4,6,8,12 (不包括1和n本身)
+
+- - 写一个class simulate一个病人吃药。一个bottle里有half pills 或者 whole pills, 随机拿一个，如果拿出来的是half pill就吃掉，如果是whole pill 就弄成两个half pill吃一个放回去一个。初始给的pills不一定全是whole的。一开始用了array list，跟面试官的思路有点不同，交流了一下改用两个integer又写了一遍。第二题是假设一开始给的pills是start state，然后给一个end state. 求一个病人随机吃药，从start state吃到end state的概率。比如一开始2 whole, 1 half, 求吃成 1 whole, 1 half的概率。LZ一开始说build一个search tree这样直观点，他表示不需要把tree专门建起来，LZ就直接一边搜一边算没有用extra memory。
+    - 从初始状态作为一个root，按一个search tree做dfs/bfs计算，每次有两个child, 把达到parent时候的概率带到child里去计算，遇到目标状态就停止，还要判断终止状态，就是到了一个不可能达到目标状态的情况。最后把所有到达目标状态时候的概率加起来。
+    - TODO
+    - Hard
+    - Important
+
+- - 给一个directed graph 的start node，这个graph里可能有cycle，如果remove一些edge可以使这个graph不含有cycle，并且从start node依然能访问到所有这个graph里的nodes，这些edge就是back edge。要求打印出所有的back edge。写完拍了照又
+    - [ ] follow up了一下，问存不存在这种graph，你可以remove 不同的 backedges 使得这个graph valid。LZ一开始觉得是不存在的，但是想不出来证明的方法。后来画了个图发现是存在的，但LZ自己没一下子看出来。。被提醒了下。
+    - TODO: Follow up
+
+- - 给你一堆灯泡。可以flip 一个范围开着变关， 关变开， 然后问这么干了k次以后， 随便问你一个灯泡是开着开始关着，怎么做。我还是很弱地没写完。 但是有很多idea。主要想就是interval， merge interval 之类
+- 假设询问有q个，灯泡有n个
+对于一次flip(l,r)，在l和r+1两点取反，即flag[l] = flag[l] xor 1, flag[r + 1] = flag[r + 1] xor 1，灯泡i 最后的状态就是把j<=i的flag[j]xor起来
+如果全部flip完后才询问，可以直接按上述方法做完后算好每个灯的状态直接保存下来，询问直接输出
+O(n+k+q)
+如果一边flip一边有询问，那么可用Binary Index Tree将flip和query都做成O(logn)，或者直接用Segment Tree或BST等数据结构维护区间修改
+O(n+(k+q)logn)
+    - TODO
+    - Hard
