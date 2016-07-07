@@ -1,3 +1,4 @@
+- Card Shuffler: https://hellosmallworld123.wordpress.com/2015/07/23/g%E7%9A%84%E5%87%A0%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/
 - Zigzag iterator: Previous
     - Wording:
         - 开始的题目是LeetCode的Zigzag Iterator
