@@ -1,0 +1,33 @@
+- Strobogrammatic number i,ii,iii
+  ii: Find all strobogrammatic numbers that are of length = n.
+  iii: Write a function to count the total strobogrammatic numbers that exist in the range of low <= num <= high.
+
+- FractionToRecurringDecimal
+  Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+If the fractional part is repeating, enclose the repeating part in parentheses.
+For example,
+Given numerator = 1, denominator = 2, return "0.5".
+Given numerator = 2, denominator = 1, return "2".
+Given numerator = 2, denominator = 3, return "0.(6)".
+
+- Wiggle sort i, ii
+- BinaryTreeNextRightPointer
+- Coins in a line III
+- HIndex
+- Read4 I, II
+- Closest value BST II
+- Reconstruct Itenarary
+- ContainsDuplicate III:
+  Given an array of integers, find out whether there are two distinct indices i and j in the array such that the difference between nums[i] and nums[j] is at most t and the difference between i and j is at most k.
+- Lintcode: Delete node in Binary tree
+- WordBreak II
+- CountOfSmallerNumberBeforeSelf
+- EncodeAndDecodeString
+- SuperUglyNumber
+- UniqueBSTII
+- FlipGame II
+- TextJustification
+- Integer Break
+- CountCompleteTreeNodes
+- MissingRange
+- CountOfRangeSum
