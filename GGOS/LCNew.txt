@@ -1,0 +1,74 @@
+- Range Addition: 
+Assume you have an array of length n initialized with all 0's and are given k update operations.
+Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray A[startIndex ... endIndex] (startIndex and endIndex inclusive) with inc.
+Return the modified array after all k operations were executed.
+
+- Max Sum of Rectangle No Larger Than K
+Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the matrix such that its sum is no larger than k.
+Given matrix = [
+  [1,  0, 1],
+  [0, -2, 3]
+]
+k = 2
+The answer is 2. Because the sum of rectangle [[0, 1], [-2, 3]] is 2 and 2 is the max number no larger than k (k = 2).
+
+- Largest divisible subset
+Given a set of distinct positive integers, find the largest subset such that every pair (Si, Sj) of elements in this subset satisfies: Si % Sj = 0 or Sj % Si = 0.
+If there are multiple solutions, return any subset is fine.
+Example 1:
+nums: [1,2,3]
+Result: [1,2] (of course, [1,3] will also be ok)
+Example 2:
+nums: [1,2,4,8]
+Result: [1,2,4,8]
+
+- Water and Jug problem
+You are given two jugs with capacities x and y litres. There is an infinite amount of water supply available. You need to determine whether it is possible to measure exactly z litres using these two jugs.
+If z liters of water is measurable, you must have z liters of water contained within one or both buckets by the end.
+Operations allowed:
+Fill any of the jugs completely with water.
+Empty any of the jugs.
+Pour water from one jug into another till the other jug is completely full or the first jug itself is empty.
+Example 1: (From the famous "Die Hard" example)
+Input: x = 3, y = 5, z = 4
+Output: True
+Example 2:
+Input: x = 2, y = 6, z = 5
+Output: False
+BFS: https://leetcode.com/discuss/110390/java-solution-similar-to-bfs-topological-sort
+
+- Rearrange String k Distance Apart
+Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
+
+- Snake game
+Design a Snake game that is played on a device with screen size = width x height. Play the game online if you are not familiar with the game.
+The snake is initially positioned at the top left corner (0,0) with length = 1 unit.
+You are given a list of food's positions in row-column order. When a snake eats the food, its length and the game's score both increase by 1.
+Each food appears one by one on the screen. For example, the second food will not appear until the first food was eaten by the snake.
+When a food does appear on the screen, it is guaranteed that it will not appear on a block occupied by the snake.
+Reference: https://leetcode.com/submissions/detail/64503247/
+
+- Android Unlock pattern
+Given an Android 3x3 key lock screen and two integers m and n, where 1 ≤ m ≤ n ≤ 9, count the total number of unlock patterns of the Android lock screen, which consist of minimum of m keys and maximum n keys.
+Rules for a valid pattern:
+Each pattern must connect at least m keys and at most n keys.
+All the keys must be distinct.
+If the line connecting two consecutive keys in the pattern passes through any other keys, the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.
+The order of keys used matters.
+
+- TicTacToe game
+
+- SortTransformed Array
+Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.
+
+- DataStream as disjoint intervals
+Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.
+For example, suppose the integers from the data stream are 1, 3, 7, 2, 6, ..., then the summary will be:
+[1, 1]
+[1, 1], [3, 3]
+[1, 1], [3, 3], [7, 7]
+[1, 3], [7, 7]
+[1, 3], [6, 7]
+Follow up:
+What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
